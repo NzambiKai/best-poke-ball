@@ -17,8 +17,8 @@
  *   except a Cherish Ball, in any main-series game. The page then shows one
  *   Cherish Ball card instead of the ranked matches. If the form has
  *   ever been caught, gifted, hatched, or transferred from a main-series
- *   origin in any other ball (a normal Poké Ball, Premier Ball, Strange Ball,
- *   or anything else), leave the flag false or leave the slug out. Flipping
+ *   origin in any other ball (a normal Poké Ball, a Premier Ball, or anything
+ *   else), leave the flag false or leave the slug out. Flipping
  *   it back to false restores that form's ranked matches.
  *
  * shinyLocked

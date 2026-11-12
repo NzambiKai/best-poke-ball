@@ -20,7 +20,8 @@
  * Hisuian Poké, Great, and Ultra Balls repeat the modern red,
  * blue-and-red, and black-and-yellow shells. Feather, Wing, Jet, Leaden,
  * Gigaton, Hisuian Heavy, and Origin are catchable only in Legends: Arceus.
- * Park Ball is the Pal Park ball and is not in this catalogue. Picnic toys
+ * Park Ball is the Pal Park ball. Strange Ball cannot be thrown; it only
+ * appears for a Hisuian-ball Pokémon moved to another game. Picnic toys
  * and held items are not catch balls.
  */
 
@@ -266,16 +267,6 @@ const BALLS = [
       { hex: "#e04048", weight: 0.1 },
     ],
     themes: ["mystic"],
-  },
-  {
-    id: "strange-ball",
-    name: "Strange Ball",
-    palette: [
-      { hex: "#5dceb4", weight: 0.78 },
-      { hex: "#149898", weight: 0.16 },
-      { hex: "#ffffff", weight: 0.06 },
-    ],
-    themes: [],
   },
   {
     id: "cherish-ball",
