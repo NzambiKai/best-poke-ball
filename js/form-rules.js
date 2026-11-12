@@ -7,62 +7,72 @@
  * to false when a slug is missing or a flag is omitted. Two forms of the same
  * species can disagree. This file does not score a ball match.
  *
+ * Scope
+ *   Main-series games only. Pokémon GO is out of scope. A Pokémon HOME
+ *   transfer counts only when its origin is a main-series game. A transfer
+ *   that came from Pokémon GO does not count.
+ *
  * cherishOnly
  *   Set true only when that exact form has never been obtainable in any ball
- *   except a Cherish Ball, in any game. The page then shows one Cherish Ball
- *   card instead of the placeholder suggestions. If the form has ever been
- *   caught, gifted, hatched, or transferred in any other ball (a normal Poké
- *   Ball, Premier Ball, Strange Ball, or anything else), leave the flag false
- *   or leave the slug out. Flipping it back to false restores that form's
- *   placeholder cards.
+ *   except a Cherish Ball, in any main-series game. The page then shows one
+ *   Cherish Ball card instead of the placeholder suggestions. If the form has
+ *   ever been caught, gifted, hatched, or transferred from a main-series
+ *   origin in any other ball (a normal Poké Ball, Premier Ball, Strange Ball,
+ *   or anything else), leave the flag false or leave the slug out. Flipping
+ *   it back to false restores that form's placeholder cards.
  *
  * shinyLocked
  *   Set true only when no legitimate shiny of that exact form exists in any
- *   game, including Pokémon GO. With the Shiny switch on, the page keeps the
- *   regular artwork and shows a Shiny-locked badge. It does not request the
- *   shiny file. A missing shiny file for a form that is not locked is a
- *   different case ("No shiny art") and is not recorded here.
+ *   main-series game. With the Shiny switch on, the page keeps the regular
+ *   artwork and shows a Shiny-locked badge. It does not request the shiny
+ *   file. A missing shiny file for a form that is not locked is a different
+ *   case ("No shiny art") and is not recorded here.
  *
  * This list needs verifying. It is not complete.
  *
- * cherishOnly seeds, high confidence as of November 2026:
- * - zarude-dada: the Sword and Shield movie distributions (Japan, Korea, and
- *   the international serial code, 2020–2021) are Cherish Balls on Serebii's
- *   event list. This form is not in Pokémon GO, is not catchable, and cannot
- *   be bred.
- * - magearna-original: only the Pokémon HOME National Pokédex gift, listed in
- *   a Cherish Ball. Pokémon GO has the standard colors, not this form.
+ * cherishOnly seeds (main series, November 2026):
+ * - magearna-original: Serebii's event list records the Pokémon HOME National
+ *   Pokédex gift in a Cherish Ball. Bulbapedia lists that gift as the
+ *   Original Color distribution. The Legends: Z-A side mission is the
+ *   regular form, not this one.
+ * - zarude: Serebii's event list shows a Cherish Ball on every distribution,
+ *   including the 2020 Jungle gifts and the 2024 Scarlet and Violet campaign.
+ *   Bulbapedia's locations are those events, plus a HOME transfer into
+ *   Scarlet and Violet that keeps the Sword and Shield ball.
+ * - zarude-dada: Serebii's level 70 movie distributions are Cherish Balls.
+ *   Bulbapedia lists only those Sword and Shield events for this form.
  *
  * Left false for cherishOnly on purpose:
- * - zarude and magearna: the standard forms have been caught in Pokémon GO in
- *   a Premier Ball, even though their core-series gifts were Cherish Balls.
- * - Cap Pikachu, including Original Cap: the 2017 Sun and Moon passcode gifts
- *   were normal Poké Balls, and several caps were also Pokémon GO costumes.
- * - Poké Ball Pattern Vivillon: at least the 2014 online download was a
- *   normal Poké Ball.
- * - Fancy Pattern Vivillon: catchable in Scarlet and Violet.
- * - Ash-Greninja: the event Greninja was in a normal Poké Ball.
- * - Pecharunt: caught with a ball of the player's choice, never a Cherish Ball.
+ * - magearna: the 2016 QR gifts are Cherish Balls on Serebii's event list,
+ *   but the Legends: Z-A Side Mission 195 gift is shown there in a Poké Ball
+ *   (OT Jett, level 80). Bulbapedia lists that mission as a regular-form
+ *   obtainment.
+ * - Cap Pikachu, including Original Cap: Serebii's event list shows the
+ *   level 1 Ash and Satoshi gifts in a Poké Ball.
+ * - Poké Ball Pattern Vivillon: Serebii shows the SUM2014 and Pokémon Center
+ *   gifts in a Poké Ball. The Paris in-person gift is a Cherish Ball, so the
+ *   form has both.
+ * - Fancy Pattern Vivillon: the GTS gifts on Serebii are Cherish Balls, and
+ *   the pattern is also the wild Vivillon in Scarlet and Violet, caught in
+ *   the player's ball.
+ * - Ash-Greninja: Serebii shows the Battle Bond gift (OT Ash, level 36) in
+ *   a Poké Ball.
+ * - Pecharunt: Bulbapedia's Cherish Ball page says it has never been released
+ *   in a Cherish Ball, and the Mochi Mayhem battle lets the player choose
+ *   the ball.
  *
- * shinyLocked seeds, each needing verification (checked November 2026):
- * - magearna: Bulbapedia's unobtainable-shiny table marks the species
- *   unavailable through Generation IX. Bulbapedia's Pokémon GO shiny list has
- *   no Magearna entry, and a GO tracker checked on 9 November 2026 still says
- *   shiny is not confirmed. Recheck before treating this as settled, in case
- *   Pokémon GO releases a shiny Magearna.
- * - magearna-original: the same main-series lock. Pokémon GO does not have
- *   this color. Recheck alongside the standard form.
- * - zarude: Bulbapedia marks it unavailable through Generation IX. Pokémon
- *   Database lists a GO image labelled shiny that is a duplicate of the
- *   regular sprite, and the entry has no shiny-release mark. Not a legitimate
- *   shiny on that reading. Recheck if GO later releases one.
- * - zarude-dada: no main-series shiny release, and this form is not in
- *   Pokémon GO. Recheck if that changes.
+ * shinyLocked seeds (main series):
+ * - magearna and magearna-original: Bulbapedia's unobtainable-shiny table
+ *   marks Magearna unavailable from Generation VII through IX. Bulbapedia's
+ *   QR Scanner page says the QR Magearna is shiny-locked. Serebii's HOME
+ *   gift of the Original Color is not a shiny distribution.
+ * - zarude and zarude-dada: Bulbapedia marks Zarude unavailable as a shiny
+ *   in Generations VIII and IX. Serebii's Dada distributions are not shiny.
  */
 const FORM_RULES = {
   magearna: { shinyLocked: true },
   "magearna-original": { cherishOnly: true, shinyLocked: true },
-  zarude: { shinyLocked: true },
+  zarude: { cherishOnly: true, shinyLocked: true },
   "zarude-dada": { cherishOnly: true, shinyLocked: true },
 };
 
