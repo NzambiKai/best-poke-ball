@@ -16,6 +16,18 @@ Then open http://localhost:8080
 
 The page is static and suited to GitHub Pages. Pokémon art loads from the PokeAPI sprites repository, so viewing it needs a network connection.
 
+## Sync the Pokédex
+
+[`scripts/sync-pokedex.mjs`](scripts/sync-pokedex.mjs) rebuilds `data/` and `assets/` from PokeAPI. It uses Node's built-in `fetch` and does not install packages. HOME sprites are converted to WebP at quality 90 with `cwebp` from the `webp` package. Ball item icons stay PNG.
+
+```bash
+# Debian/Ubuntu
+sudo apt-get install webp
+node scripts/sync-pokedex.mjs
+```
+
+The script writes only `data/` and `assets/`. It reads ball ids from [`js/balls.js`](js/balls.js), [`js/sample-cards.js`](js/sample-cards.js), and [`js/form-rules.js`](js/form-rules.js), and it always downloads the Poké Ball icon used as the favicon. Cached responses live in `.cache/`, which is gitignored. Re-running does not change the hand-edited rule list, ball catalog, or sample cards.
+
 ## What's in this mockup
 
 - Header and a short introduction
