@@ -1,0 +1,1970 @@
+{
+  "venusaur": [],
+  "ivysaur": [
+    "venusaur"
+  ],
+  "bulbasaur": [
+    "ivysaur"
+  ],
+  "charizard": [],
+  "charmeleon": [
+    "charizard"
+  ],
+  "charmander": [
+    "charmeleon"
+  ],
+  "blastoise": [],
+  "wartortle": [
+    "blastoise"
+  ],
+  "squirtle": [
+    "wartortle"
+  ],
+  "butterfree": [],
+  "metapod": [
+    "butterfree"
+  ],
+  "caterpie": [
+    "metapod"
+  ],
+  "beedrill": [],
+  "kakuna": [
+    "beedrill"
+  ],
+  "weedle": [
+    "kakuna"
+  ],
+  "pidgeot": [],
+  "pidgeotto": [
+    "pidgeot"
+  ],
+  "pidgey": [
+    "pidgeotto"
+  ],
+  "raticate": [],
+  "rattata": [
+    "raticate"
+  ],
+  "fearow": [],
+  "spearow": [
+    "fearow"
+  ],
+  "arbok": [],
+  "ekans": [
+    "arbok"
+  ],
+  "raichu": [],
+  "pikachu": [
+    "raichu"
+  ],
+  "pichu": [
+    "pikachu"
+  ],
+  "sandslash": [],
+  "sandshrew": [
+    "sandslash"
+  ],
+  "nidoqueen": [],
+  "nidorina": [
+    "nidoqueen"
+  ],
+  "nidoran-f": [
+    "nidorina"
+  ],
+  "nidoking": [],
+  "nidorino": [
+    "nidoking"
+  ],
+  "nidoran-m": [
+    "nidorino"
+  ],
+  "clefable": [],
+  "clefairy": [
+    "clefable"
+  ],
+  "cleffa": [
+    "clefairy"
+  ],
+  "ninetales": [],
+  "vulpix": [
+    "ninetales"
+  ],
+  "wigglytuff": [],
+  "jigglypuff": [
+    "wigglytuff"
+  ],
+  "igglybuff": [
+    "jigglypuff"
+  ],
+  "crobat": [],
+  "golbat": [
+    "crobat"
+  ],
+  "zubat": [
+    "golbat"
+  ],
+  "vileplume": [],
+  "bellossom": [],
+  "gloom": [
+    "vileplume",
+    "bellossom"
+  ],
+  "oddish": [
+    "gloom"
+  ],
+  "parasect": [],
+  "paras": [
+    "parasect"
+  ],
+  "venomoth": [],
+  "venonat": [
+    "venomoth"
+  ],
+  "dugtrio": [],
+  "diglett": [
+    "dugtrio"
+  ],
+  "persian": [],
+  "perrserker": [],
+  "meowth": [
+    "persian",
+    "perrserker"
+  ],
+  "golduck": [],
+  "psyduck": [
+    "golduck"
+  ],
+  "annihilape": [],
+  "primeape": [
+    "annihilape"
+  ],
+  "mankey": [
+    "primeape"
+  ],
+  "arcanine": [],
+  "growlithe": [
+    "arcanine"
+  ],
+  "poliwrath": [],
+  "politoed": [],
+  "poliwhirl": [
+    "poliwrath",
+    "politoed"
+  ],
+  "poliwag": [
+    "poliwhirl"
+  ],
+  "alakazam": [],
+  "kadabra": [
+    "alakazam"
+  ],
+  "abra": [
+    "kadabra"
+  ],
+  "machamp": [],
+  "machoke": [
+    "machamp"
+  ],
+  "machop": [
+    "machoke"
+  ],
+  "victreebel": [],
+  "weepinbell": [
+    "victreebel"
+  ],
+  "bellsprout": [
+    "weepinbell"
+  ],
+  "tentacruel": [],
+  "tentacool": [
+    "tentacruel"
+  ],
+  "golem": [],
+  "graveler": [
+    "golem"
+  ],
+  "geodude": [
+    "graveler"
+  ],
+  "rapidash": [],
+  "ponyta": [
+    "rapidash"
+  ],
+  "slowbro": [],
+  "slowking": [],
+  "slowpoke": [
+    "slowbro",
+    "slowking"
+  ],
+  "magnezone": [],
+  "magneton": [
+    "magnezone"
+  ],
+  "magnemite": [
+    "magneton"
+  ],
+  "sirfetchd": [],
+  "farfetchd": [
+    "sirfetchd"
+  ],
+  "dodrio": [],
+  "doduo": [
+    "dodrio"
+  ],
+  "dewgong": [],
+  "seel": [
+    "dewgong"
+  ],
+  "muk": [],
+  "grimer": [
+    "muk"
+  ],
+  "cloyster": [],
+  "shellder": [
+    "cloyster"
+  ],
+  "gengar": [],
+  "haunter": [
+    "gengar"
+  ],
+  "gastly": [
+    "haunter"
+  ],
+  "steelix": [],
+  "onix": [
+    "steelix"
+  ],
+  "hypno": [],
+  "drowzee": [
+    "hypno"
+  ],
+  "kingler": [],
+  "krabby": [
+    "kingler"
+  ],
+  "electrode": [],
+  "voltorb": [
+    "electrode"
+  ],
+  "exeggutor": [],
+  "exeggcute": [
+    "exeggutor"
+  ],
+  "marowak": [],
+  "cubone": [
+    "marowak"
+  ],
+  "hitmonlee": [],
+  "hitmonchan": [],
+  "hitmontop": [],
+  "tyrogue": [
+    "hitmonlee",
+    "hitmonchan",
+    "hitmontop"
+  ],
+  "lickilicky": [],
+  "lickitung": [
+    "lickilicky"
+  ],
+  "weezing": [],
+  "koffing": [
+    "weezing"
+  ],
+  "rhyperior": [],
+  "rhydon": [
+    "rhyperior"
+  ],
+  "rhyhorn": [
+    "rhydon"
+  ],
+  "blissey": [],
+  "chansey": [
+    "blissey"
+  ],
+  "happiny": [
+    "chansey"
+  ],
+  "tangrowth": [],
+  "tangela": [
+    "tangrowth"
+  ],
+  "kangaskhan": [],
+  "kingdra": [],
+  "seadra": [
+    "kingdra"
+  ],
+  "horsea": [
+    "seadra"
+  ],
+  "seaking": [],
+  "goldeen": [
+    "seaking"
+  ],
+  "starmie": [],
+  "staryu": [
+    "starmie"
+  ],
+  "mr-rime": [],
+  "mr-mime": [
+    "mr-rime"
+  ],
+  "mime-jr": [
+    "mr-mime"
+  ],
+  "scizor": [],
+  "kleavor": [],
+  "scyther": [
+    "scizor",
+    "kleavor"
+  ],
+  "jynx": [],
+  "smoochum": [
+    "jynx"
+  ],
+  "electivire": [],
+  "electabuzz": [
+    "electivire"
+  ],
+  "elekid": [
+    "electabuzz"
+  ],
+  "magmortar": [],
+  "magmar": [
+    "magmortar"
+  ],
+  "magby": [
+    "magmar"
+  ],
+  "pinsir": [],
+  "tauros": [],
+  "gyarados": [],
+  "magikarp": [
+    "gyarados"
+  ],
+  "lapras": [],
+  "ditto": [],
+  "vaporeon": [],
+  "jolteon": [],
+  "flareon": [],
+  "espeon": [],
+  "umbreon": [],
+  "leafeon": [],
+  "glaceon": [],
+  "sylveon": [],
+  "eevee": [
+    "vaporeon",
+    "jolteon",
+    "flareon",
+    "espeon",
+    "umbreon",
+    "leafeon",
+    "glaceon",
+    "sylveon"
+  ],
+  "porygon-z": [],
+  "porygon2": [
+    "porygon-z"
+  ],
+  "porygon": [
+    "porygon2"
+  ],
+  "omastar": [],
+  "omanyte": [
+    "omastar"
+  ],
+  "kabutops": [],
+  "kabuto": [
+    "kabutops"
+  ],
+  "aerodactyl": [],
+  "snorlax": [],
+  "munchlax": [
+    "snorlax"
+  ],
+  "articuno": [],
+  "zapdos": [],
+  "moltres": [],
+  "dragonite": [],
+  "dragonair": [
+    "dragonite"
+  ],
+  "dratini": [
+    "dragonair"
+  ],
+  "mewtwo": [],
+  "mew": [],
+  "meganium": [],
+  "bayleef": [
+    "meganium"
+  ],
+  "chikorita": [
+    "bayleef"
+  ],
+  "typhlosion": [],
+  "quilava": [
+    "typhlosion"
+  ],
+  "cyndaquil": [
+    "quilava"
+  ],
+  "feraligatr": [],
+  "croconaw": [
+    "feraligatr"
+  ],
+  "totodile": [
+    "croconaw"
+  ],
+  "furret": [],
+  "sentret": [
+    "furret"
+  ],
+  "noctowl": [],
+  "hoothoot": [
+    "noctowl"
+  ],
+  "ledian": [],
+  "ledyba": [
+    "ledian"
+  ],
+  "ariados": [],
+  "spinarak": [
+    "ariados"
+  ],
+  "lanturn": [],
+  "chinchou": [
+    "lanturn"
+  ],
+  "togekiss": [],
+  "togetic": [
+    "togekiss"
+  ],
+  "togepi": [
+    "togetic"
+  ],
+  "xatu": [],
+  "natu": [
+    "xatu"
+  ],
+  "ampharos": [],
+  "flaaffy": [
+    "ampharos"
+  ],
+  "mareep": [
+    "flaaffy"
+  ],
+  "azumarill": [],
+  "marill": [
+    "azumarill"
+  ],
+  "azurill": [
+    "marill"
+  ],
+  "sudowoodo": [],
+  "bonsly": [
+    "sudowoodo"
+  ],
+  "jumpluff": [],
+  "skiploom": [
+    "jumpluff"
+  ],
+  "hoppip": [
+    "skiploom"
+  ],
+  "ambipom": [],
+  "aipom": [
+    "ambipom"
+  ],
+  "sunflora": [],
+  "sunkern": [
+    "sunflora"
+  ],
+  "yanmega": [],
+  "yanma": [
+    "yanmega"
+  ],
+  "quagsire": [],
+  "clodsire": [],
+  "wooper": [
+    "quagsire",
+    "clodsire"
+  ],
+  "honchkrow": [],
+  "murkrow": [
+    "honchkrow"
+  ],
+  "mismagius": [],
+  "misdreavus": [
+    "mismagius"
+  ],
+  "unown": [],
+  "wobbuffet": [],
+  "wynaut": [
+    "wobbuffet"
+  ],
+  "farigiraf": [],
+  "girafarig": [
+    "farigiraf"
+  ],
+  "forretress": [],
+  "pineco": [
+    "forretress"
+  ],
+  "dudunsparce": [],
+  "dunsparce": [
+    "dudunsparce"
+  ],
+  "gliscor": [],
+  "gligar": [
+    "gliscor"
+  ],
+  "granbull": [],
+  "snubbull": [
+    "granbull"
+  ],
+  "overqwil": [],
+  "qwilfish": [
+    "overqwil"
+  ],
+  "shuckle": [],
+  "heracross": [],
+  "weavile": [],
+  "sneasler": [],
+  "sneasel": [
+    "weavile",
+    "sneasler"
+  ],
+  "ursaluna": [],
+  "ursaring": [
+    "ursaluna"
+  ],
+  "teddiursa": [
+    "ursaring"
+  ],
+  "magcargo": [],
+  "slugma": [
+    "magcargo"
+  ],
+  "mamoswine": [],
+  "piloswine": [
+    "mamoswine"
+  ],
+  "swinub": [
+    "piloswine"
+  ],
+  "cursola": [],
+  "corsola": [
+    "cursola"
+  ],
+  "octillery": [],
+  "remoraid": [
+    "octillery"
+  ],
+  "delibird": [],
+  "mantine": [],
+  "mantyke": [
+    "mantine"
+  ],
+  "skarmory": [],
+  "houndoom": [],
+  "houndour": [
+    "houndoom"
+  ],
+  "donphan": [],
+  "phanpy": [
+    "donphan"
+  ],
+  "wyrdeer": [],
+  "stantler": [
+    "wyrdeer"
+  ],
+  "smeargle": [],
+  "miltank": [],
+  "raikou": [],
+  "entei": [],
+  "suicune": [],
+  "tyranitar": [],
+  "pupitar": [
+    "tyranitar"
+  ],
+  "larvitar": [
+    "pupitar"
+  ],
+  "lugia": [],
+  "ho-oh": [],
+  "celebi": [],
+  "sceptile": [],
+  "grovyle": [
+    "sceptile"
+  ],
+  "treecko": [
+    "grovyle"
+  ],
+  "blaziken": [],
+  "combusken": [
+    "blaziken"
+  ],
+  "torchic": [
+    "combusken"
+  ],
+  "swampert": [],
+  "marshtomp": [
+    "swampert"
+  ],
+  "mudkip": [
+    "marshtomp"
+  ],
+  "mightyena": [],
+  "poochyena": [
+    "mightyena"
+  ],
+  "obstagoon": [],
+  "linoone": [
+    "obstagoon"
+  ],
+  "zigzagoon": [
+    "linoone"
+  ],
+  "beautifly": [],
+  "silcoon": [
+    "beautifly"
+  ],
+  "dustox": [],
+  "cascoon": [
+    "dustox"
+  ],
+  "wurmple": [
+    "silcoon",
+    "cascoon"
+  ],
+  "ludicolo": [],
+  "lombre": [
+    "ludicolo"
+  ],
+  "lotad": [
+    "lombre"
+  ],
+  "shiftry": [],
+  "nuzleaf": [
+    "shiftry"
+  ],
+  "seedot": [
+    "nuzleaf"
+  ],
+  "swellow": [],
+  "taillow": [
+    "swellow"
+  ],
+  "pelipper": [],
+  "wingull": [
+    "pelipper"
+  ],
+  "gardevoir": [],
+  "gallade": [],
+  "kirlia": [
+    "gardevoir",
+    "gallade"
+  ],
+  "ralts": [
+    "kirlia"
+  ],
+  "masquerain": [],
+  "surskit": [
+    "masquerain"
+  ],
+  "breloom": [],
+  "shroomish": [
+    "breloom"
+  ],
+  "slaking": [],
+  "vigoroth": [
+    "slaking"
+  ],
+  "slakoth": [
+    "vigoroth"
+  ],
+  "ninjask": [],
+  "shedinja": [],
+  "nincada": [
+    "ninjask",
+    "shedinja"
+  ],
+  "exploud": [],
+  "loudred": [
+    "exploud"
+  ],
+  "whismur": [
+    "loudred"
+  ],
+  "hariyama": [],
+  "makuhita": [
+    "hariyama"
+  ],
+  "probopass": [],
+  "nosepass": [
+    "probopass"
+  ],
+  "delcatty": [],
+  "skitty": [
+    "delcatty"
+  ],
+  "sableye": [],
+  "mawile": [],
+  "aggron": [],
+  "lairon": [
+    "aggron"
+  ],
+  "aron": [
+    "lairon"
+  ],
+  "medicham": [],
+  "meditite": [
+    "medicham"
+  ],
+  "manectric": [],
+  "electrike": [
+    "manectric"
+  ],
+  "plusle": [],
+  "minun": [],
+  "volbeat": [],
+  "illumise": [],
+  "roserade": [],
+  "roselia": [
+    "roserade"
+  ],
+  "budew": [
+    "roselia"
+  ],
+  "swalot": [],
+  "gulpin": [
+    "swalot"
+  ],
+  "sharpedo": [],
+  "carvanha": [
+    "sharpedo"
+  ],
+  "wailord": [],
+  "wailmer": [
+    "wailord"
+  ],
+  "camerupt": [],
+  "numel": [
+    "camerupt"
+  ],
+  "torkoal": [],
+  "grumpig": [],
+  "spoink": [
+    "grumpig"
+  ],
+  "spinda": [],
+  "flygon": [],
+  "vibrava": [
+    "flygon"
+  ],
+  "trapinch": [
+    "vibrava"
+  ],
+  "cacturne": [],
+  "cacnea": [
+    "cacturne"
+  ],
+  "altaria": [],
+  "swablu": [
+    "altaria"
+  ],
+  "zangoose": [],
+  "seviper": [],
+  "lunatone": [],
+  "solrock": [],
+  "whiscash": [],
+  "barboach": [
+    "whiscash"
+  ],
+  "crawdaunt": [],
+  "corphish": [
+    "crawdaunt"
+  ],
+  "claydol": [],
+  "baltoy": [
+    "claydol"
+  ],
+  "cradily": [],
+  "lileep": [
+    "cradily"
+  ],
+  "armaldo": [],
+  "anorith": [
+    "armaldo"
+  ],
+  "milotic": [],
+  "feebas": [
+    "milotic"
+  ],
+  "castform": [],
+  "kecleon": [],
+  "banette": [],
+  "shuppet": [
+    "banette"
+  ],
+  "dusknoir": [],
+  "dusclops": [
+    "dusknoir"
+  ],
+  "duskull": [
+    "dusclops"
+  ],
+  "tropius": [],
+  "chimecho": [],
+  "chingling": [
+    "chimecho"
+  ],
+  "absol": [],
+  "glalie": [],
+  "froslass": [],
+  "snorunt": [
+    "glalie",
+    "froslass"
+  ],
+  "walrein": [],
+  "sealeo": [
+    "walrein"
+  ],
+  "spheal": [
+    "sealeo"
+  ],
+  "huntail": [],
+  "gorebyss": [],
+  "clamperl": [
+    "huntail",
+    "gorebyss"
+  ],
+  "relicanth": [],
+  "luvdisc": [],
+  "salamence": [],
+  "shelgon": [
+    "salamence"
+  ],
+  "bagon": [
+    "shelgon"
+  ],
+  "metagross": [],
+  "metang": [
+    "metagross"
+  ],
+  "beldum": [
+    "metang"
+  ],
+  "regirock": [],
+  "regice": [],
+  "registeel": [],
+  "latias": [],
+  "latios": [],
+  "kyogre": [],
+  "groudon": [],
+  "rayquaza": [],
+  "jirachi": [],
+  "deoxys": [],
+  "torterra": [],
+  "grotle": [
+    "torterra"
+  ],
+  "turtwig": [
+    "grotle"
+  ],
+  "infernape": [],
+  "monferno": [
+    "infernape"
+  ],
+  "chimchar": [
+    "monferno"
+  ],
+  "empoleon": [],
+  "prinplup": [
+    "empoleon"
+  ],
+  "piplup": [
+    "prinplup"
+  ],
+  "staraptor": [],
+  "staravia": [
+    "staraptor"
+  ],
+  "starly": [
+    "staravia"
+  ],
+  "bibarel": [],
+  "bidoof": [
+    "bibarel"
+  ],
+  "kricketune": [],
+  "kricketot": [
+    "kricketune"
+  ],
+  "luxray": [],
+  "luxio": [
+    "luxray"
+  ],
+  "shinx": [
+    "luxio"
+  ],
+  "rampardos": [],
+  "cranidos": [
+    "rampardos"
+  ],
+  "bastiodon": [],
+  "shieldon": [
+    "bastiodon"
+  ],
+  "wormadam": [],
+  "mothim": [],
+  "burmy": [
+    "wormadam",
+    "mothim"
+  ],
+  "vespiquen": [],
+  "combee": [
+    "vespiquen"
+  ],
+  "pachirisu": [],
+  "floatzel": [],
+  "buizel": [
+    "floatzel"
+  ],
+  "cherrim": [],
+  "cherubi": [
+    "cherrim"
+  ],
+  "gastrodon": [],
+  "shellos": [
+    "gastrodon"
+  ],
+  "drifblim": [],
+  "drifloon": [
+    "drifblim"
+  ],
+  "lopunny": [],
+  "buneary": [
+    "lopunny"
+  ],
+  "purugly": [],
+  "glameow": [
+    "purugly"
+  ],
+  "skuntank": [],
+  "stunky": [
+    "skuntank"
+  ],
+  "bronzong": [],
+  "bronzor": [
+    "bronzong"
+  ],
+  "chatot": [],
+  "spiritomb": [],
+  "garchomp": [],
+  "gabite": [
+    "garchomp"
+  ],
+  "gible": [
+    "gabite"
+  ],
+  "lucario": [],
+  "riolu": [
+    "lucario"
+  ],
+  "hippowdon": [],
+  "hippopotas": [
+    "hippowdon"
+  ],
+  "drapion": [],
+  "skorupi": [
+    "drapion"
+  ],
+  "toxicroak": [],
+  "croagunk": [
+    "toxicroak"
+  ],
+  "carnivine": [],
+  "lumineon": [],
+  "finneon": [
+    "lumineon"
+  ],
+  "abomasnow": [],
+  "snover": [
+    "abomasnow"
+  ],
+  "rotom": [],
+  "uxie": [],
+  "mesprit": [],
+  "azelf": [],
+  "dialga": [],
+  "palkia": [],
+  "heatran": [],
+  "regigigas": [],
+  "giratina": [],
+  "cresselia": [],
+  "manaphy": [],
+  "phione": [
+    "manaphy"
+  ],
+  "darkrai": [],
+  "shaymin": [],
+  "arceus": [],
+  "victini": [],
+  "serperior": [],
+  "servine": [
+    "serperior"
+  ],
+  "snivy": [
+    "servine"
+  ],
+  "emboar": [],
+  "pignite": [
+    "emboar"
+  ],
+  "tepig": [
+    "pignite"
+  ],
+  "samurott": [],
+  "dewott": [
+    "samurott"
+  ],
+  "oshawott": [
+    "dewott"
+  ],
+  "watchog": [],
+  "patrat": [
+    "watchog"
+  ],
+  "stoutland": [],
+  "herdier": [
+    "stoutland"
+  ],
+  "lillipup": [
+    "herdier"
+  ],
+  "liepard": [],
+  "purrloin": [
+    "liepard"
+  ],
+  "simisage": [],
+  "pansage": [
+    "simisage"
+  ],
+  "simisear": [],
+  "pansear": [
+    "simisear"
+  ],
+  "simipour": [],
+  "panpour": [
+    "simipour"
+  ],
+  "musharna": [],
+  "munna": [
+    "musharna"
+  ],
+  "unfezant": [],
+  "tranquill": [
+    "unfezant"
+  ],
+  "pidove": [
+    "tranquill"
+  ],
+  "zebstrika": [],
+  "blitzle": [
+    "zebstrika"
+  ],
+  "gigalith": [],
+  "boldore": [
+    "gigalith"
+  ],
+  "roggenrola": [
+    "boldore"
+  ],
+  "swoobat": [],
+  "woobat": [
+    "swoobat"
+  ],
+  "excadrill": [],
+  "drilbur": [
+    "excadrill"
+  ],
+  "audino": [],
+  "conkeldurr": [],
+  "gurdurr": [
+    "conkeldurr"
+  ],
+  "timburr": [
+    "gurdurr"
+  ],
+  "seismitoad": [],
+  "palpitoad": [
+    "seismitoad"
+  ],
+  "tympole": [
+    "palpitoad"
+  ],
+  "throh": [],
+  "sawk": [],
+  "leavanny": [],
+  "swadloon": [
+    "leavanny"
+  ],
+  "sewaddle": [
+    "swadloon"
+  ],
+  "scolipede": [],
+  "whirlipede": [
+    "scolipede"
+  ],
+  "venipede": [
+    "whirlipede"
+  ],
+  "whimsicott": [],
+  "cottonee": [
+    "whimsicott"
+  ],
+  "lilligant": [],
+  "petilil": [
+    "lilligant"
+  ],
+  "basculegion": [],
+  "basculin": [
+    "basculegion"
+  ],
+  "krookodile": [],
+  "krokorok": [
+    "krookodile"
+  ],
+  "sandile": [
+    "krokorok"
+  ],
+  "darmanitan": [],
+  "darumaka": [
+    "darmanitan"
+  ],
+  "maractus": [],
+  "crustle": [],
+  "dwebble": [
+    "crustle"
+  ],
+  "scrafty": [],
+  "scraggy": [
+    "scrafty"
+  ],
+  "sigilyph": [],
+  "cofagrigus": [],
+  "runerigus": [],
+  "yamask": [
+    "cofagrigus",
+    "runerigus"
+  ],
+  "carracosta": [],
+  "tirtouga": [
+    "carracosta"
+  ],
+  "archeops": [],
+  "archen": [
+    "archeops"
+  ],
+  "garbodor": [],
+  "trubbish": [
+    "garbodor"
+  ],
+  "zoroark": [],
+  "zorua": [
+    "zoroark"
+  ],
+  "cinccino": [],
+  "minccino": [
+    "cinccino"
+  ],
+  "gothitelle": [],
+  "gothorita": [
+    "gothitelle"
+  ],
+  "gothita": [
+    "gothorita"
+  ],
+  "reuniclus": [],
+  "duosion": [
+    "reuniclus"
+  ],
+  "solosis": [
+    "duosion"
+  ],
+  "swanna": [],
+  "ducklett": [
+    "swanna"
+  ],
+  "vanilluxe": [],
+  "vanillish": [
+    "vanilluxe"
+  ],
+  "vanillite": [
+    "vanillish"
+  ],
+  "sawsbuck": [],
+  "deerling": [
+    "sawsbuck"
+  ],
+  "emolga": [],
+  "escavalier": [],
+  "karrablast": [
+    "escavalier"
+  ],
+  "amoonguss": [],
+  "foongus": [
+    "amoonguss"
+  ],
+  "jellicent": [],
+  "frillish": [
+    "jellicent"
+  ],
+  "alomomola": [],
+  "galvantula": [],
+  "joltik": [
+    "galvantula"
+  ],
+  "ferrothorn": [],
+  "ferroseed": [
+    "ferrothorn"
+  ],
+  "klinklang": [],
+  "klang": [
+    "klinklang"
+  ],
+  "klink": [
+    "klang"
+  ],
+  "eelektross": [],
+  "eelektrik": [
+    "eelektross"
+  ],
+  "tynamo": [
+    "eelektrik"
+  ],
+  "beheeyem": [],
+  "elgyem": [
+    "beheeyem"
+  ],
+  "chandelure": [],
+  "lampent": [
+    "chandelure"
+  ],
+  "litwick": [
+    "lampent"
+  ],
+  "haxorus": [],
+  "fraxure": [
+    "haxorus"
+  ],
+  "axew": [
+    "fraxure"
+  ],
+  "beartic": [],
+  "cubchoo": [
+    "beartic"
+  ],
+  "cryogonal": [],
+  "accelgor": [],
+  "shelmet": [
+    "accelgor"
+  ],
+  "stunfisk": [],
+  "mienshao": [],
+  "mienfoo": [
+    "mienshao"
+  ],
+  "druddigon": [],
+  "golurk": [],
+  "golett": [
+    "golurk"
+  ],
+  "kingambit": [],
+  "bisharp": [
+    "kingambit"
+  ],
+  "pawniard": [
+    "bisharp"
+  ],
+  "bouffalant": [],
+  "braviary": [],
+  "rufflet": [
+    "braviary"
+  ],
+  "mandibuzz": [],
+  "vullaby": [
+    "mandibuzz"
+  ],
+  "heatmor": [],
+  "durant": [],
+  "hydreigon": [],
+  "zweilous": [
+    "hydreigon"
+  ],
+  "deino": [
+    "zweilous"
+  ],
+  "volcarona": [],
+  "larvesta": [
+    "volcarona"
+  ],
+  "cobalion": [],
+  "terrakion": [],
+  "virizion": [],
+  "tornadus": [],
+  "thundurus": [],
+  "reshiram": [],
+  "zekrom": [],
+  "landorus": [],
+  "kyurem": [],
+  "keldeo": [],
+  "meloetta": [],
+  "genesect": [],
+  "chesnaught": [],
+  "quilladin": [
+    "chesnaught"
+  ],
+  "chespin": [
+    "quilladin"
+  ],
+  "delphox": [],
+  "braixen": [
+    "delphox"
+  ],
+  "fennekin": [
+    "braixen"
+  ],
+  "greninja": [],
+  "frogadier": [
+    "greninja"
+  ],
+  "froakie": [
+    "frogadier"
+  ],
+  "diggersby": [],
+  "bunnelby": [
+    "diggersby"
+  ],
+  "talonflame": [],
+  "fletchinder": [
+    "talonflame"
+  ],
+  "fletchling": [
+    "fletchinder"
+  ],
+  "vivillon": [],
+  "spewpa": [
+    "vivillon"
+  ],
+  "scatterbug": [
+    "spewpa"
+  ],
+  "pyroar": [],
+  "litleo": [
+    "pyroar"
+  ],
+  "florges": [],
+  "floette": [
+    "florges"
+  ],
+  "flabebe": [
+    "floette"
+  ],
+  "gogoat": [],
+  "skiddo": [
+    "gogoat"
+  ],
+  "pangoro": [],
+  "pancham": [
+    "pangoro"
+  ],
+  "furfrou": [],
+  "meowstic": [],
+  "espurr": [
+    "meowstic"
+  ],
+  "aegislash": [],
+  "doublade": [
+    "aegislash"
+  ],
+  "honedge": [
+    "doublade"
+  ],
+  "aromatisse": [],
+  "spritzee": [
+    "aromatisse"
+  ],
+  "slurpuff": [],
+  "swirlix": [
+    "slurpuff"
+  ],
+  "malamar": [],
+  "inkay": [
+    "malamar"
+  ],
+  "barbaracle": [],
+  "binacle": [
+    "barbaracle"
+  ],
+  "dragalge": [],
+  "skrelp": [
+    "dragalge"
+  ],
+  "clawitzer": [],
+  "clauncher": [
+    "clawitzer"
+  ],
+  "heliolisk": [],
+  "helioptile": [
+    "heliolisk"
+  ],
+  "tyrantrum": [],
+  "tyrunt": [
+    "tyrantrum"
+  ],
+  "aurorus": [],
+  "amaura": [
+    "aurorus"
+  ],
+  "hawlucha": [],
+  "dedenne": [],
+  "carbink": [],
+  "goodra": [],
+  "sliggoo": [
+    "goodra"
+  ],
+  "goomy": [
+    "sliggoo"
+  ],
+  "klefki": [],
+  "trevenant": [],
+  "phantump": [
+    "trevenant"
+  ],
+  "gourgeist": [],
+  "pumpkaboo": [
+    "gourgeist"
+  ],
+  "avalugg": [],
+  "bergmite": [
+    "avalugg"
+  ],
+  "noivern": [],
+  "noibat": [
+    "noivern"
+  ],
+  "xerneas": [],
+  "yveltal": [],
+  "zygarde": [],
+  "diancie": [],
+  "hoopa": [],
+  "volcanion": [],
+  "decidueye": [],
+  "dartrix": [
+    "decidueye"
+  ],
+  "rowlet": [
+    "dartrix"
+  ],
+  "incineroar": [],
+  "torracat": [
+    "incineroar"
+  ],
+  "litten": [
+    "torracat"
+  ],
+  "primarina": [],
+  "brionne": [
+    "primarina"
+  ],
+  "popplio": [
+    "brionne"
+  ],
+  "toucannon": [],
+  "trumbeak": [
+    "toucannon"
+  ],
+  "pikipek": [
+    "trumbeak"
+  ],
+  "gumshoos": [],
+  "yungoos": [
+    "gumshoos"
+  ],
+  "vikavolt": [],
+  "charjabug": [
+    "vikavolt"
+  ],
+  "grubbin": [
+    "charjabug"
+  ],
+  "crabominable": [],
+  "crabrawler": [
+    "crabominable"
+  ],
+  "oricorio": [],
+  "ribombee": [],
+  "cutiefly": [
+    "ribombee"
+  ],
+  "lycanroc": [],
+  "rockruff": [
+    "lycanroc"
+  ],
+  "wishiwashi": [],
+  "toxapex": [],
+  "mareanie": [
+    "toxapex"
+  ],
+  "mudsdale": [],
+  "mudbray": [
+    "mudsdale"
+  ],
+  "araquanid": [],
+  "dewpider": [
+    "araquanid"
+  ],
+  "lurantis": [],
+  "fomantis": [
+    "lurantis"
+  ],
+  "shiinotic": [],
+  "morelull": [
+    "shiinotic"
+  ],
+  "salazzle": [],
+  "salandit": [
+    "salazzle"
+  ],
+  "bewear": [],
+  "stufful": [
+    "bewear"
+  ],
+  "tsareena": [],
+  "steenee": [
+    "tsareena"
+  ],
+  "bounsweet": [
+    "steenee"
+  ],
+  "comfey": [],
+  "oranguru": [],
+  "passimian": [],
+  "golisopod": [],
+  "wimpod": [
+    "golisopod"
+  ],
+  "palossand": [],
+  "sandygast": [
+    "palossand"
+  ],
+  "pyukumuku": [],
+  "silvally": [],
+  "type-null": [
+    "silvally"
+  ],
+  "minior": [],
+  "komala": [],
+  "turtonator": [],
+  "togedemaru": [],
+  "mimikyu": [],
+  "bruxish": [],
+  "drampa": [],
+  "dhelmise": [],
+  "kommo-o": [],
+  "hakamo-o": [
+    "kommo-o"
+  ],
+  "jangmo-o": [
+    "hakamo-o"
+  ],
+  "tapu-koko": [],
+  "tapu-lele": [],
+  "tapu-bulu": [],
+  "tapu-fini": [],
+  "solgaleo": [],
+  "lunala": [],
+  "cosmoem": [
+    "solgaleo",
+    "lunala"
+  ],
+  "cosmog": [
+    "cosmoem"
+  ],
+  "nihilego": [],
+  "buzzwole": [],
+  "pheromosa": [],
+  "xurkitree": [],
+  "celesteela": [],
+  "kartana": [],
+  "guzzlord": [],
+  "necrozma": [],
+  "magearna": [],
+  "marshadow": [],
+  "naganadel": [],
+  "poipole": [
+    "naganadel"
+  ],
+  "stakataka": [],
+  "blacephalon": [],
+  "zeraora": [],
+  "melmetal": [],
+  "meltan": [
+    "melmetal"
+  ],
+  "rillaboom": [],
+  "thwackey": [
+    "rillaboom"
+  ],
+  "grookey": [
+    "thwackey"
+  ],
+  "cinderace": [],
+  "raboot": [
+    "cinderace"
+  ],
+  "scorbunny": [
+    "raboot"
+  ],
+  "inteleon": [],
+  "drizzile": [
+    "inteleon"
+  ],
+  "sobble": [
+    "drizzile"
+  ],
+  "greedent": [],
+  "skwovet": [
+    "greedent"
+  ],
+  "corviknight": [],
+  "corvisquire": [
+    "corviknight"
+  ],
+  "rookidee": [
+    "corvisquire"
+  ],
+  "orbeetle": [],
+  "dottler": [
+    "orbeetle"
+  ],
+  "blipbug": [
+    "dottler"
+  ],
+  "thievul": [],
+  "nickit": [
+    "thievul"
+  ],
+  "eldegoss": [],
+  "gossifleur": [
+    "eldegoss"
+  ],
+  "dubwool": [],
+  "wooloo": [
+    "dubwool"
+  ],
+  "drednaw": [],
+  "chewtle": [
+    "drednaw"
+  ],
+  "boltund": [],
+  "yamper": [
+    "boltund"
+  ],
+  "coalossal": [],
+  "carkol": [
+    "coalossal"
+  ],
+  "rolycoly": [
+    "carkol"
+  ],
+  "flapple": [],
+  "appletun": [],
+  "hydrapple": [],
+  "dipplin": [
+    "hydrapple"
+  ],
+  "applin": [
+    "flapple",
+    "appletun",
+    "dipplin"
+  ],
+  "sandaconda": [],
+  "silicobra": [
+    "sandaconda"
+  ],
+  "cramorant": [],
+  "barraskewda": [],
+  "arrokuda": [
+    "barraskewda"
+  ],
+  "toxtricity": [],
+  "toxel": [
+    "toxtricity"
+  ],
+  "centiskorch": [],
+  "sizzlipede": [
+    "centiskorch"
+  ],
+  "grapploct": [],
+  "clobbopus": [
+    "grapploct"
+  ],
+  "polteageist": [],
+  "sinistea": [
+    "polteageist"
+  ],
+  "hatterene": [],
+  "hattrem": [
+    "hatterene"
+  ],
+  "hatenna": [
+    "hattrem"
+  ],
+  "grimmsnarl": [],
+  "morgrem": [
+    "grimmsnarl"
+  ],
+  "impidimp": [
+    "morgrem"
+  ],
+  "alcremie": [],
+  "milcery": [
+    "alcremie"
+  ],
+  "falinks": [],
+  "pincurchin": [],
+  "frosmoth": [],
+  "snom": [
+    "frosmoth"
+  ],
+  "stonjourner": [],
+  "eiscue": [],
+  "indeedee": [],
+  "morpeko": [],
+  "copperajah": [],
+  "cufant": [
+    "copperajah"
+  ],
+  "dracozolt": [],
+  "arctozolt": [],
+  "dracovish": [],
+  "arctovish": [],
+  "archaludon": [],
+  "duraludon": [
+    "archaludon"
+  ],
+  "dragapult": [],
+  "drakloak": [
+    "dragapult"
+  ],
+  "dreepy": [
+    "drakloak"
+  ],
+  "zacian": [],
+  "zamazenta": [],
+  "eternatus": [],
+  "urshifu": [],
+  "kubfu": [
+    "urshifu"
+  ],
+  "zarude": [],
+  "regieleki": [],
+  "regidrago": [],
+  "glastrier": [],
+  "spectrier": [],
+  "calyrex": [],
+  "enamorus": [],
+  "meowscarada": [],
+  "floragato": [
+    "meowscarada"
+  ],
+  "sprigatito": [
+    "floragato"
+  ],
+  "skeledirge": [],
+  "crocalor": [
+    "skeledirge"
+  ],
+  "fuecoco": [
+    "crocalor"
+  ],
+  "quaquaval": [],
+  "quaxwell": [
+    "quaquaval"
+  ],
+  "quaxly": [
+    "quaxwell"
+  ],
+  "oinkologne": [],
+  "lechonk": [
+    "oinkologne"
+  ],
+  "spidops": [],
+  "tarountula": [
+    "spidops"
+  ],
+  "lokix": [],
+  "nymble": [
+    "lokix"
+  ],
+  "pawmot": [],
+  "pawmo": [
+    "pawmot"
+  ],
+  "pawmi": [
+    "pawmo"
+  ],
+  "maushold": [],
+  "tandemaus": [
+    "maushold"
+  ],
+  "dachsbun": [],
+  "fidough": [
+    "dachsbun"
+  ],
+  "arboliva": [],
+  "dolliv": [
+    "arboliva"
+  ],
+  "smoliv": [
+    "dolliv"
+  ],
+  "squawkabilly": [],
+  "garganacl": [],
+  "naclstack": [
+    "garganacl"
+  ],
+  "nacli": [
+    "naclstack"
+  ],
+  "armarouge": [],
+  "ceruledge": [],
+  "charcadet": [
+    "armarouge",
+    "ceruledge"
+  ],
+  "bellibolt": [],
+  "tadbulb": [
+    "bellibolt"
+  ],
+  "kilowattrel": [],
+  "wattrel": [
+    "kilowattrel"
+  ],
+  "mabosstiff": [],
+  "maschiff": [
+    "mabosstiff"
+  ],
+  "grafaiai": [],
+  "shroodle": [
+    "grafaiai"
+  ],
+  "brambleghast": [],
+  "bramblin": [
+    "brambleghast"
+  ],
+  "toedscruel": [],
+  "toedscool": [
+    "toedscruel"
+  ],
+  "klawf": [],
+  "scovillain": [],
+  "capsakid": [
+    "scovillain"
+  ],
+  "rabsca": [],
+  "rellor": [
+    "rabsca"
+  ],
+  "espathra": [],
+  "flittle": [
+    "espathra"
+  ],
+  "tinkaton": [],
+  "tinkatuff": [
+    "tinkaton"
+  ],
+  "tinkatink": [
+    "tinkatuff"
+  ],
+  "wugtrio": [],
+  "wiglett": [
+    "wugtrio"
+  ],
+  "bombirdier": [],
+  "palafin": [],
+  "finizen": [
+    "palafin"
+  ],
+  "revavroom": [],
+  "varoom": [
+    "revavroom"
+  ],
+  "cyclizar": [],
+  "orthworm": [],
+  "glimmora": [],
+  "glimmet": [
+    "glimmora"
+  ],
+  "houndstone": [],
+  "greavard": [
+    "houndstone"
+  ],
+  "flamigo": [],
+  "cetitan": [],
+  "cetoddle": [
+    "cetitan"
+  ],
+  "veluza": [],
+  "dondozo": [],
+  "tatsugiri": [],
+  "great-tusk": [],
+  "scream-tail": [],
+  "brute-bonnet": [],
+  "flutter-mane": [],
+  "slither-wing": [],
+  "sandy-shocks": [],
+  "iron-treads": [],
+  "iron-bundle": [],
+  "iron-hands": [],
+  "iron-jugulis": [],
+  "iron-moth": [],
+  "iron-thorns": [],
+  "baxcalibur": [],
+  "arctibax": [
+    "baxcalibur"
+  ],
+  "frigibax": [
+    "arctibax"
+  ],
+  "gholdengo": [],
+  "gimmighoul": [
+    "gholdengo"
+  ],
+  "wo-chien": [],
+  "chien-pao": [],
+  "ting-lu": [],
+  "chi-yu": [],
+  "roaring-moon": [],
+  "iron-valiant": [],
+  "koraidon": [],
+  "miraidon": [],
+  "walking-wake": [],
+  "iron-leaves": [],
+  "sinistcha": [],
+  "poltchageist": [
+    "sinistcha"
+  ],
+  "okidogi": [],
+  "munkidori": [],
+  "fezandipiti": [],
+  "ogerpon": [],
+  "gouging-fire": [],
+  "raging-bolt": [],
+  "iron-crown": [],
+  "iron-boulder": [],
+  "terapagos": [],
+  "pecharunt": []
+}
