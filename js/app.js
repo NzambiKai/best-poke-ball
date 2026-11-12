@@ -49,6 +49,7 @@ const variantLine = document.querySelector("#variant-line");
 const variantNote = document.querySelector("#variant-note");
 const shinyToggle = document.querySelector("#shiny-toggle");
 const artCaption = document.querySelector("#art-caption");
+const artLock = document.querySelector("#art-lock");
 
 let activeIndex = -1;
 let currentSlug = "gengar";
@@ -64,6 +65,12 @@ function dexNumber(pokemonOrId) {
   return `No. ${String(id).padStart(3, "0")}`;
 }
 
+function shinyTreatment(pokemon) {
+  if (!shinyOn) return "off";
+  if (rulesFor(pokemon.slug).shinyLocked) return "locked";
+  return "shiny";
+}
+
 function spriteCandidates(pokemon) {
   const id = pokemon.spriteId || pokemon.id;
   const group = pokemon.spriteGroup ? `${pokemon.spriteGroup}/` : "";
@@ -71,11 +78,25 @@ function spriteCandidates(pokemon) {
   const add = (url) => {
     if (!urls.includes(url)) urls.push(url);
   };
-  const rules = rulesFor(pokemon.slug);
-  if (shinyOn && !rules.shinyLocked) add(`${HOME_SPRITE}shiny/${group}${id}.png`);
+  if (shinyTreatment(pokemon) === "shiny") add(`${HOME_SPRITE}shiny/${group}${id}.png`);
   add(`${HOME_SPRITE}${group}${id}.png`);
   add(`${HOME_SPRITE}${id}.png`);
   return urls;
+}
+
+function lockBadge() {
+  const badge = document.createElement("span");
+  badge.className = "badge rounded-pill text-bg-secondary";
+  badge.textContent = "Shiny-locked";
+  return badge;
+}
+
+function showSpriteNote(image, mode) {
+  const note = image.parentElement?.querySelector(":scope > .sprite-note");
+  if (!note) return;
+  note.replaceChildren();
+  if (mode === "locked") note.append(lockBadge());
+  else if (mode === "missing") note.textContent = "No shiny art";
 }
 
 function applyHomeSprite(image, pokemon) {
@@ -84,9 +105,8 @@ function applyHomeSprite(image, pokemon) {
   image.dataset.spriteToken = token;
   image.dataset.spriteSlug = pokemon.slug;
   image.dataset.fellBack = "0";
-  const noteFor = () => image.parentElement?.querySelector(":scope > .sprite-note");
-  const existingNote = noteFor();
-  if (existingNote) existingNote.textContent = "";
+  const treatment = shinyTreatment(pokemon);
+  showSpriteNote(image, treatment === "locked" ? "locked" : "");
   let index = 0;
   const syncIfHero = () => {
     if (image === art) syncArtCaption();
@@ -102,10 +122,9 @@ function applyHomeSprite(image, pokemon) {
     if (index < urls.length) {
       image.dataset.fellBack = "1";
       image.removeAttribute("title");
-      if (shinyOn) {
+      if (treatment === "shiny") {
         image.title = "Shiny HOME artwork isn't available for this form, so the regular artwork is shown.";
-        const note = noteFor();
-        if (note) note.textContent = "No shiny art";
+        showSpriteNote(image, "missing");
       }
       syncIfHero();
       image.src = urls[index];
@@ -118,14 +137,20 @@ function applyHomeSprite(image, pokemon) {
 }
 
 function homeAlt(pokemon) {
-  return shinyOn
+  return shinyTreatment(pokemon) === "shiny"
     ? `${pokemon.name}, shiny Pokémon HOME artwork`
     : `${pokemon.name}, Pokémon HOME artwork`;
 }
 
 function syncArtCaption() {
   if (!artCaption) return;
-  if (!shinyOn) {
+  const pokemon = BY_SLUG.get(art.dataset.spriteSlug || currentSlug);
+  const treatment = pokemon ? shinyTreatment(pokemon) : "off";
+  if (artLock) {
+    artLock.replaceChildren();
+    if (treatment === "locked") artLock.append(lockBadge());
+  }
+  if (treatment === "off" || treatment === "locked") {
     artCaption.textContent = "Pokémon HOME artwork";
     return;
   }

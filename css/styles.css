@@ -140,6 +140,16 @@ h3,
   display: none;
 }
 
+#art-lock:empty {
+  display: none;
+}
+
+.sprite-note .badge,
+#art-lock .badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
 .search-icon {
   position: absolute;
   left: 1rem;

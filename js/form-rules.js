@@ -44,11 +44,26 @@
  * - Ash-Greninja: the event Greninja was in a normal Poké Ball.
  * - Pecharunt: caught with a ball of the player's choice, never a Cherish Ball.
  *
- * shinyLocked: no forms are flagged yet.
+ * shinyLocked seeds, each needing verification (checked November 2026):
+ * - magearna: Bulbapedia's unobtainable-shiny table marks the species
+ *   unavailable through Generation IX. Bulbapedia's Pokémon GO shiny list has
+ *   no Magearna entry, and a GO tracker checked on 9 November 2026 still says
+ *   shiny is not confirmed. Recheck before treating this as settled, in case
+ *   Pokémon GO releases a shiny Magearna.
+ * - magearna-original: the same main-series lock. Pokémon GO does not have
+ *   this color. Recheck alongside the standard form.
+ * - zarude: Bulbapedia marks it unavailable through Generation IX. Pokémon
+ *   Database lists a GO image labelled shiny that is a duplicate of the
+ *   regular sprite, and the entry has no shiny-release mark. Not a legitimate
+ *   shiny on that reading. Recheck if GO later releases one.
+ * - zarude-dada: no main-series shiny release, and this form is not in
+ *   Pokémon GO. Recheck if that changes.
  */
 const FORM_RULES = {
-  "zarude-dada": { cherishOnly: true },
-  "magearna-original": { cherishOnly: true },
+  magearna: { shinyLocked: true },
+  "magearna-original": { cherishOnly: true, shinyLocked: true },
+  zarude: { shinyLocked: true },
+  "zarude-dada": { cherishOnly: true, shinyLocked: true },
 };
 
 function rulesFor(slug) {

@@ -20,11 +20,11 @@ The page is static and suited to GitHub Pages. Pokémon art loads from the PokeA
 
 - Header and a short introduction
 - Search box with a static autocomplete of the sample families, and a Shiny switch beside it
-- Selected Pokémon panel with Pokémon HOME art and the PokeAPI name. The switch swaps every Pokémon image to the shiny HOME sprite, and falls back to the regular sprite if that file is missing
+- Selected Pokémon panel with Pokémon HOME art and the PokeAPI name. The switch swaps every Pokémon image to the shiny HOME sprite, and falls back to the regular sprite if that file is missing. A form marked `shinyLocked` keeps the regular sprite and shows a Shiny-locked badge instead of requesting the shiny file
 - Three hard-coded ball cards for the selected Pokémon
 - Evolution line for that family, with up to three sample ball cards on every stage (a straight line, Eevee's branches, or a single stage such as Lapras)
 - A Variants section for species that have other forms (regional forms, Mega Evolutions, Gigantamax, gender differences, and other alternate forms). It stays hidden when a Pokémon has none
-- Per-form obtainability in [`js/form-rules.js`](js/form-rules.js). `rulesFor(slug)` returns `cherishOnly` and `shinyLocked`, both false unless that form is listed. A Cherish-only form shows a single Cherish Ball card instead of the placeholder suggestions. The seed needs verifying
+- Per-form obtainability in [`js/form-rules.js`](js/form-rules.js). `rulesFor(slug)` returns `cherishOnly` and `shinyLocked`, both false unless that form is listed. A Cherish-only form shows a single Cherish Ball card instead of the placeholder suggestions. Magearna, Original Color Magearna, Zarude, and Dada Zarude are seeded as shiny-locked. Both seeds need verifying
 - Fan-project disclaimer in the footer
 
 ## Matching
@@ -32,6 +32,8 @@ The page is static and suited to GitHub Pages. Pokémon art loads from the PokeA
 Not built yet. [`js/balls.js`](js/balls.js) is a stub for a later hand-editable list of balls with colours and theme tags. The page does not read that file. The cards on the page, including the ones under each evolution and each variant, are placeholder copy in [`js/evolutions.js`](js/evolutions.js) and [`js/variants.js`](js/variants.js).
 
 The exception is a form whose `cherishOnly` flag is true in [`js/form-rules.js`](js/form-rules.js). If that exact form has only ever been released in a Cherish Ball, the page shows one Cherish Ball card everywhere balls appear: the selected Pokémon, its evolution stage, and its variant card. The flag is per form, so Magearna still shows placeholder cards while Original Color Magearna does not. The seeded list needs verifying.
+
+`shinyLocked` is the other flag in that file. Set it only when no legitimate shiny of that exact form exists in any game, including Pokémon GO. With the Shiny switch on, a locked form keeps the regular artwork and shows a Shiny-locked badge on the selected Pokémon and on that form's evolution and variant image. The page does not request the shiny file. A form that is not locked still uses shiny art, and a missing shiny file still shows "No shiny art". Magearna, Original Color Magearna, Zarude, and Dada Zarude are seeded and need verifying, including whether Pokémon GO has released a shiny Magearna.
 
 ## Sources
 
