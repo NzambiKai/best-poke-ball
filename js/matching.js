@@ -11,6 +11,8 @@
  * cherishOnly is applied here via rulesFor(), before overrides, and
  * before this ranking. When the Master Ball is the only ball selected,
  * masterAlternates() adds one or two runner-up balls after that selection.
+ * A bright ring on a dark coat, or a large saturated mark such as a flame,
+ * can add one more ball after that list is chosen.
  */
 
 const DISTANCE_CAP = 0.4;
@@ -55,6 +57,13 @@ const ACCENT_CHROMA = 0.1;
 const ACCENT_HUE_GAP = 40;
 const ACCENT_CONTRAST = 0.25;
 const ACCENT_SWATCH = 0.25;
+// Marks the ordinary accent test misses. A bright ring on a dark coat has no
+// stable hue to measure a gap against. A saturated patch on a coloured body,
+// such as a flame, still counts when it is large enough to be the feature.
+const MARK_CHROMA = 0.18;
+const MARK_SHARE = 0.05;
+const MARK_CONTRAST = 0.15;
+const MARK_EXPLAINED = 0.35;
 const PINK_PURPLE_GAP = 18;
 const PINK_PURPLE_FACTOR = 0.45;
 // The Master Ball is the rarest ball, so it should not be the only suggestion.
@@ -574,6 +583,99 @@ function masterAlternates(rows, picked, regions, types) {
   return second ? [picked[0], first, second] : [picked[0], first];
 }
 
+// A ring on a black coat, or a flame on a yellow body, never reaches the
+// accent test. The coat's hue is too faint to gap against, or the flame is
+// not lighter enough. Mouths and eyes stay under MARK_SHARE. A pale coat is
+// left to the normal gate, so a blue detail on a white body is not a ring.
+function isMissedMark(regions, index) {
+  if (isHueAccent(regions, index)) return false;
+  const region = regions[index];
+  if (!region || region.cast || region.chroma < ACCENT_CHROMA) return false;
+  if (region.share < ACCENT_MIN || region.share >= FULL_SHARE) return false;
+  const body = bodyRegion(regions);
+  if (!body || body === region) return false;
+  const contrast = Math.abs(labOf(region.hex)[0] - labOf(body.hex)[0]);
+  const bodyHasHue = !body.neutral && !body.cast && body.chroma >= CLEAR_HUE;
+  if (!bodyHasHue) return labOf(body.hex)[0] < DARK_LIGHT && contrast >= ACCENT_CONTRAST;
+  return (
+    region.chroma >= MARK_CHROMA &&
+    region.share >= MARK_SHARE &&
+    region.share <= ACCENT_MAX &&
+    hueGap(region.hue, body.hue) >= ACCENT_HUE_GAP &&
+    contrast >= MARK_CONTRAST
+  );
+}
+
+function shellFit(ball, regions, accentIndex) {
+  const accent = regions[accentIndex];
+  let accentSim = 0;
+  let accentSwatch = null;
+  for (const swatch of ball.palette) {
+    if (swatch.weight < ACCENT_SWATCH) continue;
+    const sim = regionSimilarity(swatch.hex, accent);
+    if (sim > accentSim) {
+      accentSim = sim;
+      accentSwatch = swatch;
+    }
+  }
+  if (!accentSwatch || accentSim < COVER) return null;
+  let explained = 0;
+  let clashWeight = 0;
+  for (const swatch of ball.palette) {
+    if (swatch.weight < SWATCH_MIN) continue;
+    let sim = 0;
+    for (const other of regions) sim = Math.max(sim, regionSimilarity(swatch.hex, other));
+    if (sim < CLASH) {
+      if (!isWhiteBottom(swatch)) clashWeight += swatch.weight;
+      continue;
+    }
+    if (sim < COVER) continue;
+    explained += swatch.weight * sim;
+  }
+  if (clashWeight >= CLASH_SHARE) explained -= clashWeight * CLASH_PENALTY;
+  explained = Math.max(0, explained);
+  if (explained < MARK_EXPLAINED) return null;
+  return {
+    ball,
+    ballExplained: explained,
+    monCovered: accent.share * accentSim,
+    covered: new Map([[accentIndex, accentSim]]),
+    pair: { color: accent, swatch: accentSwatch, sim: accentSim, contrib: accent.share * accentSim },
+    score: explained * accentSim,
+    accent: true,
+    theme: false,
+    targetIndex: accentIndex,
+  };
+}
+
+// After the normal list is chosen, one missed mark can add one ball. The
+// list is not rescored, so balls that already qualified stay in place. A
+// single card may still gain that ball when the card already contains the
+// mark's colour, which is how a yellow Repeat Ball keeps a Fast Ball beside
+// Charmander's flame. Two or three cards are left alone once the mark is
+// already on one of them.
+function markSupplement(regions, picked) {
+  if (picked.length >= MAX_BALLS) return picked;
+  const used = new Set(picked.map((row) => row.ball.id));
+  let best = null;
+  regions.forEach((region, index) => {
+    if (!isMissedMark(regions, index)) return;
+    const coveredWell = picked.some((row) =>
+      row.ball.palette.some((swatch) => swatch.weight >= ACCENT_SWATCH && regionSimilarity(swatch.hex, region) >= 0.82),
+    );
+    if (coveredWell && picked.length !== 1) return;
+    for (const ball of BALLS) {
+      if (ball.matchable === false || used.has(ball.id)) continue;
+      const row = shellFit(ball, regions, index);
+      if (!row) continue;
+      if (best && row.score <= best.score) continue;
+      best = row;
+    }
+  });
+  if (best) picked.push(best);
+  return picked;
+}
+
 function rankBalls(pokemon, palette) {
   const regions = regionsFor(palette);
   const rows = BALLS.filter((ball) => ball.matchable !== false).map((ball) => scoreBall(ball, regions));
@@ -605,7 +707,7 @@ function rankBalls(pokemon, palette) {
     });
     if (replaceAt >= 0) picked.splice(replaceAt, 1, accent);
   }
-  return masterAlternates(rows, picked, regions, pokemon.types);
+  return markSupplement(regions, masterAlternates(rows, picked, regions, pokemon.types));
 }
 
 function cherishCard() {
