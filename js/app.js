@@ -198,9 +198,15 @@ function cardsFor(pokemon) {
   return matchBalls(pokemon, catalog.palettes.get(pokemon.slug));
 }
 
-function featuredCard(card, index) {
+function ballColumns(count) {
+  if (count <= 1) return "col-12 col-md-8 col-lg-6 mx-auto";
+  if (count === 2) return "col-12 col-md-6";
+  return "col-12 col-lg-4";
+}
+
+function featuredCard(card, index, count) {
   const column = document.createElement("div");
-  column.className = "col-12 col-lg-4";
+  column.className = ballColumns(count);
   const article = document.createElement("article");
   article.className = "card soft-card ball-card rounded-4 h-100";
   article.dataset.accent = card.cherish ? "cherish" : String(index + 1);
@@ -244,10 +250,10 @@ function renderFeaturedBalls(pokemon) {
     resultsNote.textContent = "No ball match for this form.";
     return;
   }
-  featuredBalls.replaceChildren(...cards.map(featuredCard));
+  featuredBalls.replaceChildren(...cards.map((card, index) => featuredCard(card, index, cards.length)));
   resultsNote.textContent = cards[0]?.cherish
     ? "Only ever available in a Cherish Ball via events."
-    : `Matched to ${pokemon.name} on colour and theme.`;
+    : `Matched to ${pokemon.name} on colour.`;
 }
 
 function evolutionArrow() {

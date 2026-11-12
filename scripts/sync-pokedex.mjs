@@ -2,6 +2,7 @@
  * Rebuild data/ and assets/ from PokeAPI.
  *
  *   node scripts/sync-pokedex.mjs
+ *   node scripts/sync-pokedex.mjs --palettes-only
  *
  * Uses Node's built-in fetch only. HOME sprites are converted with cwebp
  * from the webp package (Debian/Ubuntu: sudo apt-get install webp) at
@@ -134,13 +135,16 @@ function requireTool(bin) {
   });
 }
 
-// Pixels below this OKLab chroma are black, gray, or white rather than a hue.
-const NEUTRAL_CHROMA = 0.03;
+// A pixel this close to gray has no readable hue. Paler pixels that still
+// have a hue stay in the colour clusters, so a lavender body is not filed
+// under gray.
+const NEUTRAL_CHROMA = 0.02;
 const BLACK_L = 0.32;
 const WHITE_L = 0.85;
 const MERGE_DISTANCE = 0.08;
-const MIN_COLOR_SHARE = 0.04;
-const MAX_COLORS = 4;
+const HUE_MERGE_GAP = 40;
+const MIN_COLOR_SHARE = 0.015;
+const MAX_COLORS = 6;
 const ALPHA_MIN = 170;
 const SAMPLE_STEP = 2;
 
@@ -267,12 +271,19 @@ async function extractPalette(webpPath) {
   for (const cluster of clusters) {
     let host = null;
     let nearest = MERGE_DISTANCE;
+    const clusterChroma = Math.hypot(cluster.a, cluster.b2);
+    const clusterHue = (Math.atan2(cluster.b2, cluster.a) * 180) / Math.PI;
     for (const kept of merged) {
       const distance = Math.hypot(kept.L - cluster.L, kept.a - cluster.a, kept.b2 - cluster.b2);
-      if (distance < nearest) {
-        nearest = distance;
-        host = kept;
+      if (distance >= nearest) continue;
+      const keptChroma = Math.hypot(kept.a, kept.b2);
+      if (clusterChroma >= 0.02 && keptChroma >= 0.02) {
+        const keptHue = (Math.atan2(kept.b2, kept.a) * 180) / Math.PI;
+        const gap = Math.abs(clusterHue - keptHue) % 360;
+        if (Math.min(gap, 360 - gap) > HUE_MERGE_GAP) continue;
       }
+      nearest = distance;
+      host = kept;
     }
     if (!host) {
       merged.push({ ...cluster });
@@ -645,8 +656,22 @@ async function main() {
   process.stderr.write(`Omitted with no HOME art: ${source.omittedNoHome.join(", ")}\n`);
 }
 
+async function regeneratePalettes() {
+  const entries = JSON.parse(fs.readFileSync(path.join(ROOT, "data/pokemon.json"), "utf8"));
+  const previous = JSON.parse(fs.readFileSync(path.join(ROOT, "data/palettes.json"), "utf8"));
+  process.stderr.write(`Reading colours from ${entries.length} HOME sprites\n`);
+  const failed = await writePalettes(entries, (entry) => previous[entry.slug]?.speciesColor || null);
+  const sourcePath = path.join(ROOT, "data/source.json");
+  const source = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
+  source.paletteCount = entries.length - failed.length;
+  source.paletteFailed = failed;
+  fs.writeFileSync(sourcePath, `${JSON.stringify(source, null, 2)}\n`);
+  process.stderr.write(`Palettes ${source.paletteCount}, failed ${failed.length}\n`);
+}
+
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  main().catch((error) => {
+  const run = process.argv.includes("--palettes-only") ? regeneratePalettes : main;
+  run().catch((error) => {
     console.error(error);
     process.exit(1);
   });

@@ -12,7 +12,8 @@
  * slate. The shared outline and the shine are left out, but black that
  * is part of the design stays. A white lower half is weighted 0.26, the
  * same as the Poké Ball. Weights sum to 1.
- * themes describe that look. They are not catch bonuses.
+ * themes describe that look. They only break a close colour tie.
+ * They are not catch bonuses and they never qualify a ball.
  * matchable false keeps a ball out of the ranking. The Cherish Ball is
  * only shown for a form whose cherishOnly flag is true.
  *
