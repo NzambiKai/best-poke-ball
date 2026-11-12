@@ -7,15 +7,18 @@
  * per-Pokémon picks. Overrides, when any exist, live in js/overrides.js.
  *
  * id is the PokeAPI item slug and the file name in assets/items/.
- * palette is the shell a person sees: the shared black outline and the
- * shine on the item icon are left out. Weights sum to 1.
+ * palette is the shell on the modern in-game model, not a sample of the
+ * bag icon. Those icons turn red into orange and a black hemisphere into
+ * slate. The shared outline and the shine are left out, but black that
+ * is part of the design stays. A white lower half is weighted 0.26, the
+ * same as the Poké Ball. Weights sum to 1.
  * themes describe that look. They are not catch bonuses.
  * matchable false keeps a ball out of the ranking. The Cherish Ball is
  * only shown for a form whose cherishOnly flag is true.
  *
  * Omitted from the catalogue, so the sync does not download their icons:
- * Hisuian Poké, Great, and Ultra Balls repeat the modern orange,
- * blue-and-red, and yellow-and-slate shells. Feather, Wing, Jet, Leaden,
+ * Hisuian Poké, Great, and Ultra Balls repeat the modern red,
+ * blue-and-red, and black-and-yellow shells. Feather, Wing, Jet, Leaden,
  * Gigaton, Hisuian Heavy, and Origin are catchable only in Legends: Arceus.
  * Strange Ball is a fallback icon, not a look to recommend. Picnic toys
  * and held items are not catch balls.
@@ -26,7 +29,7 @@ const BALLS = [
     id: "poke-ball",
     name: "Poké Ball",
     palette: [
-      { hex: "#ff943a", weight: 0.74 },
+      { hex: "#e23d32", weight: 0.74 },
       { hex: "#ffffff", weight: 0.26 },
     ],
     themes: [],
@@ -35,9 +38,9 @@ const BALLS = [
     id: "great-ball",
     name: "Great Ball",
     palette: [
-      { hex: "#3a94ff", weight: 0.64 },
-      { hex: "#bd3131", weight: 0.28 },
-      { hex: "#ffffff", weight: 0.08 },
+      { hex: "#3a94ff", weight: 0.5 },
+      { hex: "#d23b32", weight: 0.24 },
+      { hex: "#ffffff", weight: 0.26 },
     ],
     themes: [],
   },
@@ -45,8 +48,9 @@ const BALLS = [
     id: "ultra-ball",
     name: "Ultra Ball",
     palette: [
-      { hex: "#738494", weight: 0.52 },
-      { hex: "#ffd63a", weight: 0.48 },
+      { hex: "#1c1c1c", weight: 0.46 },
+      { hex: "#f0d030", weight: 0.28 },
+      { hex: "#ffffff", weight: 0.26 },
     ],
     themes: [],
   },
@@ -54,8 +58,9 @@ const BALLS = [
     id: "master-ball",
     name: "Master Ball",
     palette: [
-      { hex: "#b53af7", weight: 0.62 },
-      { hex: "#e621c5", weight: 0.38 },
+      { hex: "#b53af7", weight: 0.52 },
+      { hex: "#e621c5", weight: 0.22 },
+      { hex: "#ffffff", weight: 0.26 },
     ],
     themes: ["mystic"],
   },
@@ -72,9 +77,8 @@ const BALLS = [
     id: "sport-ball",
     name: "Sport Ball",
     palette: [
-      { hex: "#ff943a", weight: 0.58 },
-      { hex: "#ffffff", weight: 0.27 },
-      { hex: "#de5a3a", weight: 0.15 },
+      { hex: "#ffffff", weight: 0.68 },
+      { hex: "#de3a3a", weight: 0.32 },
     ],
     themes: [],
   },
@@ -82,8 +86,9 @@ const BALLS = [
     id: "fast-ball",
     name: "Fast Ball",
     palette: [
-      { hex: "#ef8c42", weight: 0.62 },
-      { hex: "#f7ce3a", weight: 0.38 },
+      { hex: "#e23d32", weight: 0.46 },
+      { hex: "#f0d030", weight: 0.28 },
+      { hex: "#ffffff", weight: 0.26 },
     ],
     themes: ["fire"],
   },
@@ -91,9 +96,9 @@ const BALLS = [
     id: "level-ball",
     name: "Level Ball",
     palette: [
-      { hex: "#efbd94", weight: 0.46 },
-      { hex: "#7b6b63", weight: 0.24 },
-      { hex: "#de4a3a", weight: 0.3 },
+      { hex: "#e0b48a", weight: 0.48 },
+      { hex: "#7a5a48", weight: 0.32 },
+      { hex: "#d89048", weight: 0.2 },
     ],
     themes: ["earth"],
   },
@@ -119,8 +124,9 @@ const BALLS = [
     id: "love-ball",
     name: "Love Ball",
     palette: [
-      { hex: "#ffc5e6", weight: 0.5 },
-      { hex: "#de84b5", weight: 0.5 },
+      { hex: "#f0c0d8", weight: 0.42 },
+      { hex: "#e070a8", weight: 0.34 },
+      { hex: "#a04088", weight: 0.24 },
     ],
     themes: ["fairy", "cute"],
   },
@@ -128,8 +134,9 @@ const BALLS = [
     id: "friend-ball",
     name: "Friend Ball",
     palette: [
-      { hex: "#8cc53a", weight: 0.9 },
-      { hex: "#ffffff", weight: 0.1 },
+      { hex: "#6aaa32", weight: 0.64 },
+      { hex: "#e0c040", weight: 0.1 },
+      { hex: "#ffffff", weight: 0.26 },
     ],
     themes: ["forest"],
   },
@@ -137,9 +144,9 @@ const BALLS = [
     id: "moon-ball",
     name: "Moon Ball",
     palette: [
-      { hex: "#6e8498", weight: 0.62 },
-      { hex: "#4ac5ef", weight: 0.22 },
-      { hex: "#f7ce42", weight: 0.16 },
+      { hex: "#243048", weight: 0.52 },
+      { hex: "#f0d040", weight: 0.22 },
+      { hex: "#ffffff", weight: 0.26 },
     ],
     themes: ["night"],
   },
@@ -147,8 +154,9 @@ const BALLS = [
     id: "net-ball",
     name: "Net Ball",
     palette: [
-      { hex: "#4ab5c5", weight: 0.6 },
-      { hex: "#7b7b84", weight: 0.4 },
+      { hex: "#1f7a88", weight: 0.4 },
+      { hex: "#4ab5c5", weight: 0.4 },
+      { hex: "#1c1c1c", weight: 0.2 },
     ],
     themes: ["water"],
   },
@@ -186,8 +194,8 @@ const BALLS = [
     name: "Timer Ball",
     palette: [
       { hex: "#ffffff", weight: 0.55 },
-      { hex: "#7b7b84", weight: 0.3 },
-      { hex: "#de5a3a", weight: 0.15 },
+      { hex: "#1c1c1c", weight: 0.28 },
+      { hex: "#de3a3a", weight: 0.17 },
     ],
     themes: [],
   },
@@ -195,8 +203,10 @@ const BALLS = [
     id: "luxury-ball",
     name: "Luxury Ball",
     palette: [
-      { hex: "#7b7b84", weight: 0.58 },
-      { hex: "#d69c31", weight: 0.42 },
+      { hex: "#1c1c1c", weight: 0.48 },
+      { hex: "#d4a017", weight: 0.2 },
+      { hex: "#ffffff", weight: 0.26 },
+      { hex: "#d23b32", weight: 0.06 },
     ],
     themes: ["sleek"],
   },
@@ -250,9 +260,10 @@ const BALLS = [
     id: "beast-ball",
     name: "Beast Ball",
     palette: [
-      { hex: "#3a5ad6", weight: 0.55 },
-      { hex: "#5a3af7", weight: 0.28 },
-      { hex: "#efd63a", weight: 0.17 },
+      { hex: "#2f62c8", weight: 0.46 },
+      { hex: "#322e98", weight: 0.26 },
+      { hex: "#3aa0e0", weight: 0.18 },
+      { hex: "#e04048", weight: 0.1 },
     ],
     themes: ["mystic"],
   },
