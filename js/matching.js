@@ -40,6 +40,22 @@ const PALE_BODY_LIGHT = 0.8;
 const MUTED_BODY_CHROMA = 0.038;
 // A hue this faint is not stable enough to borrow a saturated swatch's score.
 const FAMILY_CHROMA = 0.034;
+// Neutral coats split by lightness. Charcoal is black, not mid gray.
+const DARK_LIGHT = 0.62;
+const MID_LIGHT = 0.82;
+const NEUTRAL_SWATCH = 0.05;
+const CLASH = 0.22;
+const CLASH_SHARE = 0.3;
+const CLASH_PENALTY = 0.7;
+const FULL_SHARE = 0.16;
+const ACCENT_MIN = 0.012;
+const ACCENT_MAX = 0.08;
+const ACCENT_CHROMA = 0.1;
+const ACCENT_HUE_GAP = 40;
+const ACCENT_CONTRAST = 0.25;
+const ACCENT_SWATCH = 0.25;
+const PINK_PURPLE_GAP = 18;
+const PINK_PURPLE_FACTOR = 0.45;
 
 const TYPE_THEMES = {
   normal: [],
@@ -126,17 +142,42 @@ function similarity(hexA, hexB) {
       if (family > sim) sim = family;
     }
   }
-  return sim;
+  return sim * pinkPurpleFactor(hexA, hexB);
+}
+
+function pinkPurpleFactor(hexA, hexB) {
+  const left = labOf(hexA);
+  const right = labOf(hexB);
+  if (Math.min(chromaOf(left), chromaOf(right)) < CLEAR_HUE) return 1;
+  if (hueGap(hueOf(left), hueOf(right)) <= PINK_PURPLE_GAP) return 1;
+  const names = new Set([hueName(hexA), hueName(hexB)]);
+  const pink = names.has("pink") || names.has("red");
+  if (pink && names.has("purple")) return PINK_PURPLE_FACTOR;
+  return 1;
+}
+
+function lightBand(lightness) {
+  if (lightness < DARK_LIGHT) return 0;
+  if (lightness < MID_LIGHT) return 1;
+  return 2;
 }
 
 function regionSimilarity(swatchHex, region) {
   if (!region.cast) return similarity(swatchHex, region.hex);
-  const left = labOf(swatchHex);
-  const right = labOf(region.hex);
-  const distance = Math.hypot(left[0] - right[0], left[1] - right[1], left[2] - right[2]);
-  let sim = 1 - Math.min(1, distance / DISTANCE_CAP);
-  if (chromaOf(left) > VIVID_CHROMA) sim *= 0.5;
-  return sim;
+  const swatch = labOf(swatchHex);
+  const body = labOf(region.hex);
+  const swatchChroma = chromaOf(swatch);
+  // A coloured shell does not match a neutral coat. A dark navy shell still matches a dark coat.
+  if (swatchChroma > NEUTRAL_SWATCH) {
+    if (swatch[0] >= 0.42 || body[0] >= DARK_LIGHT) return 0;
+    const distance = Math.hypot(swatch[0] - body[0], swatch[1] - body[1], swatch[2] - body[2]);
+    return (1 - Math.min(1, distance / DISTANCE_CAP)) * 0.85;
+  }
+  const bandGap = Math.abs(lightBand(swatch[0]) - lightBand(body[0]));
+  if (bandGap > 1) return 0;
+  if (bandGap === 1) return 0.34;
+  const lightnessGap = Math.abs(swatch[0] - body[0]);
+  return Math.max(0.72, 0.96 - lightnessGap);
 }
 
 function hueName(hex) {
@@ -149,7 +190,7 @@ function hueName(hex) {
   }
   const hue = (Math.atan2(b, a) * 180) / Math.PI;
   const turn = (hue + 360) % 360;
-  if (turn >= 345 || turn < 15) return lightness > 0.72 ? "pink" : "red";
+  if (turn >= 328 || turn < 15) return lightness > 0.62 ? "pink" : "red";
   if (turn < 42) return "red";
   if (turn < 72) return lightness < 0.58 ? "brown" : "orange";
   if (turn < 112) return "yellow";
@@ -218,31 +259,81 @@ function themed(ball, types) {
   return types.some((type) => (TYPE_THEMES[type] || []).some((tag) => tags.has(tag)));
 }
 
+function isWhiteBottom(swatch) {
+  if (swatch.weight > 0.27) return false;
+  const lab = labOf(swatch.hex);
+  return lab[0] > 0.9 && chromaOf(lab) < 0.02;
+}
+
+function bodyRegion(regions) {
+  return regions.reduce((best, region) => (!best || region.share > best.share ? region : best), null);
+}
+
+function isHueAccent(regions, index) {
+  const region = regions[index];
+  if (!region || region.cast || region.chroma < ACCENT_CHROMA) return false;
+  if (region.share < ACCENT_MIN || region.share > ACCENT_MAX) return false;
+  const body = bodyRegion(regions);
+  if (!body || body === region) return false;
+  if (Math.abs(labOf(region.hex)[0] - labOf(body.hex)[0]) < ACCENT_CONTRAST) return false;
+  return hueGap(region.hue, body.hue) >= ACCENT_HUE_GAP;
+}
+
+function isNeutralMark(regions, index) {
+  const region = regions[index];
+  if (!region || region.share < ACCENT_MIN || region.share > ACCENT_MAX) return false;
+  if (!(region.cast || region.chroma < 0.03)) return false;
+  const body = bodyRegion(regions);
+  if (!body || body === region) return false;
+  if (Math.abs(labOf(region.hex)[0] - labOf(body.hex)[0]) < ACCENT_CONTRAST) return false;
+  return lightBand(labOf(region.hex)[0]) !== lightBand(labOf(body.hex)[0]);
+}
+
 function scoreBall(ball, regions) {
   const covered = new Map();
   let ballExplained = 0;
+  let clashWeight = 0;
   let pair = null;
-  for (const swatch of ball.palette) {
-    if (swatch.weight < SWATCH_MIN) continue;
+  ball.palette.forEach((swatch) => {
+    if (swatch.weight < SWATCH_MIN) return;
     let bestSim = 0;
     let bestIndex = -1;
+    let largestShare = 0;
+    let largestIndex = -1;
     regions.forEach((region, index) => {
       const sim = regionSimilarity(swatch.hex, region);
-      if (sim < COVER) return;
-      const previous = covered.get(index) || 0;
-      if (sim > previous) covered.set(index, sim);
       if (sim > bestSim) {
         bestSim = sim;
         bestIndex = index;
       }
+      if (sim >= COVER && region.share > largestShare) {
+        largestShare = region.share;
+        largestIndex = index;
+      }
     });
-    if (bestIndex < 0) continue;
-    ballExplained += swatch.weight * bestSim;
-    const contrib = regions[bestIndex].share * swatch.weight * bestSim;
-    if (!pair || contrib > pair.contrib) {
-      pair = { color: regions[bestIndex], swatch, sim: bestSim, contrib };
+    if (bestIndex < 0 || bestSim < CLASH) {
+      if (!isWhiteBottom(swatch)) clashWeight += swatch.weight;
+      return;
     }
-  }
+    const creditIndex = largestIndex >= 0 ? largestIndex : bestIndex;
+    const creditShare = regions[creditIndex].share;
+    const neutralMark = isNeutralMark(regions, creditIndex) && chromaOf(labOf(swatch.hex)) <= 0.02 && swatch.weight >= ACCENT_SWATCH;
+    const hueMark = isHueAccent(regions, creditIndex) && swatch.weight >= ACCENT_SWATCH;
+    const factor = creditShare >= FULL_SHARE || neutralMark || hueMark ? 1 : creditShare / FULL_SHARE;
+    if (bestSim < COVER) return;
+    ballExplained += swatch.weight * bestSim * factor;
+    regions.forEach((region, index) => {
+      const sim = regionSimilarity(swatch.hex, region);
+      if (sim < COVER) return;
+      if (region.share < FULL_SHARE && !isNeutralMark(regions, index) && !isHueAccent(regions, index)) return;
+      const previous = covered.get(index) || 0;
+      if (sim > previous) covered.set(index, sim);
+    });
+    const contrib = creditShare * swatch.weight * bestSim;
+    if (!pair || contrib > pair.contrib) pair = { color: regions[creditIndex], swatch, sim: bestSim, contrib };
+  });
+  if (clashWeight >= CLASH_SHARE) ballExplained -= clashWeight * CLASH_PENALTY;
+  ballExplained = Math.max(0, ballExplained);
   let monCovered = 0;
   for (const [index, sim] of covered) monCovered += regions[index].share * sim;
   return {
@@ -257,7 +348,9 @@ function scoreBall(ball, regions) {
 }
 
 function passes(row) {
-  return row.monCovered >= MIN_COVER && row.ballExplained >= BALL_FLOOR;
+  if (row.monCovered < MIN_COVER || row.ballExplained < BALL_FLOOR || !row.pair) return false;
+  if (row.pair.color.share >= LARGE_SHARE) return true;
+  return row.pair.swatch.weight >= ACCENT_SWATCH && row.pair.color.share >= FULL_SHARE;
 }
 
 function orderByColour(rows, types) {
@@ -329,6 +422,15 @@ function looseBall(regions, chosen, used) {
   return best;
 }
 
+function coversNewLargeRegion(row, chosen, regions) {
+  for (const [index, sim] of row.covered) {
+    if (sim < COVER || regions[index].share < LARGE_SHARE) continue;
+    const held = chosen.some((other) => (other.covered.get(index) || 0) >= COVER);
+    if (!held) return true;
+  }
+  return false;
+}
+
 function keepsAnotherLargeRegion(row, chosen, regions, targetIndex) {
   for (const [index, sim] of row.covered) {
     if (index === targetIndex || sim < COVER) continue;
@@ -353,11 +455,48 @@ function reasonFor(pokemon, row) {
   return `${capitalize(ballHue)} shell beside ${pokemon.name}'s ${monHue} coloring`;
 }
 
+function accentBall(regions, picked) {
+  const used = new Set(picked.map((row) => row.ball.id));
+  let best = null;
+  regions.forEach((region, index) => {
+    if (!isHueAccent(regions, index)) return;
+    const already = picked.some((row) =>
+      row.ball.palette.some((swatch) => swatch.weight >= SWATCH_MIN && regionSimilarity(swatch.hex, region) >= 0.82),
+    );
+    if (already) return;
+    for (const ball of BALLS) {
+      if (ball.matchable === false || used.has(ball.id)) continue;
+      for (const swatch of ball.palette) {
+        if (swatch.weight < ACCENT_SWATCH) continue;
+        const sim = regionSimilarity(swatch.hex, region);
+        if (sim < COVER) continue;
+        if (best && sim <= best.pair.sim) continue;
+        best = {
+          ball,
+          ballExplained: swatch.weight * sim,
+          monCovered: region.share * sim,
+          covered: new Map([[index, sim]]),
+          pair: { color: region, swatch, sim, contrib: region.share * sim },
+          score: region.share * sim,
+          accent: true,
+          theme: false,
+          targetIndex: index,
+        };
+      }
+    }
+  });
+  return best;
+}
+
 function rankBalls(pokemon, palette) {
   const regions = regionsFor(palette);
   const rows = BALLS.filter((ball) => ball.matchable !== false).map((ball) => scoreBall(ball, regions));
   const qualified = orderByColour(rows.filter(passes), pokemon.types);
   const picked = qualified.slice(0, MAX_BALLS);
+  if (picked.length === MAX_BALLS) {
+    const diverse = qualified.find((row) => !picked.slice(0, 2).includes(row) && coversNewLargeRegion(row, picked.slice(0, 2), regions));
+    if (diverse) picked[2] = diverse;
+  }
   if (!picked.length && rows.length) {
     rows.sort((left, right) => right.score - left.score || left.ball.name.localeCompare(right.ball.name));
     picked.push(rows[0]);
@@ -367,6 +506,18 @@ function rankBalls(pokemon, palette) {
   else if (extra) {
     const replaceAt = picked.findLastIndex((row) => !keepsAnotherLargeRegion(row, picked, regions, extra.targetIndex));
     if (replaceAt >= 0) picked.splice(replaceAt, 1, extra);
+  }
+  const accent = accentBall(regions, picked);
+  if (accent && picked.length < MAX_BALLS) picked.push(accent);
+  else if (accent) {
+    const replaceAt = picked.findLastIndex((row) => {
+      if (!row.pair || keepsAnotherLargeRegion(row, picked, regions, accent.targetIndex)) return false;
+      return picked.some((other) => {
+        if (other === row || !other.pair) return false;
+        return hueGap(hueOf(labOf(row.pair.color.hex)), hueOf(labOf(other.pair.color.hex))) <= 28;
+      });
+    });
+    if (replaceAt >= 0) picked.splice(replaceAt, 1, accent);
   }
   return picked;
 }
