@@ -32,6 +32,14 @@ const CAST_FLOOR = 0.03;
 const CONFIRM_CHROMA = 0.05;
 const CONFIRM_SHARE = 0.04;
 const CONFIRM_GAP = 30;
+// A colour that covers most of the sprite is the body, not a shading cast.
+// A very pale tint qualifies when it is light; a darker tint has to be stronger.
+const BODY_SHARE = 0.4;
+const BODY_CHROMA = 0.025;
+const PALE_BODY_LIGHT = 0.8;
+const MUTED_BODY_CHROMA = 0.038;
+// A hue this faint is not stable enough to borrow a saturated swatch's score.
+const FAMILY_CHROMA = 0.034;
 
 const TYPE_THEMES = {
   normal: [],
@@ -109,7 +117,7 @@ function similarity(hexA, hexB) {
     const gap = hueGap(hueOf(left), hueOf(right));
     if (gap > HUE_GAP_START) sim *= Math.max(0, 1 - (gap - HUE_GAP_START) / 26);
     const pale = lowChroma / highChroma < 0.55;
-    if (pale && gap <= HUE_FAMILY) {
+    if (pale && gap <= HUE_FAMILY && lowChroma >= FAMILY_CHROMA) {
       // A pale or shaded colour keeps its hue against the saturated version.
       // Two solid colours are left to the distance above.
       const lightGap = Math.abs(left[0] - right[0]);
@@ -169,6 +177,18 @@ function regionsFor(palette) {
   return classifyRegions(regions);
 }
 
+function isBodyHue(region) {
+  if (region.share < BODY_SHARE || region.chroma < BODY_CHROMA) return false;
+  if (region.chroma >= MUTED_BODY_CHROMA) return true;
+  return labOf(region.hex)[0] >= PALE_BODY_LIGHT;
+}
+
+function confirmsHue(other, region) {
+  if (other === region || hueGap(region.hue, other.hue) > CONFIRM_GAP) return false;
+  if (isBodyHue(other)) return true;
+  return other.chroma >= CONFIRM_CHROMA && other.share >= CONFIRM_SHARE;
+}
+
 function classifyRegions(regions) {
   for (const region of regions) {
     const lab = labOf(region.hex);
@@ -176,6 +196,10 @@ function classifyRegions(regions) {
     region.hue = hueOf(lab);
   }
   for (const region of regions) {
+    if (isBodyHue(region)) {
+      region.cast = false;
+      continue;
+    }
     if (region.chroma < CAST_FLOOR) {
       region.cast = true;
       continue;
@@ -184,10 +208,7 @@ function classifyRegions(regions) {
       region.cast = false;
       continue;
     }
-    region.cast = !regions.some((other) => {
-      if (other === region || other.chroma < CONFIRM_CHROMA || other.share < CONFIRM_SHARE) return false;
-      return hueGap(region.hue, other.hue) <= CONFIRM_GAP;
-    });
+    region.cast = !regions.some((other) => confirmsHue(other, region));
   }
   return regions;
 }
