@@ -509,6 +509,35 @@ function visualScoreOrder(left, right) {
   return right.score - left.score || right.ballExplained - left.ballExplained || left.ball.name.localeCompare(right.ball.name);
 }
 
+// Area-weighted distance from the sprite's colours to the nearest shell colour.
+// Used only when the Master Ball fallback is tied on visual score.
+function shellProximity(regions, ball) {
+  let total = 0;
+  let weight = 0;
+  for (const region of regions) {
+    if (!region.hex || region.share <= 0) continue;
+    let nearest = Infinity;
+    for (const swatch of ball.palette) {
+      const left = labOf(region.hex);
+      const right = labOf(swatch.hex);
+      nearest = Math.min(nearest, Math.hypot(left[0] - right[0], left[1] - right[1], left[2] - right[2]));
+    }
+    if (!Number.isFinite(nearest)) continue;
+    total += region.share * nearest;
+    weight += region.share;
+  }
+  return weight ? total / weight : Infinity;
+}
+
+function fallbackOrder(left, right) {
+  return (
+    right.score - left.score ||
+    right.ballExplained - left.ballExplained ||
+    left.proximity - right.proximity ||
+    left.ball.name.localeCompare(right.ball.name)
+  );
+}
+
 function alternateClose(row, first) {
   if (first.score > 0) return row.score >= first.score * MASTER_ALT_CLOSE;
   return row.ballExplained >= first.ballExplained * MASTER_ALT_CLOSE;
@@ -523,16 +552,18 @@ function alternateClose(row, first) {
  * coverage cutoff. A second alternate is kept when it is close to the first.
  * That second slot still prefers a ball that covers a colour the first two
  * cards do not. If nothing clears the floor, the single best other ball by
- * visual score is shown anyway, and no second alternate is added. Forms that
- * already have another match, and forms that did not pick the Master Ball,
- * are left as they are.
+ * visual score is shown anyway, and no second alternate is added. A tie on
+ * that score is broken by how near the shell colours are to the sprite,
+ * weighted by area, and only then by name. Forms that already have another
+ * match, and forms that did not pick the Master Ball, are left as they are.
  */
 function masterAlternates(rows, picked, regions, types) {
   if (picked.length !== 1 || picked[0].ball.id !== "master-ball") return picked;
   const others = rows.filter((row) => row.ball.id !== "master-ball");
   const ordered = orderByColour(others.filter(passesMasterAlternate), types, visualScoreOrder);
   if (!ordered.length) {
-    const fallback = orderByColour(others, types, visualScoreOrder);
+    for (const row of others) row.proximity = shellProximity(regions, row.ball);
+    const fallback = orderByColour(others, types, fallbackOrder);
     return fallback.length ? [picked[0], fallback[0]] : picked;
   }
   const first = ordered[0];
