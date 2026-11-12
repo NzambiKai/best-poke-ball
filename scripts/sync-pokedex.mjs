@@ -12,7 +12,9 @@
  * that commit, and the same sha is recorded in data/source.json.
  *
  * Writes only under data/ and assets/. Reads ball ids from the hand-edited
- * files and never changes them. Raw responses are cached in .cache/.
+ * files and never changes them. A ball omitted from js/balls.js is not
+ * downloaded. That includes the Legends: Arceus balls. Raw responses are
+ * cached in .cache/.
  */
 import { spawn } from "node:child_process";
 import fs from "node:fs";

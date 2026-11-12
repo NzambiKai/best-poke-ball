@@ -13,10 +13,12 @@
  * matchable false keeps a ball out of the ranking. The Cherish Ball is
  * only shown for a form whose cherishOnly flag is true.
  *
- * Hisuian Poké, Great, and Ultra Balls are omitted: their shells repeat
- * the modern orange, blue-and-red, and yellow-and-slate balls. Strange
- * Ball is a fallback icon, not a look to recommend. Picnic toys and
- * held items are not catch balls.
+ * Omitted from the catalogue, so the sync does not download their icons:
+ * Hisuian Poké, Great, and Ultra Balls repeat the modern orange,
+ * blue-and-red, and yellow-and-slate shells. Feather, Wing, Jet, Leaden,
+ * Gigaton, Hisuian Heavy, and Origin are catchable only in Legends: Arceus.
+ * Strange Ball is a fallback icon, not a look to recommend. Picnic toys
+ * and held items are not catch balls.
  */
 
 const BALLS = [
@@ -272,69 +274,6 @@ const BALLS = [
     ],
     themes: [],
     matchable: false,
-  },
-  {
-    id: "lafeather-ball",
-    name: "Feather Ball",
-    palette: [
-      { hex: "#f2f7f8", weight: 0.46 },
-      { hex: "#2090b0", weight: 0.54 },
-    ],
-    themes: ["sky"],
-  },
-  {
-    id: "lawing-ball",
-    name: "Wing Ball",
-    palette: [
-      { hex: "#f4f8f8", weight: 0.64 },
-      { hex: "#7ec8d4", weight: 0.36 },
-    ],
-    themes: ["sky"],
-  },
-  {
-    id: "lajet-ball",
-    name: "Jet Ball",
-    palette: [
-      { hex: "#eef3f4", weight: 0.4 },
-      { hex: "#0a7098", weight: 0.6 },
-    ],
-    themes: ["sky"],
-  },
-  {
-    id: "laleaden-ball",
-    name: "Leaden Ball",
-    palette: [
-      { hex: "#2a2a2a", weight: 0.74 },
-      { hex: "#8a9090", weight: 0.26 },
-    ],
-    themes: ["metal"],
-  },
-  {
-    id: "lagigaton-ball",
-    name: "Gigaton Ball",
-    palette: [
-      { hex: "#242424", weight: 0.8 },
-      { hex: "#6a6464", weight: 0.2 },
-    ],
-    themes: ["metal"],
-  },
-  {
-    id: "laheavy-ball",
-    name: "Hisuian Heavy Ball",
-    palette: [
-      { hex: "#303030", weight: 0.7 },
-      { hex: "#8a8a96", weight: 0.3 },
-    ],
-    themes: ["metal"],
-  },
-  {
-    id: "laorigin-ball",
-    name: "Origin Ball",
-    palette: [
-      { hex: "#e04030", weight: 0.72 },
-      { hex: "#f0b0a8", weight: 0.28 },
-    ],
-    themes: [],
   },
 ];
 
