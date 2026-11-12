@@ -1,10 +1,10 @@
 {
-  "generatedAt": "2026-11-12T03:33:31.255Z",
+  "generatedAt": "2026-11-12T05:03:02.949Z",
   "pokeapi": "https://pokeapi.co/api/v2/",
   "spritesRepository": "https://github.com/PokeAPI/sprites",
   "spritesCommit": "1b3b7c0a538dd2226ae08d0d2f8955125075bbd4",
   "webpQuality": 90,
-  "webpTool": "cwebp",
+  "webpTool": "cwebp, dwebp",
   "speciesCount": 1025,
   "varietyCount": 1335,
   "formCount": 180,
@@ -75,5 +75,7 @@
     "spewpa-savanna",
     "spewpa-sun",
     "spewpa-tundra"
-  ]
+  ],
+  "paletteCount": 1614,
+  "paletteFailed": []
 }

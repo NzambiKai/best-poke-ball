@@ -18,7 +18,7 @@ The page is static and suited to GitHub Pages. Pokémon data and artwork are in 
 
 ## Sync the Pokédex
 
-[`scripts/sync-pokedex.mjs`](scripts/sync-pokedex.mjs) rebuilds `data/` and `assets/` from PokeAPI. It uses Node's built-in `fetch` and does not install packages. HOME sprites are converted to WebP at quality 90 with `cwebp` from the `webp` package. Ball item icons stay PNG.
+[`scripts/sync-pokedex.mjs`](scripts/sync-pokedex.mjs) rebuilds `data/` and `assets/` from PokeAPI. It uses Node's built-in `fetch` and does not install packages. HOME sprites are converted to WebP at quality 90 with `cwebp`. `dwebp`, from the same `webp` package, reads those files to write each form's colours into `data/palettes.json`. Ball item icons stay PNG.
 
 ```bash
 # Debian/Ubuntu
@@ -26,7 +26,7 @@ sudo apt-get install webp
 node scripts/sync-pokedex.mjs
 ```
 
-The script writes only `data/` and `assets/`. It reads ball ids from [`js/balls.js`](js/balls.js), [`js/sample-cards.js`](js/sample-cards.js), and [`js/form-rules.js`](js/form-rules.js), and it always downloads the Poké Ball icon used as the favicon. Cached responses live in `.cache/`, which is gitignored. Re-running does not change the hand-edited rule list, ball catalog, or sample cards.
+The script resolves the current PokeAPI sprites commit first, then downloads ball icons from that commit and records the sha in `data/source.json`. It writes only `data/` and `assets/`. It reads ball ids from [`js/balls.js`](js/balls.js), [`js/sample-cards.js`](js/sample-cards.js), and [`js/form-rules.js`](js/form-rules.js), and it always downloads the Poké Ball icon used as the favicon. A HOME sprite that is already in `assets/` is left in place. Cached responses live in `.cache/`, which is gitignored. Re-running does not change the hand-edited rule list, ball catalogue, or sample cards.
 
 ## What's in this mockup
 
@@ -41,7 +41,7 @@ The script writes only `data/` and `assets/`. It reads ball ids from [`js/balls.
 
 ## Matching
 
-Not built yet. [`js/balls.js`](js/balls.js) is a stub for a later hand-editable list of balls with colours and theme tags. The page does not read that file. The cards on the page, including the ones under each evolution and each variant, are placeholder copy in [`js/sample-cards.js`](js/sample-cards.js), keyed by form slug. A form with no entry there shows a note that matching comes later.
+Not on the page yet. [`js/balls.js`](js/balls.js) is the hand-edited main-series catalogue: each ball has shell colours and theme tags, and the Cherish Ball is marked so the scorer will not recommend it. [`data/palettes.json`](data/palettes.json) holds the colours read from each form's regular HOME sprite, plus the Pokédex colour for a species' default form. The cards on the page, including the ones under each evolution and each variant, are still placeholder copy in [`js/sample-cards.js`](js/sample-cards.js). A form with no entry there shows a note that matching comes later.
 
 The exception is a form whose `cherishOnly` flag is true in [`js/form-rules.js`](js/form-rules.js). Rules on that list cover main-series games only. Pokémon GO is out of scope. A Pokémon HOME transfer counts only when its origin is a main-series game. If that exact form has only ever been released in a Cherish Ball, the page shows one Cherish Ball card everywhere balls appear: the selected Pokémon, its evolution stage, and its variant card. The flag is per form. Original Color Magearna, Zarude, and Dada Zarude are Cherish-only. Standard Magearna still shows placeholder cards, because the Legends: Z-A side mission gifts one in a Poké Ball. The seeded list needs verifying.
 

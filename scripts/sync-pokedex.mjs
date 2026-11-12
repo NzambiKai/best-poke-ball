@@ -5,7 +5,11 @@
  *
  * Uses Node's built-in fetch only. HOME sprites are converted with cwebp
  * from the webp package (Debian/Ubuntu: sudo apt-get install webp) at
- * quality 90. Ball item icons stay PNG.
+ * quality 90. dwebp, from the same package, reads those WebP files to
+ * write data/palettes.json. Ball item icons stay PNG.
+ *
+ * The sprites commit is resolved first. Ball icons are downloaded from
+ * that commit, and the same sha is recorded in data/source.json.
  *
  * Writes only under data/ and assets/. Reads ball ids from the hand-edited
  * files and never changes them. Raw responses are cached in .cache/.
@@ -114,17 +118,234 @@ async function listAll(resource) {
   return page.results;
 }
 
-function requireCwebp() {
+function requireTool(bin) {
   return new Promise((resolve, reject) => {
-    const child = spawn("cwebp", ["-version"], { stdio: "ignore" });
-    child.on("error", () => {
-      reject(new Error("cwebp is required. Install the webp package (Debian/Ubuntu: sudo apt-get install webp)."));
-    });
+    const child = spawn(bin, ["-version"], { stdio: "ignore" });
+    const fail = () => {
+      reject(new Error(`${bin} is required. Install the webp package (Debian/Ubuntu: sudo apt-get install webp).`));
+    };
+    child.on("error", fail);
     child.on("close", (code) => {
       if (code === 0) resolve();
-      else reject(new Error("cwebp is required. Install the webp package (Debian/Ubuntu: sudo apt-get install webp)."));
+      else fail();
     });
   });
+}
+
+// Pixels below this OKLab chroma are black, gray, or white rather than a hue.
+const NEUTRAL_CHROMA = 0.03;
+const BLACK_L = 0.32;
+const WHITE_L = 0.85;
+const MERGE_DISTANCE = 0.08;
+const MIN_COLOR_SHARE = 0.04;
+const MAX_COLORS = 4;
+const ALPHA_MIN = 170;
+const SAMPLE_STEP = 2;
+
+function srgbToLinear(channel) {
+  const value = channel / 255;
+  return value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4;
+}
+
+function oklabFromRgb(r, g, b) {
+  const red = srgbToLinear(r);
+  const green = srgbToLinear(g);
+  const blue = srgbToLinear(b);
+  const l = Math.cbrt(0.4122214708 * red + 0.5363325363 * green + 0.0514459929 * blue);
+  const m = Math.cbrt(0.2119034982 * red + 0.6806995451 * green + 0.1073969566 * blue);
+  const s = Math.cbrt(0.0883024619 * red + 0.2817188376 * green + 0.6299787005 * blue);
+  return [
+    0.2104542553 * l + 0.793617785 * m - 0.0040720468 * s,
+    1.9779984951 * l - 2.428592205 * m + 0.4505937099 * s,
+    0.0259040371 * l + 0.7827717662 * m - 0.808675766 * s,
+  ];
+}
+
+function rgbHex(r, g, b) {
+  const channel = (value) => Math.max(0, Math.min(255, Math.round(value))).toString(16).padStart(2, "0");
+  return `#${channel(r)}${channel(g)}${channel(b)}`;
+}
+
+function round3(value) {
+  return Math.round(value * 1000) / 1000;
+}
+
+function dwebpPam(webpPath) {
+  return new Promise((resolve, reject) => {
+    const child = spawn("dwebp", [webpPath, "-pam", "-o", "-"], { stdio: ["ignore", "pipe", "pipe"] });
+    const chunks = [];
+    let err = "";
+    child.stdout.on("data", (chunk) => chunks.push(chunk));
+    child.stderr.on("data", (chunk) => {
+      err += chunk;
+    });
+    child.on("error", () => reject(new Error(`dwebp failed for ${webpPath}`)));
+    child.on("close", (code) => {
+      if (code === 0) resolve(Buffer.concat(chunks));
+      else reject(new Error(`dwebp failed for ${webpPath}: ${err}`));
+    });
+  });
+}
+
+function parsePam(buffer) {
+  const marker = buffer.indexOf("ENDHDR\n");
+  if (marker < 0) throw new Error("PAM header missing");
+  const header = buffer.slice(0, marker).toString("ascii");
+  let width = 0;
+  let height = 0;
+  let depth = 0;
+  for (const line of header.split("\n")) {
+    const [key, value] = line.split(/\s+/);
+    if (key === "WIDTH") width = Number(value);
+    else if (key === "HEIGHT") height = Number(value);
+    else if (key === "DEPTH") depth = Number(value);
+  }
+  if (!width || !height || depth !== 4) throw new Error(`Unexpected PAM header ${width}x${height} depth ${depth}`);
+  return { width, height, body: buffer.slice(marker + "ENDHDR\n".length) };
+}
+
+async function extractPalette(webpPath) {
+  const { width, height, body } = parsePam(await dwebpPam(webpPath));
+  let opaque = 0;
+  const neutralPx = {
+    black: { n: 0, r: 0, g: 0, b: 0 },
+    gray: { n: 0, r: 0, g: 0, b: 0 },
+    white: { n: 0, r: 0, g: 0, b: 0 },
+  };
+  const buckets = new Map();
+  for (let y = 0; y < height; y += SAMPLE_STEP) {
+    for (let x = 0; x < width; x += SAMPLE_STEP) {
+      const index = (y * width + x) * 4;
+      const r = body[index];
+      const g = body[index + 1];
+      const b = body[index + 2];
+      const a = body[index + 3];
+      if (a < ALPHA_MIN) continue;
+      opaque += 1;
+      const lab = oklabFromRgb(r, g, b);
+      const chroma = Math.hypot(lab[1], lab[2]);
+      if (chroma < NEUTRAL_CHROMA) {
+        const bucket = lab[0] < BLACK_L ? neutralPx.black : lab[0] > WHITE_L ? neutralPx.white : neutralPx.gray;
+        bucket.n += 1;
+        bucket.r += r;
+        bucket.g += g;
+        bucket.b += b;
+        continue;
+      }
+      const key = `${Math.round(lab[0] * 16)},${Math.round(lab[1] * 16)},${Math.round(lab[2] * 16)}`;
+      let bucket = buckets.get(key);
+      if (!bucket) {
+        bucket = { n: 0, r: 0, g: 0, b: 0, L: 0, a: 0, b2: 0 };
+        buckets.set(key, bucket);
+      }
+      bucket.n += 1;
+      bucket.r += r;
+      bucket.g += g;
+      bucket.b += b;
+      bucket.L += lab[0];
+      bucket.a += lab[1];
+      bucket.b2 += lab[2];
+    }
+  }
+  if (!opaque) return null;
+
+  const clusters = [...buckets.values()]
+    .map((bucket) => ({
+      n: bucket.n,
+      r: bucket.r / bucket.n,
+      g: bucket.g / bucket.n,
+      b: bucket.b / bucket.n,
+      L: bucket.L / bucket.n,
+      a: bucket.a / bucket.n,
+      b2: bucket.b2 / bucket.n,
+    }))
+    .sort((left, right) => right.n - left.n);
+
+  const merged = [];
+  for (const cluster of clusters) {
+    let host = null;
+    let nearest = MERGE_DISTANCE;
+    for (const kept of merged) {
+      const distance = Math.hypot(kept.L - cluster.L, kept.a - cluster.a, kept.b2 - cluster.b2);
+      if (distance < nearest) {
+        nearest = distance;
+        host = kept;
+      }
+    }
+    if (!host) {
+      merged.push({ ...cluster });
+      continue;
+    }
+    const count = host.n + cluster.n;
+    host.r = (host.r * host.n + cluster.r * cluster.n) / count;
+    host.g = (host.g * host.n + cluster.g * cluster.n) / count;
+    host.b = (host.b * host.n + cluster.b * cluster.n) / count;
+    host.L = (host.L * host.n + cluster.L * cluster.n) / count;
+    host.a = (host.a * host.n + cluster.a * cluster.n) / count;
+    host.b2 = (host.b2 * host.n + cluster.b2 * cluster.n) / count;
+    host.n = count;
+  }
+  merged.sort((left, right) => right.n - left.n);
+
+  const colors = [];
+  for (const cluster of merged) {
+    const share = cluster.n / opaque;
+    if (share < MIN_COLOR_SHARE) continue;
+    colors.push({ hex: rgbHex(cluster.r, cluster.g, cluster.b), share: round3(share) });
+    if (colors.length === MAX_COLORS) break;
+  }
+  const neutral = {};
+  for (const name of ["black", "gray", "white"]) {
+    const bucket = neutralPx[name];
+    neutral[name] = round3(bucket.n / opaque);
+    if (bucket.n > 0) neutral[`${name}Hex`] = rgbHex(bucket.r / bucket.n, bucket.g / bucket.n, bucket.b / bucket.n);
+  }
+  return { colors, neutral };
+}
+
+async function writePalettes(entries, speciesColorFor) {
+  const found = new Map();
+  const failed = [];
+  await mapPool(entries, 8, async (entry, index) => {
+    if (index > 0 && index % 200 === 0) process.stderr.write(`  palettes ${index}/${entries.length}\n`);
+    try {
+      const palette = await extractPalette(path.join(ROOT, entry.sprites.home));
+      if (!palette || (palette.colors.length === 0 && palette.neutral.black + palette.neutral.gray + palette.neutral.white < 0.2)) {
+        failed.push(entry.slug);
+        return;
+      }
+      const speciesColor = speciesColorFor(entry);
+      if (speciesColor) palette.speciesColor = speciesColor;
+      found.set(entry.slug, palette);
+    } catch (error) {
+      failed.push(entry.slug);
+      process.stderr.write(`  palette failed ${entry.slug}: ${error.message}\n`);
+    }
+  });
+  const ordered = {};
+  for (const entry of entries) {
+    if (found.has(entry.slug)) ordered[entry.slug] = found.get(entry.slug);
+  }
+  fs.writeFileSync(outputPath("data/palettes.json"), `${JSON.stringify(ordered, null, 2)}\n`);
+  return failed.sort();
+}
+
+async function resolveSpritesCommit() {
+  const response = await fetchResponse("https://api.github.com/repos/PokeAPI/sprites/commits/master");
+  if (!response.ok) throw new Error(`${response.status} sprites commit`);
+  const commit = await response.json();
+  if (!commit.sha || !/^[0-9a-f]{40}$/.test(commit.sha)) throw new Error("Unexpected sprites commit sha");
+  return commit.sha;
+}
+
+async function downloadBallIcons(commitSha) {
+  const icons = ballIds();
+  process.stderr.write(`Downloading ${icons.length} ball icons from ${commitSha.slice(0, 12)}\n`);
+  for (const id of icons) {
+    const url = `https://raw.githubusercontent.com/PokeAPI/sprites/${commitSha}/sprites/items/${id}.png`;
+    const dest = outputPath(`assets/items/${id}.png`);
+    await downloadFile(url, dest, true);
+  }
 }
 
 function convertWebp(pngPath, assetRel) {
@@ -146,8 +367,8 @@ function convertWebp(pngPath, assetRel) {
   });
 }
 
-async function downloadFile(url, dest) {
-  if (fs.existsSync(dest) && fs.statSync(dest).size > 0) return;
+async function downloadFile(url, dest, fresh = false) {
+  if (!fresh && fs.existsSync(dest) && fs.statSync(dest).size > 0) return;
   const response = await fetchResponse(url);
   if (!response.ok) throw new Error(`${response.status} ${url}`);
   const bytes = Buffer.from(await response.arrayBuffer());
@@ -182,7 +403,10 @@ function spriteRecord(downloads, home) {
 }
 
 async function main() {
-  await requireCwebp();
+  await requireTool("cwebp");
+  await requireTool("dwebp");
+  const spritesCommit = await resolveSpritesCommit();
+  process.stderr.write(`Sprites commit ${spritesCommit}\n`);
   const downloads = new Map();
   const omittedNoHome = new Set();
   const omittedGo = new Set();
@@ -205,6 +429,7 @@ async function main() {
       dex: dex.entry_number,
       varieties: species.varieties,
       chain: species.evolution_chain.url,
+      color: species.color?.name || null,
     };
     speciesBySlug.set(species.name, record);
     national.push(record);
@@ -373,31 +598,28 @@ async function main() {
   const spriteJobs = [...downloads.entries()];
   await mapPool(spriteJobs, 10, async ([asset, url], index) => {
     if (index > 0 && index % 250 === 0) process.stderr.write(`  sprites ${index}/${spriteJobs.length}\n`);
+    const dest = outputPath(asset);
+    if (fs.existsSync(dest) && fs.statSync(dest).size > 0) return;
     const rel = asset.slice("assets/home/".length).replace(/\.webp$/, ".png");
     const cached = path.join(ROOT, ".cache", "sprites", rel);
     await downloadFile(url, cached);
     await convertWebp(cached, asset);
   });
 
-  const icons = ballIds();
-  process.stderr.write(`Downloading ${icons.length} ball icons\n`);
-  for (const id of icons) {
-    const url = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/${id}.png`;
-    const dest = outputPath(`assets/items/${id}.png`);
-    await downloadFile(url, dest);
-  }
+  await downloadBallIcons(spritesCommit);
 
-  const commitResponse = await fetchResponse("https://api.github.com/repos/PokeAPI/sprites/commits/master");
-  if (!commitResponse.ok) throw new Error(`${commitResponse.status} sprites commit`);
-  const commit = await commitResponse.json();
+  process.stderr.write(`Reading colours from ${entries.length} HOME sprites\n`);
+  const paletteFailed = await writePalettes(entries, (entry) =>
+    entry.isDefault ? speciesBySlug.get(entry.speciesSlug)?.color || null : null
+  );
 
   const source = {
     generatedAt: new Date().toISOString(),
     pokeapi: `${API}/`,
     spritesRepository: "https://github.com/PokeAPI/sprites",
-    spritesCommit: commit.sha,
+    spritesCommit,
     webpQuality: Number(WEBP_QUALITY),
-    webpTool: "cwebp",
+    webpTool: "cwebp, dwebp",
     speciesCount: national.length,
     varietyCount: entries.filter((entry) => entry.kind === "variety").length,
     formCount: entries.filter((entry) => entry.kind === "form").length,
@@ -407,6 +629,8 @@ async function main() {
     goDenylist: [...GO_DENYLIST].sort(),
     omittedGo: [...omittedGo].sort(),
     omittedNoHome: [...omittedNoHome].sort(),
+    paletteCount: entries.length - paletteFailed.length,
+    paletteFailed,
   };
 
   fs.mkdirSync(outputPath("data"), { recursive: true });
@@ -419,7 +643,11 @@ async function main() {
   process.stderr.write(`Omitted with no HOME art: ${source.omittedNoHome.join(", ")}\n`);
 }
 
-main().catch((error) => {
-  console.error(error);
-  process.exit(1);
-});
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main().catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
+}
+
+export { extractPalette, oklabFromRgb };
