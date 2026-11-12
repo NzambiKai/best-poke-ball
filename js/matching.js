@@ -522,14 +522,19 @@ function alternateClose(row, first) {
  * so a runner-up can be a partial shell match or a patch just under the
  * coverage cutoff. A second alternate is kept when it is close to the first.
  * That second slot still prefers a ball that covers a colour the first two
- * cards do not. Forms that already have another match, and forms that did
- * not pick the Master Ball, are left as they are.
+ * cards do not. If nothing clears the floor, the single best other ball by
+ * visual score is shown anyway, and no second alternate is added. Forms that
+ * already have another match, and forms that did not pick the Master Ball,
+ * are left as they are.
  */
 function masterAlternates(rows, picked, regions, types) {
   if (picked.length !== 1 || picked[0].ball.id !== "master-ball") return picked;
-  const pool = rows.filter((row) => row.ball.id !== "master-ball" && passesMasterAlternate(row));
-  const ordered = orderByColour(pool, types, visualScoreOrder);
-  if (!ordered.length) return picked;
+  const others = rows.filter((row) => row.ball.id !== "master-ball");
+  const ordered = orderByColour(others.filter(passesMasterAlternate), types, visualScoreOrder);
+  if (!ordered.length) {
+    const fallback = orderByColour(others, types, visualScoreOrder);
+    return fallback.length ? [picked[0], fallback[0]] : picked;
+  }
   const first = ordered[0];
   const close = ordered.slice(1).filter((row) => alternateClose(row, first));
   const held = [picked[0], first];
