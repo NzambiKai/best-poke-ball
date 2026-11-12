@@ -2,9 +2,9 @@
 
 /**
  * Layout behaviour only: search, the selected Pokémon, the evolution line,
- * the shiny artwork switch, and the variant section. Ball cards are
- * placeholder copy from js/evolutions.js and js/variants.js. Per-form
- * obtainability comes from rulesFor() in js/form-rules.js.
+ * the shiny artwork switch, and the variant section. Placeholder ball
+ * cards come from js/sample-cards.js. Per-form obtainability comes from
+ * rulesFor() in js/form-rules.js.
  * Matching is a later pass. See js/balls.js, which this page does not read.
  */
 
@@ -209,7 +209,7 @@ function ballPlate(file) {
 
 function cardsFor(pokemon) {
   if (rulesFor(pokemon.slug).cherishOnly) return [CHERISH_CARD];
-  return (SAMPLE_CARDS[pokemon.id] || []).slice(0, 3);
+  return (SAMPLE_CARDS[pokemon.slug] || []).slice(0, 3);
 }
 
 function featuredCard(card, index) {
