@@ -19,14 +19,15 @@ The page is static and suited to GitHub Pages. Pokémon art loads from the PokeA
 ## What's in this mockup
 
 - Header and a short introduction
-- Search box with a static autocomplete of seven sample Pokémon
+- Search box with a static autocomplete of the sample families
 - Selected Pokémon panel with Pokémon HOME art and the PokeAPI name
-- Three hard-coded ball cards (image, name, and a sample reason)
+- Three hard-coded ball cards for the selected Pokémon
+- Evolution line for that family, with up to three sample ball cards on every stage (a straight line, Eevee's branches, or a single stage such as Lapras)
 - Fan-project disclaimer in the footer
 
 ## Matching
 
-Not built yet. [`js/balls.js`](js/balls.js) is a stub for a later hand-editable list of balls with colours and theme tags. The page does not read that file. The cards in `index.html` are placeholder copy.
+Not built yet. [`js/balls.js`](js/balls.js) is a stub for a later hand-editable list of balls with colours and theme tags. The page does not read that file. The cards on the page, including the ones under each evolution, are placeholder copy in [`js/evolutions.js`](js/evolutions.js).
 
 ## Sources
 
