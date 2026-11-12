@@ -2,9 +2,12 @@
  * Dev-only contact sheet for ball picks. Not loaded by the site.
  *
  *   node scripts/review-sheet.mjs [out-dir]
+ *   node scripts/review-sheet.mjs --shiny [out-dir]
  *
  * Writes sheet-1.png, sheet-2.png, ... and picks.txt. Each row is the HOME
  * sprite, the extracted palette, and the balls js/matching.js chose.
+ * --shiny uses the shiny sprite and the shiny palette. Forms with no shiny
+ * art are listed in missing.txt and left off the sheet.
  */
 import { spawnSync } from "node:child_process";
 import fs from "node:fs";
@@ -13,7 +16,9 @@ import vm from "node:vm";
 import { fileURLToPath } from "node:url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const outDir = path.resolve(process.argv[2] || "/tmp/review-sheets");
+const args = process.argv.slice(2);
+const shinyMode = args.includes("--shiny");
+const outDir = path.resolve(args.find((arg) => !arg.startsWith("--")) || "/tmp/review-sheets");
 fs.mkdirSync(outDir, { recursive: true });
 
 const REQUIRED = [
@@ -43,24 +48,30 @@ const palettes = JSON.parse(fs.readFileSync(path.join(ROOT, "data/palettes.json"
 const bySlug = Object.fromEntries(pokemon.map((mon) => [mon.slug, mon]));
 const slugs = [];
 const seen = new Set();
+const missingShiny = [];
 for (const slug of REQUIRED) {
   if (seen.has(slug) || !bySlug[slug] || !palettes[slug]) continue;
   seen.add(slug);
+  if (shinyMode && !palettes[slug].shiny) {
+    missingShiny.push(slug);
+    continue;
+  }
   slugs.push(slug);
 }
 
 const rows = [];
-const sandbox = { bySlug, palettes, slugs, rows, console };
+const sandbox = { bySlug, palettes, slugs, rows, shinyMode, console };
 vm.runInNewContext(`${src}
 for (const slug of slugs) {
   const mon = bySlug[slug];
-  const palette = palettes[slug];
+  const stored = palettes[slug];
+  const palette = shinyMode ? stored.shiny : stored.regular;
   const regions = regionsFor(palette);
   const ranked = rankBalls(mon, palette);
   rows.push({
     slug,
-    name: mon.name,
-    sprite: mon.sprites.home,
+    name: shinyMode ? "Shiny " + mon.name : mon.name,
+    sprite: shinyMode ? mon.sprites.shiny : mon.sprites.home,
     colors: (palette.colors || []).map((color) => ({ hex: color.hex, share: color.share })),
     neutral: palette.neutral || {},
     picks: ranked.map((row) => {
@@ -84,6 +95,7 @@ for (const row of rows) {
   }
 }
 fs.writeFileSync(path.join(outDir, "picks.txt"), rows.map((row) => `${row.slug}\t${row.picks.map((pick) => `${pick.name}${pick.loose ? "*" : ""} ${pick.score}`).join(", ")}`).join("\n") + "\n");
+if (shinyMode) fs.writeFileSync(path.join(outDir, "missing.txt"), missingShiny.join("\n") + (missingShiny.length ? "\n" : ""));
 fs.writeFileSync(path.join(outDir, "flags.txt"), flags.join("\n") + (flags.length ? "\n" : ""));
 fs.writeFileSync(path.join(outDir, "rows.json"), JSON.stringify(rows));
 
@@ -97,5 +109,5 @@ if (drawer.status !== 0) {
   process.exit(drawer.status || 1);
 }
 process.stdout.write(drawer.stdout);
-console.log(`rows ${rows.length}, cast-only flags ${flags.length}`);
+console.log(`rows ${rows.length}, cast-only flags ${flags.length}${shinyMode ? `, missing shiny ${missingShiny.length}` : ""}`);
 if (flags.length) console.log(flags.join("\n"));

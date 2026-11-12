@@ -194,8 +194,15 @@ function ballPlate(file) {
   return plate;
 }
 
+function paletteFor(pokemon, treatment) {
+  const entry = catalog.palettes.get(pokemon.slug);
+  if (!entry) return null;
+  if (treatment === "shiny" && pokemon.sprites.shiny && entry.shiny) return entry.shiny;
+  return entry.regular;
+}
+
 function cardsFor(pokemon) {
-  return matchBalls(pokemon, catalog.palettes.get(pokemon.slug));
+  return matchBalls(pokemon, paletteFor(pokemon, shinyTreatment(pokemon)));
 }
 
 function ballColumns(count) {
@@ -251,9 +258,10 @@ function renderFeaturedBalls(pokemon) {
     return;
   }
   featuredBalls.replaceChildren(...cards.map((card, index) => featuredCard(card, index, cards.length)));
+  const shinyMatch = shinyTreatment(pokemon) === "shiny" && pokemon.sprites.shiny;
   resultsNote.textContent = cards[0]?.cherish
     ? "Only ever available in a Cherish Ball via events."
-    : `Matched to ${pokemon.name} on colour.`;
+    : `Matched to ${shinyMatch ? "shiny " : ""}${pokemon.name} on colour.`;
 }
 
 function evolutionArrow() {
@@ -662,8 +670,13 @@ shinyToggle.checked = shinyOn;
 shinyToggle.toggleAttribute("checked", shinyOn);
 shinyToggle.addEventListener("change", () => {
   shinyOn = shinyToggle.checked;
-  rememberLocation(catalog.bySlug.get(currentSlug));
+  const pokemon = catalog.bySlug.get(currentSlug);
+  rememberLocation(pokemon);
   refreshHomeArt();
+  if (!pokemon) return;
+  renderFeaturedBalls(pokemon);
+  renderEvolution(pokemon);
+  renderVariants(pokemon);
 });
 
 loadCatalog()

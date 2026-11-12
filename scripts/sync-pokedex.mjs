@@ -7,7 +7,8 @@
  * Uses Node's built-in fetch only. HOME sprites are converted with cwebp
  * from the webp package (Debian/Ubuntu: sudo apt-get install webp) at
  * quality 90. dwebp, from the same package, reads those WebP files to
- * write data/palettes.json. Ball item icons stay PNG.
+ * write data/palettes.json. Each form stores a regular palette and, when a
+ * shiny HOME sprite is bundled, a shiny palette beside it. Ball item icons stay PNG.
  *
  * The sprites commit is resolved first. Ball icons are downloaded from
  * that commit, and the same sha is recorded in data/source.json.
@@ -316,31 +317,70 @@ async function extractPalette(webpPath) {
   return { colors, neutral };
 }
 
-async function writePalettes(entries, speciesColorFor) {
+function paletteUsable(palette) {
+  if (!palette) return false;
+  const neutral = palette.neutral || {};
+  const cover = (neutral.black || 0) + (neutral.gray || 0) + (neutral.white || 0);
+  return (palette.colors || []).length > 0 || cover >= 0.2;
+}
+
+function storedRegular(stored) {
+  if (!stored) return null;
+  if (stored.regular) return stored.regular;
+  if (stored.colors) return stored;
+  return null;
+}
+
+async function writePalettes(entries, { speciesColorFor, previous }) {
   const found = new Map();
   const failed = [];
+  const shinyFailed = [];
+  const shinyMissing = [];
   await mapPool(entries, 8, async (entry, index) => {
     if (index > 0 && index % 200 === 0) process.stderr.write(`  palettes ${index}/${entries.length}\n`);
-    try {
-      const palette = await extractPalette(path.join(ROOT, entry.sprites.home));
-      if (!palette || (palette.colors.length === 0 && palette.neutral.black + palette.neutral.gray + palette.neutral.white < 0.2)) {
+    let regular = storedRegular(previous?.[entry.slug]);
+    if (!regular) {
+      try {
+        regular = await extractPalette(path.join(ROOT, entry.sprites.home));
+      } catch (error) {
+        failed.push(entry.slug);
+        process.stderr.write(`  palette failed ${entry.slug}: ${error.message}\n`);
+        return;
+      }
+      if (!paletteUsable(regular)) {
         failed.push(entry.slug);
         return;
       }
       const speciesColor = speciesColorFor(entry);
-      if (speciesColor) palette.speciesColor = speciesColor;
-      found.set(entry.slug, palette);
-    } catch (error) {
-      failed.push(entry.slug);
-      process.stderr.write(`  palette failed ${entry.slug}: ${error.message}\n`);
+      if (speciesColor) regular.speciesColor = speciesColor;
     }
+    let shiny = null;
+    const shinyRel = entry.sprites && entry.sprites.shiny;
+    if (!shinyRel || !fs.existsSync(path.join(ROOT, shinyRel))) {
+      shinyMissing.push(entry.slug);
+    } else {
+      try {
+        const extracted = await extractPalette(path.join(ROOT, shinyRel));
+        if (paletteUsable(extracted)) shiny = extracted;
+        else shinyFailed.push(entry.slug);
+      } catch (error) {
+        shinyFailed.push(entry.slug);
+        process.stderr.write(`  shiny palette failed ${entry.slug}: ${error.message}\n`);
+      }
+    }
+    found.set(entry.slug, { regular, shiny });
   });
   const ordered = {};
   for (const entry of entries) {
     if (found.has(entry.slug)) ordered[entry.slug] = found.get(entry.slug);
   }
   fs.writeFileSync(outputPath("data/palettes.json"), `${JSON.stringify(ordered, null, 2)}\n`);
-  return failed.sort();
+  return {
+    failed: failed.sort(),
+    shinyFailed: shinyFailed.sort(),
+    shinyMissing: shinyMissing.sort(),
+    shinyCount: [...found.values()].filter((entry) => entry.shiny).length,
+  };
 }
 
 async function resolveSpritesCommit() {
@@ -622,9 +662,11 @@ async function main() {
   await downloadBallIcons(spritesCommit);
 
   process.stderr.write(`Reading colours from ${entries.length} HOME sprites\n`);
-  const paletteFailed = await writePalettes(entries, (entry) =>
-    entry.isDefault ? speciesBySlug.get(entry.speciesSlug)?.color || null : null
-  );
+  const paletteResult = await writePalettes(entries, {
+    speciesColorFor: (entry) => (entry.isDefault ? speciesBySlug.get(entry.speciesSlug)?.color || null : null),
+    previous: null,
+  });
+  const paletteFailed = paletteResult.failed;
 
   const source = {
     generatedAt: new Date().toISOString(),
@@ -642,8 +684,12 @@ async function main() {
     goDenylist: [...GO_DENYLIST].sort(),
     omittedGo: [...omittedGo].sort(),
     omittedNoHome: [...omittedNoHome].sort(),
+    paletteVersion: 2,
     paletteCount: entries.length - paletteFailed.length,
     paletteFailed,
+    shinyPaletteCount: paletteResult.shinyCount,
+    shinyPaletteFailed: paletteResult.shinyFailed,
+    shinyPaletteMissing: paletteResult.shinyMissing,
   };
 
   fs.mkdirSync(outputPath("data"), { recursive: true });
@@ -660,13 +706,20 @@ async function regeneratePalettes() {
   const entries = JSON.parse(fs.readFileSync(path.join(ROOT, "data/pokemon.json"), "utf8"));
   const previous = JSON.parse(fs.readFileSync(path.join(ROOT, "data/palettes.json"), "utf8"));
   process.stderr.write(`Reading colours from ${entries.length} HOME sprites\n`);
-  const failed = await writePalettes(entries, (entry) => previous[entry.slug]?.speciesColor || null);
+  const result = await writePalettes(entries, {
+    speciesColorFor: (entry) => storedRegular(previous[entry.slug])?.speciesColor || null,
+    previous,
+  });
   const sourcePath = path.join(ROOT, "data/source.json");
   const source = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
-  source.paletteCount = entries.length - failed.length;
-  source.paletteFailed = failed;
+  source.paletteVersion = 2;
+  source.paletteCount = entries.length - result.failed.length;
+  source.paletteFailed = result.failed;
+  source.shinyPaletteCount = result.shinyCount;
+  source.shinyPaletteFailed = result.shinyFailed;
+  source.shinyPaletteMissing = result.shinyMissing;
   fs.writeFileSync(sourcePath, `${JSON.stringify(source, null, 2)}\n`);
-  process.stderr.write(`Palettes ${source.paletteCount}, failed ${failed.length}\n`);
+  process.stderr.write(`Palettes ${source.paletteCount}, failed ${result.failed.length}, shiny ${result.shinyCount}, shiny missing ${result.shinyMissing.length}\n`);
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
