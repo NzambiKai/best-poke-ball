@@ -29,7 +29,7 @@ const WEBP_QUALITY = "90";
 // A listed slug is skipped even when PokeAPI has a HOME sprite for it.
 const GO_DENYLIST = new Set();
 
-const HAND_EDITED = ["js/balls.js", "js/sample-cards.js", "js/form-rules.js"];
+const HAND_EDITED = ["js/balls.js", "js/overrides.js", "js/form-rules.js"];
 
 function outputPath(rel) {
   const abs = path.resolve(ROOT, rel);

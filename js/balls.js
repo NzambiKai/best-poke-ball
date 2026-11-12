@@ -3,9 +3,8 @@
 /**
  * Main-series Poké Ball catalogue. Hand-edited.
  *
- * The scorer reads this list. It is not a list of per-Pokémon picks.
- * Until that scorer is wired up, the page still shows the placeholder
- * cards in js/sample-cards.js and does not load this file.
+ * The scorer in js/matching.js reads this list. It is not a list of
+ * per-Pokémon picks. Overrides, when any exist, live in js/overrides.js.
  *
  * id is the PokeAPI item slug and the file name in assets/items/.
  * palette is the shell a person sees: the shared black outline and the
@@ -94,7 +93,7 @@ const BALLS = [
       { hex: "#7b6b63", weight: 0.24 },
       { hex: "#de4a3a", weight: 0.3 },
     ],
-    themes: [],
+    themes: ["earth"],
   },
   {
     id: "lure-ball",

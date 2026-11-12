@@ -3,9 +3,8 @@
 /**
  * Layout behaviour only: search, the selected Pokémon, the evolution line,
  * the shiny artwork switch, and the variant section. Pokédex data comes
- * from js/catalog.js. Placeholder ball cards come from js/sample-cards.js.
+ * from js/catalog.js. Ball cards come from matchBalls() in js/matching.js.
  * Per-form obtainability comes from rulesFor() in js/form-rules.js.
- * Matching is a later pass. See js/balls.js, which this page does not read.
  */
 
 const ITEM_SPRITE = "assets/items/";
@@ -196,8 +195,7 @@ function ballPlate(file) {
 }
 
 function cardsFor(pokemon) {
-  if (rulesFor(pokemon.slug).cherishOnly) return [CHERISH_CARD];
-  return (SAMPLE_CARDS[pokemon.slug] || []).slice(0, 3);
+  return matchBalls(pokemon, catalog.palettes.get(pokemon.slug));
 }
 
 function featuredCard(card, index) {
@@ -219,7 +217,7 @@ function featuredCard(card, index) {
   heading.className = "h5 mb-0";
   const hidden = document.createElement("span");
   hidden.className = "visually-hidden";
-  hidden.textContent = card.cherish ? "Event only: " : `Sample result ${index + 1}: `;
+  hidden.textContent = card.cherish ? "Event only: " : `Match ${index + 1}: `;
   heading.append(hidden, document.createTextNode(card.name));
   if (card.cherish) {
     const pill = document.createElement("span");
@@ -243,13 +241,13 @@ function renderFeaturedBalls(pokemon) {
   const cards = cardsFor(pokemon);
   if (cards.length === 0) {
     featuredBalls.replaceChildren();
-    resultsNote.textContent = "Matching comes in a later pass.";
+    resultsNote.textContent = "No ball match for this form.";
     return;
   }
   featuredBalls.replaceChildren(...cards.map(featuredCard));
   resultsNote.textContent = cards[0]?.cherish
-    ? "Only ever available in a Cherish Ball via events. Matching comes in a later pass."
-    : `Sample cards for ${pokemon.name}. Matching comes in a later pass.`;
+    ? "Only ever available in a Cherish Ball via events."
+    : `Matched to ${pokemon.name} on colour and theme.`;
 }
 
 function evolutionArrow() {
@@ -322,7 +320,7 @@ function stageCard(pokemon, markLine) {
   if (cards.length === 0) {
     const item = document.createElement("li");
     item.className = "list-group-item evo-reason";
-    item.textContent = "Matching comes in a later pass.";
+    item.textContent = "No ball match for this form.";
     list.append(item);
   }
   cards.forEach((card) => {
@@ -458,7 +456,7 @@ function renderVariants(pokemon) {
     return;
   }
   variantSection.hidden = false;
-  variantNote.textContent = `Other forms of ${pokemon.speciesName}. Sample ball cards, same as the evolution line. Matching comes in a later pass.`;
+  variantNote.textContent = `Other forms of ${pokemon.speciesName}, with the same ball matches as the evolution line.`;
   variantLine.replaceChildren();
   for (const form of others) {
     const col = document.createElement("div");

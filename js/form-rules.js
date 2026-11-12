@@ -15,11 +15,11 @@
  * cherishOnly
  *   Set true only when that exact form has never been obtainable in any ball
  *   except a Cherish Ball, in any main-series game. The page then shows one
- *   Cherish Ball card instead of the placeholder suggestions. If the form has
+ *   Cherish Ball card instead of the ranked matches. If the form has
  *   ever been caught, gifted, hatched, or transferred from a main-series
  *   origin in any other ball (a normal Poké Ball, Premier Ball, Strange Ball,
  *   or anything else), leave the flag false or leave the slug out. Flipping
- *   it back to false restores that form's placeholder cards.
+ *   it back to false restores that form's ranked matches.
  *
  * shinyLocked
  *   Set true only when no legitimate shiny of that exact form exists in any
@@ -83,11 +83,3 @@ function rulesFor(slug) {
     shinyLocked: found.shinyLocked === true,
   };
 }
-
-// Shown wherever a cherishOnly form lists balls. Not a second list of forms.
-const CHERISH_CARD = {
-  ball: "cherish-ball",
-  name: "Cherish Ball",
-  reason: "Only ever available in a Cherish Ball via events",
-  cherish: true,
-};

@@ -1,17 +1,19 @@
 "use strict";
 
 /**
- * Loads the generated National Dex and answers lookup questions.
- * No DOM and no third-party requests.
+ * Loads the generated National Dex and the colour palettes.
+ * No DOM and no third-party requests. Does not score balls.
  */
 
 const REGIONAL_SUFFIXES = ["-alola", "-galar", "-hisui", "-paldea"];
 
 async function loadCatalog() {
-  const [pokemon, families] = await Promise.all([
+  const [pokemon, families, palettes] = await Promise.all([
     fetchJson("data/pokemon.json"),
     fetchJson("data/families.json"),
+    fetchJson("data/palettes.json"),
   ]);
+  const paletteBySlug = new Map(Object.entries(palettes));
   const bySlug = new Map(pokemon.map((entry) => [entry.slug, entry]));
   const bySpecies = new Map();
   for (const entry of pokemon) {
@@ -76,7 +78,7 @@ async function loadCatalog() {
     return node(rootOf(entry.speciesSlug));
   }
 
-  return { pokemon, bySlug, bySpecies, familyTree };
+  return { pokemon, bySlug, bySpecies, familyTree, palettes: paletteBySlug };
 }
 
 async function fetchJson(url) {
