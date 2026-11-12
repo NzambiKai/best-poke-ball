@@ -28,6 +28,7 @@ const TYPE_LABEL = {
   dark: "Dark",
   fairy: "Fairy",
   dragon: "Dragon",
+  steel: "Steel",
 };
 
 const searchForm = document.querySelector("#search-form");
@@ -179,12 +180,17 @@ function ballPlate(file) {
   return plate;
 }
 
+function cardsFor(pokemon) {
+  if (CHERISH_ONLY[pokemon.slug]) return [CHERISH_CARD];
+  return (SAMPLE_CARDS[pokemon.id] || []).slice(0, 3);
+}
+
 function featuredCard(card, index) {
   const column = document.createElement("div");
   column.className = "col-12 col-lg-4";
   const article = document.createElement("article");
   article.className = "card soft-card ball-card rounded-4 h-100";
-  article.dataset.accent = String(index + 1);
+  article.dataset.accent = card.cherish ? "cherish" : String(index + 1);
   const body = document.createElement("div");
   body.className = "card-body d-flex gap-3 align-items-center";
   const copy = document.createElement("div");
@@ -198,9 +204,16 @@ function featuredCard(card, index) {
   heading.className = "h5 mb-0";
   const hidden = document.createElement("span");
   hidden.className = "visually-hidden";
-  hidden.textContent = `Sample result ${index + 1}: `;
+  hidden.textContent = card.cherish ? "Event only: " : `Sample result ${index + 1}: `;
   heading.append(hidden, document.createTextNode(card.name));
-  headingRow.append(rank, heading);
+  if (card.cherish) {
+    const pill = document.createElement("span");
+    pill.className = "badge rounded-pill cherish-pill";
+    pill.textContent = "Event only";
+    headingRow.append(pill, heading);
+  } else {
+    headingRow.append(rank, heading);
+  }
   const reason = document.createElement("p");
   reason.className = "mb-0 ball-reason";
   reason.textContent = card.reason;
@@ -212,9 +225,11 @@ function featuredCard(card, index) {
 }
 
 function renderFeaturedBalls(pokemon) {
-  const cards = (SAMPLE_CARDS[pokemon.id] || []).slice(0, 3);
+  const cards = cardsFor(pokemon);
   featuredBalls.replaceChildren(...cards.map(featuredCard));
-  resultsNote.textContent = `Sample cards for ${pokemon.name}. Matching comes in a later pass.`;
+  resultsNote.textContent = cards[0]?.cherish
+    ? "Only ever available in a Cherish Ball via events. Matching comes in a later pass."
+    : `Sample cards for ${pokemon.name}. Matching comes in a later pass.`;
 }
 
 function evolutionArrow() {
@@ -279,9 +294,9 @@ function stageCard(pokemon, markLine) {
 
   const list = document.createElement("ul");
   list.className = "list-group list-group-flush";
-  (SAMPLE_CARDS[pokemon.id] || []).slice(0, 3).forEach((card) => {
+  cardsFor(pokemon).forEach((card) => {
     const item = document.createElement("li");
-    item.className = "list-group-item";
+    item.className = card.cherish ? "list-group-item cherish-entry" : "list-group-item";
     const ball = document.createElement("img");
     ball.className = "evo-ball";
     ball.src = `${ITEM_SPRITE}${card.ball}.png`;
@@ -291,7 +306,13 @@ function stageCard(pokemon, markLine) {
     const text = document.createElement("div");
     const title = document.createElement("div");
     title.className = "fw-bold";
-    title.textContent = card.name;
+    if (card.cherish) {
+      const pill = document.createElement("span");
+      pill.className = "badge rounded-pill cherish-pill me-2";
+      pill.textContent = "Event only";
+      title.append(pill);
+    }
+    title.append(document.createTextNode(card.name));
     const reason = document.createElement("p");
     reason.className = "mb-0 evo-reason";
     reason.textContent = card.reason;

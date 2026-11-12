@@ -445,6 +445,38 @@ const FORMS = [
       cards("nest-ball", "Nest Ball", "Matches Gigantamax Eevee's soft, bushy look"),
     ],
   },
+  {
+    id: 10147,
+    slug: "magearna-original",
+    name: "Original Color Magearna",
+    types: ["steel", "fairy"],
+    family: "magearna",
+    baseId: 801,
+    speciesId: 801,
+    speciesName: "Magearna",
+    dex: 801,
+    cards: [
+      cards("love-ball", "Love Ball", "Matches Original Color Magearna's red and gold look"),
+      cards("luxury-ball", "Luxury Ball", "Matches Original Color Magearna's gilded vibe"),
+      cards("repeat-ball", "Repeat Ball", "Matches Original Color Magearna's deep red coat"),
+    ],
+  },
+  {
+    id: 10192,
+    slug: "zarude-dada",
+    name: "Dada Zarude",
+    types: ["dark", "grass"],
+    family: "zarude",
+    baseId: 893,
+    speciesId: 893,
+    speciesName: "Zarude",
+    dex: 893,
+    cards: [
+      cards("dusk-ball", "Dusk Ball", "Matches Dada Zarude's dark, jungle vibe"),
+      cards("friend-ball", "Friend Ball", "Matches Dada Zarude's green, leafy look"),
+      cards("love-ball", "Love Ball", "Matches Dada Zarude's pink cloth"),
+    ],
+  },
 ];
 
 for (const pokemon of POKEDEX) {

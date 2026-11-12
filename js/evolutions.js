@@ -39,6 +39,8 @@ const POKEDEX = [
   { id: 470, slug: "leafeon", name: "Leafeon", types: ["grass"], family: "eevee" },
   { id: 471, slug: "glaceon", name: "Glaceon", types: ["ice"], family: "eevee" },
   { id: 700, slug: "sylveon", name: "Sylveon", types: ["fairy"], family: "eevee" },
+  { id: 801, slug: "magearna", name: "Magearna", types: ["steel", "fairy"], family: "magearna" },
+  { id: 893, slug: "zarude", name: "Zarude", types: ["dark", "grass"], family: "zarude" },
 ];
 
 const FAMILIES = {
@@ -77,6 +79,16 @@ const FAMILIES = {
     base: 133,
     branches: [134, 135, 136, 196, 197, 470, 471, 700],
     note: "Eevee branches into eight evolutions. Each stage has its own sample ball cards.",
+  },
+  magearna: {
+    shape: "single",
+    ids: [801],
+    note: "Magearna does not evolve. This single stage is the whole family, with sample ball cards.",
+  },
+  zarude: {
+    shape: "single",
+    ids: [893],
+    note: "Zarude does not evolve. This single stage is the whole family, with sample ball cards.",
   },
 };
 
@@ -201,5 +213,15 @@ const SAMPLE_CARDS = {
     { ball: "love-ball", name: "Love Ball", reason: "Matches Sylveon's pink, cute vibe" },
     { ball: "heal-ball", name: "Heal Ball", reason: "Matches Sylveon's soft, ribboned look" },
     { ball: "dream-ball", name: "Dream Ball", reason: "Matches Sylveon's pink, fairy vibe" },
+  ],
+  801: [
+    { ball: "love-ball", name: "Love Ball", reason: "Matches Magearna's pink, crafted vibe" },
+    { ball: "luxury-ball", name: "Luxury Ball", reason: "Matches Magearna's elegant, gilded look" },
+    { ball: "dream-ball", name: "Dream Ball", reason: "Matches Magearna's soft, fairy colors" },
+  ],
+  893: [
+    { ball: "dusk-ball", name: "Dusk Ball", reason: "Matches Zarude's dark, jungle vibe" },
+    { ball: "friend-ball", name: "Friend Ball", reason: "Matches Zarude's green, leafy look" },
+    { ball: "safari-ball", name: "Safari Ball", reason: "Matches Zarude's wild, forest vibe" },
   ],
 };
