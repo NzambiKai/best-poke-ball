@@ -513,6 +513,11 @@ h3,
     align-items: stretch;
   }
 
+  .evo-tree-nested .evo-line > .evo-stage {
+    flex: 0 0 auto;
+    height: auto;
+  }
+
   .evo-tree-nested .evo-arrow svg {
     transform: rotate(90deg);
   }
