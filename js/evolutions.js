@@ -11,6 +11,7 @@
  * Names and National Dex numbers follow PokeAPI species data. Evolution
  * order follows the PokeAPI evolution chains for these families. Artwork
  * is the Pokémon HOME sprite for that National Dex id.
+ * Alternate forms live in js/variants.js and are still placeholder cards.
  */
 
 const POKEDEX = [
@@ -22,6 +23,8 @@ const POKEDEX = [
   { id: 6, slug: "charizard", name: "Charizard", types: ["fire", "flying"], family: "charmander" },
   { id: 25, slug: "pikachu", name: "Pikachu", types: ["electric"], family: "pichu" },
   { id: 26, slug: "raichu", name: "Raichu", types: ["electric"], family: "pichu" },
+  { id: 37, slug: "vulpix", name: "Vulpix", types: ["fire"], family: "vulpix" },
+  { id: 38, slug: "ninetales", name: "Ninetales", types: ["fire"], family: "vulpix" },
   { id: 92, slug: "gastly", name: "Gastly", types: ["ghost", "poison"], family: "gastly" },
   { id: 93, slug: "haunter", name: "Haunter", types: ["ghost", "poison"], family: "gastly" },
   { id: 94, slug: "gengar", name: "Gengar", types: ["ghost", "poison"], family: "gastly" },
@@ -53,6 +56,11 @@ const FAMILIES = {
     shape: "line",
     ids: [172, 25, 26],
     note: "Every stage from Pichu to Raichu, with sample ball cards.",
+  },
+  vulpix: {
+    shape: "line",
+    ids: [37, 38],
+    note: "Every stage from Vulpix to Ninetales, with sample ball cards.",
   },
   gastly: {
     shape: "line",
@@ -113,6 +121,16 @@ const SAMPLE_CARDS = {
     { ball: "quick-ball", name: "Quick Ball", reason: "Matches Raichu's orange, electric vibe" },
     { ball: "ultra-ball", name: "Ultra Ball", reason: "Matches Raichu's bold yellow and brown look" },
     { ball: "fast-ball", name: "Fast Ball", reason: "Matches Raichu's energetic vibe" },
+  ],
+  37: [
+    { ball: "fast-ball", name: "Fast Ball", reason: "Matches Vulpix's orange, fiery vibe" },
+    { ball: "repeat-ball", name: "Repeat Ball", reason: "Matches Vulpix's warm, fox-fire look" },
+    { ball: "level-ball", name: "Level Ball", reason: "Matches Vulpix's red and cream tails" },
+  ],
+  38: [
+    { ball: "fast-ball", name: "Fast Ball", reason: "Matches Ninetales's golden, fiery vibe" },
+    { ball: "luxury-ball", name: "Luxury Ball", reason: "Matches Ninetales's elegant, flowing look" },
+    { ball: "repeat-ball", name: "Repeat Ball", reason: "Matches Ninetales's warm, fox-fire look" },
   ],
   92: [
     { ball: "dusk-ball", name: "Dusk Ball", reason: "Matches Gastly's purple, ghostly vibe" },

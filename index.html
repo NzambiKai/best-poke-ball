@@ -35,13 +35,14 @@
         <p class="eyebrow text-uppercase fw-bold mb-2">Fan-made quick reference</p>
         <h1 class="display-6 mb-3">Which ball fits the vibe?</h1>
         <p class="lead-copy mx-auto mb-0">
-          Pick a Pokémon and see sample Poké Balls for it and for every stage in its family.
+          Pick a Pokémon and see sample Poké Balls for it, every stage in its family, and any other forms.
         </p>
       </div>
 
       <form id="search-form" class="search-panel mx-auto mt-4" role="search" autocomplete="off">
         <label class="form-label fw-bold" for="pokemon-search">Search Pokémon</label>
-        <div class="search-field position-relative">
+        <div class="search-row d-flex align-items-center gap-2 gap-sm-3">
+        <div class="search-field position-relative flex-grow-1">
           <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
             <circle cx="11" cy="11" r="7"></circle>
             <path d="M20 20l-3.5-3.5"></path>
@@ -61,11 +62,17 @@
             spellcheck="false">
           <div id="suggestions" class="list-group shadow overflow-auto" role="listbox" aria-label="Sample Pokémon" hidden></div>
         </div>
+        <div class="form-check form-switch shiny-switch mb-0 flex-shrink-0">
+          <input class="form-check-input" type="checkbox" role="switch" id="shiny-toggle">
+          <label class="form-check-label fw-bold" for="shiny-toggle">Shiny</label>
+        </div>
+        </div>
       </form>
 
       <div class="sample-row text-center mt-3" role="group" aria-label="Sample Pokémon">
         <button type="button" class="btn btn-light border sample-btn" data-slug="bulbasaur" aria-pressed="false">Bulbasaur</button>
         <button type="button" class="btn btn-light border sample-btn" data-slug="charizard" aria-pressed="false">Charizard</button>
+        <button type="button" class="btn btn-light border sample-btn" data-slug="vulpix" aria-pressed="false">Vulpix</button>
         <button type="button" class="btn btn-light border sample-btn" data-slug="pikachu" aria-pressed="false">Pikachu</button>
         <button type="button" class="btn btn-outline-danger sample-btn" data-slug="gengar" aria-pressed="true">Gengar</button>
         <button type="button" class="btn btn-light border sample-btn" data-slug="lapras" aria-pressed="false">Lapras</button>
@@ -85,7 +92,7 @@
                   width="512"
                   height="512">
               </div>
-              <p class="small sprite-caption mt-2 mb-0">Pokémon HOME artwork</p>
+              <p id="art-caption" class="small sprite-caption mt-2 mb-0">Pokémon HOME artwork</p>
             </div>
             <div class="col text-center text-sm-start">
               <p class="eyebrow text-uppercase fw-bold mb-1">Selected Pokémon</p>
@@ -183,6 +190,15 @@
         </p>
         <div id="evolution-line"></div>
       </section>
+
+      <section id="variant-section" class="mt-4 mt-md-5" aria-labelledby="variant-heading" hidden>
+        <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
+          <h2 id="variant-heading" class="h4 mb-0">Variants</h2>
+          <span class="badge rounded-pill sample-pill">Sample layout</span>
+        </div>
+        <p id="variant-note" class="sprite-caption mb-3"></p>
+        <div id="variant-line" class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3"></div>
+      </section>
     </main>
 
     <footer class="site-footer mt-4">
@@ -193,7 +209,8 @@
         <p class="small mb-0 sprite-caption">
           Pokémon art is the
           <a href="https://github.com/PokeAPI/sprites/tree/master/sprites/pokemon/other/home">HOME sprites</a>
-          from the PokeAPI sprites project. Names and National Dex numbers follow
+          from the PokeAPI sprites project, including shiny art and alternate forms.
+          Names, National Dex numbers, and form names follow
           <a href="https://pokeapi.co/">PokeAPI</a>.
           Ball icons are item sprites from the same project. Layout uses Bootstrap 5.3.9.
         </p>
@@ -205,6 +222,7 @@
       integrity="sha384-WyOxWvTyr1QaMPfiPJSv76iReVthorl5uWlFtZPyK0IEB0hGzo9y5Bp9mYanr8Bu"
       crossorigin="anonymous"></script>
     <script src="js/evolutions.js"></script>
+    <script src="js/variants.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>

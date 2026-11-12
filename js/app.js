@@ -1,8 +1,9 @@
 "use strict";
 
 /**
- * Layout behaviour only: search, the selected Pokémon, and the evolution
- * line. Ball cards are placeholder copy from js/evolutions.js.
+ * Layout behaviour only: search, the selected Pokémon, the evolution line,
+ * the shiny artwork switch, and the variant section. Ball cards are
+ * placeholder copy from js/evolutions.js and js/variants.js.
  * Matching is a later pass. See js/balls.js, which this page does not read.
  */
 
@@ -26,6 +27,7 @@ const TYPE_LABEL = {
   ice: "Ice",
   dark: "Dark",
   fairy: "Fairy",
+  dragon: "Dragon",
 };
 
 const searchForm = document.querySelector("#search-form");
@@ -40,14 +42,104 @@ const featuredBalls = document.querySelector("#featured-balls");
 const resultsNote = document.querySelector("#results-note");
 const evolutionLine = document.querySelector("#evolution-line");
 const evolutionNote = document.querySelector("#evolution-note");
+const variantSection = document.querySelector("#variant-section");
+const variantLine = document.querySelector("#variant-line");
+const variantNote = document.querySelector("#variant-note");
+const shinyToggle = document.querySelector("#shiny-toggle");
+const artCaption = document.querySelector("#art-caption");
 
 let activeIndex = -1;
 let currentSlug = "gengar";
 let open = false;
 let showAll = false;
+let shinyOn = false;
 
-function dexNumber(id) {
+function dexNumber(pokemonOrId) {
+  const id =
+    pokemonOrId && typeof pokemonOrId === "object"
+      ? pokemonOrId.dex || pokemonOrId.id
+      : pokemonOrId;
   return `No. ${String(id).padStart(3, "0")}`;
+}
+
+function spriteCandidates(pokemon) {
+  const id = pokemon.spriteId || pokemon.id;
+  const group = pokemon.spriteGroup ? `${pokemon.spriteGroup}/` : "";
+  const urls = [];
+  const add = (url) => {
+    if (!urls.includes(url)) urls.push(url);
+  };
+  if (shinyOn) add(`${HOME_SPRITE}shiny/${group}${id}.png`);
+  add(`${HOME_SPRITE}${group}${id}.png`);
+  add(`${HOME_SPRITE}${id}.png`);
+  return urls;
+}
+
+function applyHomeSprite(image, pokemon) {
+  const urls = spriteCandidates(pokemon);
+  const token = `${Date.now()}-${Math.random()}`;
+  image.dataset.spriteToken = token;
+  image.dataset.spriteSlug = pokemon.slug;
+  image.dataset.fellBack = "0";
+  const noteFor = () => image.parentElement?.querySelector(":scope > .sprite-note");
+  const existingNote = noteFor();
+  if (existingNote) existingNote.textContent = "";
+  let index = 0;
+  const syncIfHero = () => {
+    if (image === art) syncArtCaption();
+  };
+  image.onload = () => {
+    if (image.dataset.spriteToken !== token) return;
+    if (index === 0) image.dataset.fellBack = "0";
+    syncIfHero();
+  };
+  image.onerror = () => {
+    if (image.dataset.spriteToken !== token) return;
+    index += 1;
+    if (index < urls.length) {
+      image.dataset.fellBack = "1";
+      image.removeAttribute("title");
+      if (shinyOn) {
+        image.title = "Shiny HOME artwork isn't available for this form, so the regular artwork is shown.";
+        const note = noteFor();
+        if (note) note.textContent = "No shiny art";
+      }
+      syncIfHero();
+      image.src = urls[index];
+      return;
+    }
+    image.onerror = null;
+    syncIfHero();
+  };
+  image.src = urls[index];
+}
+
+function homeAlt(pokemon) {
+  return shinyOn
+    ? `${pokemon.name}, shiny Pokémon HOME artwork`
+    : `${pokemon.name}, Pokémon HOME artwork`;
+}
+
+function syncArtCaption() {
+  if (!artCaption) return;
+  if (!shinyOn) {
+    artCaption.textContent = "Pokémon HOME artwork";
+    return;
+  }
+  artCaption.textContent =
+    art.dataset.fellBack === "1"
+      ? "Regular HOME artwork (shiny file missing)"
+      : "Shiny Pokémon HOME artwork";
+}
+
+function refreshHomeArt() {
+  document.querySelectorAll("[data-sprite-slug]").forEach((image) => {
+    const pokemon = BY_SLUG.get(image.dataset.spriteSlug);
+    if (!pokemon) return;
+    applyHomeSprite(image, pokemon);
+    if (image === art) image.alt = homeAlt(pokemon);
+  });
+  syncArtCaption();
 }
 
 function matches(query) {
@@ -143,8 +235,11 @@ function evolutionArrow() {
   return wrap;
 }
 
-function stageCard(pokemon) {
-  const selected = pokemon.slug === currentSlug;
+function stageCard(pokemon, markLine) {
+  const current = BY_SLUG.get(currentSlug);
+  const selected = markLine
+    ? pokemon.slug === currentSlug || (current && pokemon.id === current.baseId && current.baseId !== current.id)
+    : pokemon.slug === currentSlug;
   const article = document.createElement("article");
   article.className = `card soft-card evo-stage h-100${selected ? " is-selected" : ""}`;
 
@@ -155,10 +250,13 @@ function stageCard(pokemon) {
 
   const image = document.createElement("img");
   image.className = "evo-art";
-  image.src = `${HOME_SPRITE}${pokemon.id}.png`;
   image.alt = "";
   image.width = 96;
   image.height = 96;
+  const fallback = document.createElement("span");
+  fallback.className = "sprite-note";
+  button.append(image, fallback);
+  applyHomeSprite(image, pokemon);
 
   const name = document.createElement("span");
   name.className = "evo-name";
@@ -166,9 +264,9 @@ function stageCard(pokemon) {
 
   const dex = document.createElement("span");
   dex.className = "evo-dex";
-  dex.textContent = dexNumber(pokemon.id);
+  dex.textContent = dexNumber(pokemon);
 
-  button.append(image, name, dex);
+  button.append(name, dex);
   if (selected) {
     const badge = document.createElement("span");
     badge.className = "badge rounded-pill evo-selected-pill";
@@ -208,16 +306,22 @@ function stageCard(pokemon) {
 
 function renderEvolution(pokemon) {
   const family = FAMILIES[pokemon.family];
-  const restoreFocus = evolutionLine.contains(document.activeElement);
-  evolutionNote.textContent = family.note;
+  const restoreFocus =
+    evolutionLine.contains(document.activeElement) ||
+    variantLine.contains(document.activeElement);
   evolutionLine.replaceChildren();
+  if (!family) {
+    evolutionNote.textContent = "";
+    return;
+  }
+  evolutionNote.textContent = family.note;
 
   if (family.shape === "branch") {
     const top = document.createElement("div");
     top.className = "row justify-content-center mb-3";
     const topCol = document.createElement("div");
     topCol.className = "col-12 col-md-8 col-lg-5";
-    topCol.append(stageCard(BY_ID.get(family.base)));
+    topCol.append(stageCard(BY_ID.get(family.base), true));
     top.append(topCol);
 
     const label = document.createElement("p");
@@ -229,7 +333,7 @@ function renderEvolution(pokemon) {
     for (const id of family.branches) {
       const col = document.createElement("div");
       col.className = "col";
-      col.append(stageCard(BY_ID.get(id)));
+      col.append(stageCard(BY_ID.get(id), true));
       grid.append(col);
     }
     evolutionLine.append(top, label, grid);
@@ -238,7 +342,7 @@ function renderEvolution(pokemon) {
     row.className = "row";
     const col = document.createElement("div");
     col.className = "col-12 col-lg-6";
-    col.append(stageCard(BY_ID.get(family.ids[0])));
+    col.append(stageCard(BY_ID.get(family.ids[0]), true));
     row.append(col);
     evolutionLine.append(row);
   } else {
@@ -246,7 +350,7 @@ function renderEvolution(pokemon) {
     line.className = "evo-line";
     family.ids.forEach((id, index) => {
       if (index > 0) line.append(evolutionArrow());
-      line.append(stageCard(BY_ID.get(id)));
+      line.append(stageCard(BY_ID.get(id), true));
     });
     evolutionLine.append(line);
   }
@@ -256,12 +360,54 @@ function renderEvolution(pokemon) {
   }
 }
 
+function renderVariants(pokemon) {
+  const others = POKEDEX.filter(
+    (entry) => entry.speciesId === pokemon.speciesId && entry.slug !== pokemon.slug
+  );
+  const rank = (entry) => {
+    if (entry.id === entry.speciesId) return [0, 0];
+    if (typeof entry.id !== "number") return [1, 0];
+    return [2, entry.id];
+  };
+  others.sort((a, b) => {
+    const aRank = rank(a);
+    const bRank = rank(b);
+    return aRank[0] - bRank[0] || aRank[1] - bRank[1] || a.name.localeCompare(b.name);
+  });
+  if (others.length === 0) {
+    variantSection.hidden = true;
+    variantNote.textContent = "";
+    variantLine.replaceChildren();
+    return;
+  }
+  variantSection.hidden = false;
+  variantNote.textContent = `Other forms of ${pokemon.speciesName}. Sample ball cards, same as the evolution line. Matching comes in a later pass.`;
+  variantLine.replaceChildren();
+  for (const form of others) {
+    const col = document.createElement("div");
+    col.className = "col";
+    col.append(stageCard(form, false));
+    variantLine.append(col);
+  }
+}
+
+function rememberLocation(pokemon) {
+  const url = new URL(location.href);
+  url.hash = pokemon.slug;
+  if (shinyOn) url.searchParams.set("shiny", "1");
+  else url.searchParams.delete("shiny");
+  const next = `${url.pathname}${url.search}${url.hash}`;
+  const current = `${location.pathname}${location.search}${location.hash}`;
+  if (next !== current) history.replaceState(null, "", next);
+}
+
 function selectPokemon(pokemon) {
   currentSlug = pokemon.slug;
-  art.src = `${HOME_SPRITE}${pokemon.id}.png`;
-  art.alt = `${pokemon.name}, Pokémon HOME artwork`;
+  applyHomeSprite(art, pokemon);
+  art.alt = homeAlt(pokemon);
+  syncArtCaption();
   nameEl.textContent = pokemon.name;
-  dexEl.textContent = dexNumber(pokemon.id);
+  dexEl.textContent = dexNumber(pokemon);
   typesEl.replaceChildren();
   for (const type of pokemon.types) {
     const badge = document.createElement("span");
@@ -269,8 +415,11 @@ function selectPokemon(pokemon) {
     badge.textContent = TYPE_LABEL[type] || type;
     typesEl.append(badge);
   }
+  const baseStage = BY_ID.get(pokemon.baseId);
   for (const button of sampleButtons) {
-    const selected = button.dataset.slug === pokemon.slug;
+    const selected =
+      button.dataset.slug === pokemon.slug ||
+      (baseStage && button.dataset.slug === baseStage.slug);
     button.className = selected
       ? "btn btn-outline-danger sample-btn"
       : "btn btn-light border sample-btn";
@@ -278,10 +427,9 @@ function selectPokemon(pokemon) {
   }
   renderFeaturedBalls(pokemon);
   renderEvolution(pokemon);
+  renderVariants(pokemon);
   document.title = `${pokemon.name} · Best Poké Ball`;
-  if (location.hash !== `#${pokemon.slug}`) {
-    history.replaceState(null, "", `#${pokemon.slug}`);
-  }
+  rememberLocation(pokemon);
 }
 
 function closeList() {
@@ -322,11 +470,11 @@ function renderSuggestions() {
     if (index === activeIndex) option.classList.add("active");
 
     const image = document.createElement("img");
-    image.src = `${HOME_SPRITE}${pokemon.id}.png`;
     image.alt = "";
     image.width = 48;
     image.height = 48;
     image.className = "suggestion-art";
+    applyHomeSprite(image, pokemon);
 
     const label = document.createElement("span");
     label.className = "fw-bold";
@@ -334,7 +482,7 @@ function renderSuggestions() {
 
     const dex = document.createElement("span");
     dex.className = "ms-auto small suggestion-dex";
-    dex.textContent = dexNumber(pokemon.id);
+    dex.textContent = dexNumber(pokemon);
 
     option.append(image, label, dex);
     option.addEventListener("mousedown", (event) => {
@@ -421,7 +569,16 @@ for (const button of sampleButtons) {
   });
 }
 
-const fromHash = BY_SLUG.get(location.hash.replace("#", ""));
+shinyOn = new URLSearchParams(location.search).get("shiny") === "1";
+shinyToggle.checked = shinyOn;
+shinyToggle.toggleAttribute("checked", shinyOn);
+shinyToggle.addEventListener("change", () => {
+  shinyOn = shinyToggle.checked;
+  rememberLocation(BY_SLUG.get(currentSlug));
+  refreshHomeArt();
+});
+
+const fromHash = BY_SLUG.get(decodeURIComponent(location.hash.replace("#", "")));
 const initialPokemon = fromHash || BY_SLUG.get("gengar");
 search.value = initialPokemon.name;
 selectPokemon(initialPokemon);
