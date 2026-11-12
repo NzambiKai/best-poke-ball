@@ -129,6 +129,7 @@ function requireCwebp() {
 
 function convertWebp(pngPath, assetRel) {
   const dest = outputPath(assetRel);
+  if (fs.existsSync(dest) && fs.statSync(dest).size > 0) return Promise.resolve();
   fs.mkdirSync(path.dirname(dest), { recursive: true });
   return new Promise((resolve, reject) => {
     const child = spawn("cwebp", ["-quiet", "-q", WEBP_QUALITY, pngPath, "-o", dest], {
@@ -229,6 +230,7 @@ async function main() {
   const entries = [];
   const slugs = new Set();
   const varietyBySlug = new Map();
+  const femaleSprites = [];
 
   function addEntry(entry) {
     if (slugs.has(entry.slug)) throw new Error(`Duplicate slug ${entry.slug}`);
@@ -262,27 +264,47 @@ async function main() {
     };
     addEntry(entry);
     varietyBySlug.set(slug, entry);
-    if (home.front_female) {
-      const femaleSlug = `${slug}-female`;
-      if (GO_DENYLIST.has(femaleSlug)) {
-        omittedGo.add(femaleSlug);
-      } else {
-        addEntry({
-          slug: femaleSlug,
-          name: `Female ${entry.name}`,
-          dex: entry.dex,
-          speciesSlug: entry.speciesSlug,
-          speciesName: entry.speciesName,
-          types: entry.types,
-          kind: "female",
-          isDefault: false,
-          sprites: {
-            home: trackSprite(downloads, home.front_female),
-            shiny: trackSprite(downloads, home.front_shiny_female),
-          },
-        });
-      }
+    // PokeAPI copies front_default into front_female for many forms. A real
+    // gender sprite lives under the HOME female/ directory.
+    if (home.front_female && home.front_female.includes("/home/female/")) {
+      femaleSprites.push({
+        slug,
+        species: job.species,
+        name: entry.name,
+        dex: entry.dex,
+        speciesSlug: entry.speciesSlug,
+        speciesName: entry.speciesName,
+        types: entry.types,
+        home: home.front_female,
+        shiny: home.front_shiny_female,
+      });
     }
+  }
+
+  for (const female of femaleSprites) {
+    const femaleSlug = female.slug.endsWith("-male")
+      ? `${female.slug.slice(0, -"-male".length)}-female`
+      : `${female.slug}-female`;
+    if (slugs.has(femaleSlug)) continue;
+    if (GO_DENYLIST.has(femaleSlug)) {
+      omittedGo.add(femaleSlug);
+      continue;
+    }
+    const name = female.slug.endsWith("-male") ? `Female ${female.species.english}` : `Female ${female.name}`;
+    addEntry({
+      slug: femaleSlug,
+      name,
+      dex: female.dex,
+      speciesSlug: female.speciesSlug,
+      speciesName: female.speciesName,
+      types: female.types,
+      kind: "female",
+      isDefault: false,
+      sprites: {
+        home: trackSprite(downloads, female.home),
+        shiny: trackSprite(downloads, female.shiny),
+      },
+    });
   }
 
   for (const species of national) {
