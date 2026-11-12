@@ -25,6 +25,13 @@ const CLOSE_RATIO = 0.92;
 const MAX_BALLS = 3;
 const HUE_FAMILY = 36;
 const CLEAR_HUE = 0.02;
+const VIVID_CHROMA = 0.06;
+// Below this, a hue is only a cast unless a stronger sample of the same hue is present.
+const CAST_CHROMA = 0.045;
+const CAST_FLOOR = 0.03;
+const CONFIRM_CHROMA = 0.05;
+const CONFIRM_SHARE = 0.04;
+const CONFIRM_GAP = 30;
 
 const TYPE_THEMES = {
   normal: [],
@@ -84,6 +91,10 @@ function hueGap(left, right) {
   return Math.min(gap, 360 - gap);
 }
 
+function hueOf(lab) {
+  return (Math.atan2(lab[2], lab[1]) * 180) / Math.PI;
+}
+
 function similarity(hexA, hexB) {
   const left = labOf(hexA);
   const right = labOf(hexB);
@@ -93,9 +104,9 @@ function similarity(hexA, hexB) {
   const rightChroma = chromaOf(right);
   const lowChroma = Math.min(leftChroma, rightChroma);
   const highChroma = Math.max(leftChroma, rightChroma);
-  if (lowChroma < CLEAR_HUE && highChroma > 0.06) sim *= 0.5;
+  if (lowChroma < CLEAR_HUE && highChroma > VIVID_CHROMA) sim *= 0.5;
   if (lowChroma >= CLEAR_HUE) {
-    const gap = hueGap((Math.atan2(left[2], left[1]) * 180) / Math.PI, (Math.atan2(right[2], right[1]) * 180) / Math.PI);
+    const gap = hueGap(hueOf(left), hueOf(right));
     if (gap > HUE_GAP_START) sim *= Math.max(0, 1 - (gap - HUE_GAP_START) / 26);
     const pale = lowChroma / highChroma < 0.55;
     if (pale && gap <= HUE_FAMILY) {
@@ -107,6 +118,16 @@ function similarity(hexA, hexB) {
       if (family > sim) sim = family;
     }
   }
+  return sim;
+}
+
+function regionSimilarity(swatchHex, region) {
+  if (!region.cast) return similarity(swatchHex, region.hex);
+  const left = labOf(swatchHex);
+  const right = labOf(region.hex);
+  const distance = Math.hypot(left[0] - right[0], left[1] - right[1], left[2] - right[2]);
+  let sim = 1 - Math.min(1, distance / DISTANCE_CAP);
+  if (chromaOf(left) > VIVID_CHROMA) sim *= 0.5;
   return sim;
 }
 
@@ -143,7 +164,30 @@ function regionsFor(palette) {
   for (const name of ["black", "gray", "white"]) {
     const share = neutral[name] || 0;
     const hex = neutral[`${name}Hex`];
-    if (share >= 0.03 && hex) regions.push({ hex, share, neutral: name !== "gray" ? true : chromaOf(labOf(hex)) < CLEAR_HUE });
+    if (share >= 0.03 && hex) regions.push({ hex, share, neutral: true });
+  }
+  return classifyRegions(regions);
+}
+
+function classifyRegions(regions) {
+  for (const region of regions) {
+    const lab = labOf(region.hex);
+    region.chroma = chromaOf(lab);
+    region.hue = hueOf(lab);
+  }
+  for (const region of regions) {
+    if (region.chroma < CAST_FLOOR) {
+      region.cast = true;
+      continue;
+    }
+    if (region.chroma >= CAST_CHROMA) {
+      region.cast = false;
+      continue;
+    }
+    region.cast = !regions.some((other) => {
+      if (other === region || other.chroma < CONFIRM_CHROMA || other.share < CONFIRM_SHARE) return false;
+      return hueGap(region.hue, other.hue) <= CONFIRM_GAP;
+    });
   }
   return regions;
 }
@@ -162,7 +206,7 @@ function scoreBall(ball, regions) {
     let bestSim = 0;
     let bestIndex = -1;
     regions.forEach((region, index) => {
-      const sim = similarity(swatch.hex, region.hex);
+      const sim = regionSimilarity(swatch.hex, region);
       if (sim < COVER) return;
       const previous = covered.get(index) || 0;
       if (sim > previous) covered.set(index, sim);
@@ -211,7 +255,7 @@ function coverOf(region, chosen) {
   for (const row of chosen) {
     for (const swatch of row.ball.palette) {
       if (swatch.weight < SWATCH_MIN) continue;
-      best = Math.max(best, similarity(swatch.hex, region.hex));
+      best = Math.max(best, regionSimilarity(swatch.hex, region));
     }
   }
   return best;
@@ -239,7 +283,7 @@ function looseBall(regions, chosen, used) {
     let swatch = null;
     for (const candidate of ball.palette) {
       if (candidate.weight < SWATCH_MIN) continue;
-      const next = similarity(candidate.hex, target.hex);
+      const next = regionSimilarity(candidate.hex, target);
       if (next > sim) {
         sim = next;
         swatch = candidate;
@@ -279,7 +323,7 @@ function reasonFor(pokemon, row) {
   if (!pair) return `A match for ${pokemon.name}'s colours`;
   const ballHue = hueName(pair.swatch.hex);
   const monHue = hueName(pair.color.hex);
-  const neutral = pair.color.neutral || chromaOf(labOf(pair.color.hex)) < 0.03;
+  const neutral = pair.color.neutral || pair.color.cast || chromaOf(labOf(pair.color.hex)) < 0.03;
   if (neutral) {
     const coat = ballHue === "black" || ballHue === "gray" ? "dark" : ballHue;
     const body = monHue === "black" || monHue === "gray" ? "dark" : monHue;
