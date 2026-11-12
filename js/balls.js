@@ -3,7 +3,7 @@
  *
  * TODO: Matching is not implemented. This array is a hand-editable starter
  * list of balls with colours and theme tags. The page does not read this
- * file. Placeholder cards for the sample families live in js/evolutions.js.
+ * file. Placeholder cards live in js/sample-cards.js.
  */
 const BALLS = [
   {

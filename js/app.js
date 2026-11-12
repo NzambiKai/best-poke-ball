@@ -2,18 +2,15 @@
 
 /**
  * Layout behaviour only: search, the selected Pokémon, the evolution line,
- * the shiny artwork switch, and the variant section. Placeholder ball
- * cards come from js/sample-cards.js. Per-form obtainability comes from
- * rulesFor() in js/form-rules.js.
+ * the shiny artwork switch, and the variant section. Pokédex data comes
+ * from js/catalog.js. Placeholder ball cards come from js/sample-cards.js.
+ * Per-form obtainability comes from rulesFor() in js/form-rules.js.
  * Matching is a later pass. See js/balls.js, which this page does not read.
  */
 
-const HOME_SPRITE =
-  "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/";
-const ITEM_SPRITE = "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/items/";
+const ITEM_SPRITE = "assets/items/";
 
-const BY_SLUG = new Map(POKEDEX.map((pokemon) => [pokemon.slug, pokemon]));
-const BY_ID = new Map(POKEDEX.map((pokemon) => [pokemon.id, pokemon]));
+let catalog = null;
 
 const TYPE_LABEL = {
   normal: "Normal",
@@ -57,12 +54,8 @@ let open = false;
 let showAll = false;
 let shinyOn = false;
 
-function dexNumber(pokemonOrId) {
-  const id =
-    pokemonOrId && typeof pokemonOrId === "object"
-      ? pokemonOrId.dex || pokemonOrId.id
-      : pokemonOrId;
-  return `No. ${String(id).padStart(3, "0")}`;
+function dexNumber(pokemon) {
+  return `No. ${String(pokemon.dex).padStart(3, "0")}`;
 }
 
 function shinyTreatment(pokemon) {
@@ -71,17 +64,14 @@ function shinyTreatment(pokemon) {
   return "shiny";
 }
 
-function spriteCandidates(pokemon) {
-  const id = pokemon.spriteId || pokemon.id;
-  const group = pokemon.spriteGroup ? `${pokemon.spriteGroup}/` : "";
-  const urls = [];
-  const add = (url) => {
-    if (!urls.includes(url)) urls.push(url);
-  };
-  if (shinyTreatment(pokemon) === "shiny") add(`${HOME_SPRITE}shiny/${group}${id}.png`);
-  add(`${HOME_SPRITE}${group}${id}.png`);
-  add(`${HOME_SPRITE}${id}.png`);
-  return urls;
+function artworkFor(pokemon) {
+  const treatment = shinyTreatment(pokemon);
+  if (treatment === "locked") return { src: pokemon.sprites.home, note: "locked", fellBack: "0" };
+  if (treatment === "shiny" && pokemon.sprites.shiny) {
+    return { src: pokemon.sprites.shiny, note: "", fellBack: "0" };
+  }
+  if (treatment === "shiny") return { src: pokemon.sprites.home, note: "missing", fellBack: "1" };
+  return { src: pokemon.sprites.home, note: "", fellBack: "0" };
 }
 
 function lockBadge() {
@@ -100,40 +90,27 @@ function showSpriteNote(image, mode) {
 }
 
 function applyHomeSprite(image, pokemon) {
-  const urls = spriteCandidates(pokemon);
+  const choice = artworkFor(pokemon);
   const token = `${Date.now()}-${Math.random()}`;
   image.dataset.spriteToken = token;
   image.dataset.spriteSlug = pokemon.slug;
-  image.dataset.fellBack = "0";
-  const treatment = shinyTreatment(pokemon);
-  showSpriteNote(image, treatment === "locked" ? "locked" : "");
-  let index = 0;
-  const syncIfHero = () => {
-    if (image === art) syncArtCaption();
-  };
+  image.dataset.fellBack = choice.fellBack;
+  showSpriteNote(image, choice.note);
+  if (choice.note === "missing") {
+    image.title = "Shiny HOME artwork isn't available for this form, so the regular artwork is shown.";
+  } else {
+    image.removeAttribute("title");
+  }
   image.onload = () => {
     if (image.dataset.spriteToken !== token) return;
-    if (index === 0) image.dataset.fellBack = "0";
-    syncIfHero();
+    if (image === art) syncArtCaption();
   };
   image.onerror = () => {
     if (image.dataset.spriteToken !== token) return;
-    index += 1;
-    if (index < urls.length) {
-      image.dataset.fellBack = "1";
-      image.removeAttribute("title");
-      if (treatment === "shiny") {
-        image.title = "Shiny HOME artwork isn't available for this form, so the regular artwork is shown.";
-        showSpriteNote(image, "missing");
-      }
-      syncIfHero();
-      image.src = urls[index];
-      return;
-    }
     image.onerror = null;
-    syncIfHero();
   };
-  image.src = urls[index];
+  image.src = choice.src;
+  if (image === art) syncArtCaption();
 }
 
 function homeAlt(pokemon) {
@@ -144,7 +121,7 @@ function homeAlt(pokemon) {
 
 function syncArtCaption() {
   if (!artCaption) return;
-  const pokemon = BY_SLUG.get(art.dataset.spriteSlug || currentSlug);
+  const pokemon = catalog.bySlug.get(art.dataset.spriteSlug || currentSlug);
   const treatment = pokemon ? shinyTreatment(pokemon) : "off";
   if (artLock) {
     artLock.replaceChildren();
@@ -162,7 +139,7 @@ function syncArtCaption() {
 
 function refreshHomeArt() {
   document.querySelectorAll("[data-sprite-slug]").forEach((image) => {
-    const pokemon = BY_SLUG.get(image.dataset.spriteSlug);
+    const pokemon = catalog.bySlug.get(image.dataset.spriteSlug);
     if (!pokemon) return;
     applyHomeSprite(image, pokemon);
     if (image === art) image.alt = homeAlt(pokemon);
@@ -171,10 +148,11 @@ function refreshHomeArt() {
 }
 
 function matches(query) {
-  if (showAll) return POKEDEX.slice();
+  const all = catalog.pokemon;
+  if (showAll) return all.slice();
   const q = query.trim().toLowerCase();
-  if (!q) return POKEDEX.slice();
-  return POKEDEX.filter(
+  if (!q) return all.slice();
+  return all.filter(
     (pokemon) => pokemon.name.toLowerCase().includes(q) || pokemon.slug.includes(q)
   );
 }
@@ -253,6 +231,11 @@ function featuredCard(card, index) {
 
 function renderFeaturedBalls(pokemon) {
   const cards = cardsFor(pokemon);
+  if (cards.length === 0) {
+    featuredBalls.replaceChildren();
+    resultsNote.textContent = "Matching comes in a later pass.";
+    return;
+  }
   featuredBalls.replaceChildren(...cards.map(featuredCard));
   resultsNote.textContent = cards[0]?.cherish
     ? "Only ever available in a Cherish Ball via events. Matching comes in a later pass."
@@ -277,11 +260,15 @@ function evolutionArrow() {
   return wrap;
 }
 
+function stageIsSelected(stage, markLine) {
+  const current = catalog.bySlug.get(currentSlug);
+  if (!current) return false;
+  if (stage.slug === current.slug) return true;
+  return markLine && stage.isDefault && stage.speciesSlug === current.speciesSlug;
+}
+
 function stageCard(pokemon, markLine) {
-  const current = BY_SLUG.get(currentSlug);
-  const selected = markLine
-    ? pokemon.slug === currentSlug || (current && pokemon.id === current.baseId && current.baseId !== current.id)
-    : pokemon.slug === currentSlug;
+  const selected = stageIsSelected(pokemon, markLine);
   const article = document.createElement("article");
   article.className = `card soft-card evo-stage h-100${selected ? " is-selected" : ""}`;
 
@@ -321,7 +308,14 @@ function stageCard(pokemon, markLine) {
 
   const list = document.createElement("ul");
   list.className = "list-group list-group-flush";
-  cardsFor(pokemon).forEach((card) => {
+  const cards = cardsFor(pokemon);
+  if (cards.length === 0) {
+    const item = document.createElement("li");
+    item.className = "list-group-item evo-reason";
+    item.textContent = "Matching comes in a later pass.";
+    list.append(item);
+  }
+  cards.forEach((card) => {
     const item = document.createElement("li");
     item.className = card.cherish ? "list-group-item cherish-entry" : "list-group-item";
     const ball = document.createElement("img");
@@ -352,55 +346,98 @@ function stageCard(pokemon, markLine) {
   return article;
 }
 
+function lineStages(node) {
+  const stages = [];
+  let cursor = node;
+  while (cursor.evolvesTo.length === 1) {
+    stages.push(cursor.pokemon);
+    cursor = cursor.evolvesTo[0];
+  }
+  stages.push(cursor.pokemon);
+  return { stages, tail: cursor };
+}
+
+function evolutionShape(node) {
+  if (node.evolvesTo.length === 0) return "single";
+  const { tail } = lineStages(node);
+  if (tail.evolvesTo.length === 0) return "line";
+  if (node.evolvesTo.length > 1 && node.evolvesTo.every((child) => child.evolvesTo.length === 0)) return "branch";
+  return "tree";
+}
+
+function appendLine(parent, stages) {
+  const line = document.createElement("div");
+  line.className = "evo-line";
+  stages.forEach((stage, index) => {
+    if (index > 0) line.append(evolutionArrow());
+    line.append(stageCard(stage, true));
+  });
+  parent.append(line);
+}
+
+function renderNestedFamily(node) {
+  const wrap = document.createElement("div");
+  wrap.append(stageCard(node.pokemon, true));
+  if (node.evolvesTo.length === 0) return wrap;
+  const grid = document.createElement("div");
+  grid.className = "row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3 mt-2";
+  for (const child of node.evolvesTo) {
+    const col = document.createElement("div");
+    col.className = "col";
+    col.append(renderNestedFamily(child));
+    grid.append(col);
+  }
+  wrap.append(grid);
+  return wrap;
+}
+
 function renderEvolution(pokemon) {
-  const family = FAMILIES[pokemon.family];
+  const tree = catalog.familyTree(pokemon.slug);
   const restoreFocus =
     evolutionLine.contains(document.activeElement) ||
     variantLine.contains(document.activeElement);
   evolutionLine.replaceChildren();
-  if (!family) {
+  if (!tree) {
     evolutionNote.textContent = "";
     return;
   }
-  evolutionNote.textContent = family.note;
-
-  if (family.shape === "branch") {
+  const shape = evolutionShape(tree);
+  if (shape === "branch") {
+    evolutionNote.textContent = `${tree.pokemon.name} branches into ${tree.evolvesTo.length} evolutions.`;
     const top = document.createElement("div");
     top.className = "row justify-content-center mb-3";
     const topCol = document.createElement("div");
     topCol.className = "col-12 col-md-8 col-lg-5";
-    topCol.append(stageCard(BY_ID.get(family.base), true));
+    topCol.append(stageCard(tree.pokemon, true));
     top.append(topCol);
-
     const label = document.createElement("p");
     label.className = "evo-branch-label mb-2";
     label.textContent = "Evolves into";
-
     const grid = document.createElement("div");
     grid.className = "row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3";
-    for (const id of family.branches) {
+    for (const child of tree.evolvesTo) {
       const col = document.createElement("div");
       col.className = "col";
-      col.append(stageCard(BY_ID.get(id), true));
+      col.append(stageCard(child.pokemon, true));
       grid.append(col);
     }
     evolutionLine.append(top, label, grid);
-  } else if (family.shape === "single") {
+  } else if (shape === "single") {
+    evolutionNote.textContent = `${tree.pokemon.name} does not evolve.`;
     const row = document.createElement("div");
     row.className = "row";
     const col = document.createElement("div");
     col.className = "col-12 col-lg-6";
-    col.append(stageCard(BY_ID.get(family.ids[0]), true));
+    col.append(stageCard(tree.pokemon, true));
     row.append(col);
     evolutionLine.append(row);
+  } else if (shape === "line") {
+    const { stages } = lineStages(tree);
+    evolutionNote.textContent = `Every stage from ${stages[0].name} to ${stages[stages.length - 1].name}.`;
+    appendLine(evolutionLine, stages);
   } else {
-    const line = document.createElement("div");
-    line.className = "evo-line";
-    family.ids.forEach((id, index) => {
-      if (index > 0) line.append(evolutionArrow());
-      line.append(stageCard(BY_ID.get(id), true));
-    });
-    evolutionLine.append(line);
+    evolutionNote.textContent = `${tree.pokemon.name}'s family.`;
+    evolutionLine.append(renderNestedFamily(tree));
   }
 
   if (restoreFocus) {
@@ -409,19 +446,10 @@ function renderEvolution(pokemon) {
 }
 
 function renderVariants(pokemon) {
-  const others = POKEDEX.filter(
-    (entry) => entry.speciesId === pokemon.speciesId && entry.slug !== pokemon.slug
+  const others = (catalog.bySpecies.get(pokemon.speciesSlug) || []).filter(
+    (entry) => entry.slug !== pokemon.slug
   );
-  const rank = (entry) => {
-    if (entry.id === entry.speciesId) return [0, 0];
-    if (typeof entry.id !== "number") return [1, 0];
-    return [2, entry.id];
-  };
-  others.sort((a, b) => {
-    const aRank = rank(a);
-    const bRank = rank(b);
-    return aRank[0] - bRank[0] || aRank[1] - bRank[1] || a.name.localeCompare(b.name);
-  });
+  others.sort((a, b) => Number(b.isDefault) - Number(a.isDefault) || a.name.localeCompare(b.name));
   if (others.length === 0) {
     variantSection.hidden = true;
     variantNote.textContent = "";
@@ -463,11 +491,11 @@ function selectPokemon(pokemon) {
     badge.textContent = TYPE_LABEL[type] || type;
     typesEl.append(badge);
   }
-  const baseStage = BY_ID.get(pokemon.baseId);
+  const speciesDefault = (catalog.bySpecies.get(pokemon.speciesSlug) || []).find((entry) => entry.isDefault);
   for (const button of sampleButtons) {
     const selected =
       button.dataset.slug === pokemon.slug ||
-      (baseStage && button.dataset.slug === baseStage.slug);
+      (speciesDefault && button.dataset.slug === speciesDefault.slug);
     button.className = selected
       ? "btn btn-outline-danger sample-btn"
       : "btn btn-light border sample-btn";
@@ -500,7 +528,7 @@ function renderSuggestions() {
   if (list.length === 0) {
     const empty = document.createElement("div");
     empty.className = "list-group-item sprite-caption";
-    empty.textContent = "No sample Pokémon by that name. Try Gengar or Pikachu.";
+    empty.textContent = "No Pokémon by that name.";
     suggestions.append(empty);
     suggestions.hidden = false;
     search.setAttribute("aria-expanded", "true");
@@ -611,7 +639,7 @@ document.addEventListener("click", (event) => {
 
 for (const button of sampleButtons) {
   button.addEventListener("click", () => {
-    const pokemon = BY_SLUG.get(button.dataset.slug);
+    const pokemon = catalog.bySlug.get(button.dataset.slug);
     if (!pokemon) return;
     choose(pokemon);
   });
@@ -622,11 +650,19 @@ shinyToggle.checked = shinyOn;
 shinyToggle.toggleAttribute("checked", shinyOn);
 shinyToggle.addEventListener("change", () => {
   shinyOn = shinyToggle.checked;
-  rememberLocation(BY_SLUG.get(currentSlug));
+  rememberLocation(catalog.bySlug.get(currentSlug));
   refreshHomeArt();
 });
 
-const fromHash = BY_SLUG.get(decodeURIComponent(location.hash.replace("#", "")));
-const initialPokemon = fromHash || BY_SLUG.get("gengar");
-search.value = initialPokemon.name;
-selectPokemon(initialPokemon);
+loadCatalog()
+  .then((loaded) => {
+    catalog = loaded;
+    const fromHash = catalog.bySlug.get(decodeURIComponent(location.hash.replace("#", "")));
+    const initialPokemon = fromHash || catalog.bySlug.get("gengar");
+    search.value = initialPokemon.name;
+    selectPokemon(initialPokemon);
+  })
+  .catch((error) => {
+    resultsNote.textContent = "Could not load the Pokédex.";
+    console.error(error);
+  });
