@@ -9,7 +9,8 @@
  * already passed. Catch bonuses are not used.
  *
  * cherishOnly is applied here via rulesFor(), before overrides, and
- * before this ranking.
+ * before this ranking. When the Master Ball is the only ball selected,
+ * masterAlternates() adds one or two runner-up balls after that selection.
  */
 
 const DISTANCE_CAP = 0.4;
@@ -56,6 +57,12 @@ const ACCENT_CONTRAST = 0.25;
 const ACCENT_SWATCH = 0.25;
 const PINK_PURPLE_GAP = 18;
 const PINK_PURPLE_FACTOR = 0.45;
+// The Master Ball is the rarest ball, so it should not be the only suggestion.
+// These sit below the normal gate. A runner-up may explain less of its shell
+// and land on a smaller patch, and it does not have to clear the coverage minimum.
+const MASTER_ALT_EXPLAINED = 0.12;
+const MASTER_ALT_SHARE = 0.09;
+const MASTER_ALT_CLOSE = 0.75;
 
 const TYPE_THEMES = {
   normal: [],
@@ -353,11 +360,16 @@ function passes(row) {
   return row.pair.swatch.weight >= ACCENT_SWATCH && row.pair.color.share >= FULL_SHARE;
 }
 
-function orderByColour(rows, types) {
-  const ranked = rows.slice().sort((left, right) => right.score - left.score || left.ball.name.localeCompare(right.ball.name));
+function orderByColour(rows, types, compare) {
+  const ranked = rows.slice().sort(compare || ((left, right) => right.score - left.score || left.ball.name.localeCompare(right.ball.name)));
   for (const row of ranked) row.theme = themed(row.ball, types);
   if (!ranked.length || ranked[0].theme) return ranked;
-  const band = ranked.filter((row) => row.score >= ranked[0].score * CLOSE_RATIO && row.theme);
+  const leader = ranked[0];
+  const band = ranked.filter((row) => {
+    if (!row.theme) return false;
+    if (leader.score > 0) return row.score >= leader.score * CLOSE_RATIO;
+    return row.ballExplained >= leader.ballExplained * CLOSE_RATIO;
+  });
   if (!band.length) return ranked;
   const chosen = band[0];
   chosen.tiebreak = true;
@@ -488,6 +500,44 @@ function accentBall(regions, picked) {
   return best;
 }
 
+function passesMasterAlternate(row) {
+  if (!row.pair || row.ballExplained < MASTER_ALT_EXPLAINED) return false;
+  return row.pair.color.share >= MASTER_ALT_SHARE;
+}
+
+function visualScoreOrder(left, right) {
+  return right.score - left.score || right.ballExplained - left.ballExplained || left.ball.name.localeCompare(right.ball.name);
+}
+
+function alternateClose(row, first) {
+  if (first.score > 0) return row.score >= first.score * MASTER_ALT_CLOSE;
+  return row.ballExplained >= first.ballExplained * MASTER_ALT_CLOSE;
+}
+
+/**
+ * The Master Ball is the rarest ball in the games. When it is the only ball
+ * this form kept, add the next visual matches so the page is not a single
+ * rare ball. Candidates are the other balls in visual-score order, through
+ * the same type tiebreak as the main list. The floor is looser than passes(),
+ * so a runner-up can be a partial shell match or a patch just under the
+ * coverage cutoff. A second alternate is kept when it is close to the first.
+ * That second slot still prefers a ball that covers a colour the first two
+ * cards do not. Forms that already have another match, and forms that did
+ * not pick the Master Ball, are left as they are.
+ */
+function masterAlternates(rows, picked, regions, types) {
+  if (picked.length !== 1 || picked[0].ball.id !== "master-ball") return picked;
+  const pool = rows.filter((row) => row.ball.id !== "master-ball" && passesMasterAlternate(row));
+  const ordered = orderByColour(pool, types, visualScoreOrder);
+  if (!ordered.length) return picked;
+  const first = ordered[0];
+  const close = ordered.slice(1).filter((row) => alternateClose(row, first));
+  const held = [picked[0], first];
+  const diverse = close.find((row) => coversNewLargeRegion(row, held, regions));
+  const second = diverse || close[0] || null;
+  return second ? [picked[0], first, second] : [picked[0], first];
+}
+
 function rankBalls(pokemon, palette) {
   const regions = regionsFor(palette);
   const rows = BALLS.filter((ball) => ball.matchable !== false).map((ball) => scoreBall(ball, regions));
@@ -519,7 +569,7 @@ function rankBalls(pokemon, palette) {
     });
     if (replaceAt >= 0) picked.splice(replaceAt, 1, accent);
   }
-  return picked;
+  return masterAlternates(rows, picked, regions, pokemon.types);
 }
 
 function cherishCard() {
