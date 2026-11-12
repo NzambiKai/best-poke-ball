@@ -24,14 +24,14 @@ The page is static and suited to GitHub Pages. Pokémon art loads from the PokeA
 - Three hard-coded ball cards for the selected Pokémon
 - Evolution line for that family, with up to three sample ball cards on every stage (a straight line, Eevee's branches, or a single stage such as Lapras)
 - A Variants section for species that have other forms (regional forms, Mega Evolutions, Gigantamax, gender differences, and other alternate forms). It stays hidden when a Pokémon has none
-- A per-form Cherish Ball flag in [`js/cherish.js`](js/cherish.js). A form marked there shows a single Cherish Ball card instead of the placeholder suggestions. The seed needs verifying
+- Per-form obtainability in [`js/form-rules.js`](js/form-rules.js). `rulesFor(slug)` returns `cherishOnly` and `shinyLocked`, both false unless that form is listed. A Cherish-only form shows a single Cherish Ball card instead of the placeholder suggestions. The seed needs verifying
 - Fan-project disclaimer in the footer
 
 ## Matching
 
 Not built yet. [`js/balls.js`](js/balls.js) is a stub for a later hand-editable list of balls with colours and theme tags. The page does not read that file. The cards on the page, including the ones under each evolution and each variant, are placeholder copy in [`js/evolutions.js`](js/evolutions.js) and [`js/variants.js`](js/variants.js).
 
-The exception is a form flagged in [`js/cherish.js`](js/cherish.js). If that exact form has only ever been released in a Cherish Ball, the page shows one Cherish Ball card everywhere balls appear: the selected Pokémon, its evolution stage, and its variant card. The flag is per form, so Magearna still shows placeholder cards while Original Color Magearna does not. The seeded list needs verifying.
+The exception is a form whose `cherishOnly` flag is true in [`js/form-rules.js`](js/form-rules.js). If that exact form has only ever been released in a Cherish Ball, the page shows one Cherish Ball card everywhere balls appear: the selected Pokémon, its evolution stage, and its variant card. The flag is per form, so Magearna still shows placeholder cards while Original Color Magearna does not. The seeded list needs verifying.
 
 ## Sources
 
