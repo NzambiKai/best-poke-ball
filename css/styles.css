@@ -360,6 +360,10 @@ h3,
 .type-fairy { background: #f4a6c0; color: #3d2030; }
 .type-dragon { background: #6f4cc4; color: #fff; }
 .type-steel { background: #b8b8d0; color: #24243a; }
+.type-bug { background: #c6d45a; color: #24300a; }
+.type-fighting { background: #e07868; color: #3a1210; }
+.type-ground { background: #e2c78a; color: #3a2c10; }
+.type-rock { background: #c8b878; color: #332a12; }
 
 .site-footer {
   border-top: 1px solid rgba(42, 33, 64, 0.08);
@@ -502,6 +506,15 @@ h3,
 
   .evo-arrow svg {
     transform: none;
+  }
+
+  .evo-tree-nested .evo-line {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .evo-tree-nested .evo-arrow svg {
+    transform: rotate(90deg);
   }
 }
 

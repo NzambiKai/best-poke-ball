@@ -12,21 +12,27 @@ const ITEM_SPRITE = "assets/items/";
 
 let catalog = null;
 
+const SUGGESTION_LIMIT = 12;
+
 const TYPE_LABEL = {
   normal: "Normal",
-  grass: "Grass",
-  poison: "Poison",
-  fire: "Fire",
+  fighting: "Fighting",
   flying: "Flying",
-  electric: "Electric",
+  poison: "Poison",
+  ground: "Ground",
+  rock: "Rock",
+  bug: "Bug",
   ghost: "Ghost",
+  steel: "Steel",
+  fire: "Fire",
   water: "Water",
+  grass: "Grass",
+  electric: "Electric",
   psychic: "Psychic",
   ice: "Ice",
+  dragon: "Dragon",
   dark: "Dark",
   fairy: "Fairy",
-  dragon: "Dragon",
-  steel: "Steel",
 };
 
 const searchForm = document.querySelector("#search-form");
@@ -147,14 +153,18 @@ function refreshHomeArt() {
   syncArtCaption();
 }
 
-function matches(query) {
+function matchResult(query) {
   const all = catalog.pokemon;
-  if (showAll) return all.slice();
-  const q = query.trim().toLowerCase();
-  if (!q) return all.slice();
-  return all.filter(
-    (pokemon) => pokemon.name.toLowerCase().includes(q) || pokemon.slug.includes(q)
-  );
+  let found = all;
+  if (!showAll) {
+    const q = query.trim().toLowerCase();
+    if (q) {
+      found = all.filter(
+        (pokemon) => pokemon.name.toLowerCase().includes(q) || pokemon.slug.includes(q)
+      );
+    }
+  }
+  return { shown: found.slice(0, SUGGESTION_LIMIT), total: found.length };
 }
 
 function highlight(name, query) {
@@ -346,7 +356,7 @@ function stageCard(pokemon, markLine) {
   return article;
 }
 
-function lineStages(node) {
+function takeLine(node) {
   const stages = [];
   let cursor = node;
   while (cursor.evolvesTo.length === 1) {
@@ -357,37 +367,65 @@ function lineStages(node) {
   return { stages, tail: cursor };
 }
 
-function evolutionShape(node) {
-  if (node.evolvesTo.length === 0) return "single";
-  const { tail } = lineStages(node);
-  if (tail.evolvesTo.length === 0) return "line";
-  if (node.evolvesTo.length > 1 && node.evolvesTo.every((child) => child.evolvesTo.length === 0)) return "branch";
-  return "tree";
-}
-
-function appendLine(parent, stages) {
-  const line = document.createElement("div");
-  line.className = "evo-line";
-  stages.forEach((stage, index) => {
-    if (index > 0) line.append(evolutionArrow());
-    line.append(stageCard(stage, true));
-  });
-  parent.append(line);
-}
-
-function renderNestedFamily(node) {
-  const wrap = document.createElement("div");
-  wrap.append(stageCard(node.pokemon, true));
-  if (node.evolvesTo.length === 0) return wrap;
-  const grid = document.createElement("div");
-  grid.className = "row row-cols-1 row-cols-md-2 row-cols-xl-3 g-3 mt-2";
-  for (const child of node.evolvesTo) {
-    const col = document.createElement("div");
-    col.className = "col";
-    col.append(renderNestedFamily(child));
-    grid.append(col);
+function evolutionSummary(node) {
+  const { stages, tail } = takeLine(node);
+  if (tail.evolvesTo.length === 0) {
+    if (stages.length === 1) return `${node.pokemon.name} does not evolve.`;
+    return `Every stage from ${stages[0].name} to ${stages[stages.length - 1].name}.`;
   }
-  wrap.append(grid);
+  if (stages.length === 1 && tail.evolvesTo.every((child) => child.evolvesTo.length === 0)) {
+    return `${node.pokemon.name} branches into ${tail.evolvesTo.length} evolutions.`;
+  }
+  return `${stages[0].name}'s family branches.`;
+}
+
+function renderFamily(node, top) {
+  const { stages, tail } = takeLine(node);
+  const branches = tail.evolvesTo;
+  if (top && stages.length === 1 && branches.length === 0) {
+    const row = document.createElement("div");
+    row.className = "row";
+    const col = document.createElement("div");
+    col.className = "col-12 col-lg-6";
+    col.append(stageCard(stages[0], true));
+    row.append(col);
+    return row;
+  }
+
+  const wrap = document.createElement("div");
+  wrap.className = top ? "evo-tree" : "evo-tree evo-tree-nested";
+  if (stages.length === 1 && branches.length > 0 && top) {
+    const topRow = document.createElement("div");
+    topRow.className = "row justify-content-center mb-3";
+    const topCol = document.createElement("div");
+    topCol.className = "col-12 col-md-8 col-lg-5";
+    topCol.append(stageCard(stages[0], true));
+    topRow.append(topCol);
+    wrap.append(topRow);
+  } else {
+    const line = document.createElement("div");
+    line.className = "evo-line";
+    stages.forEach((stage, index) => {
+      if (index > 0) line.append(evolutionArrow());
+      line.append(stageCard(stage, true));
+    });
+    wrap.append(line);
+  }
+
+  if (branches.length > 1) {
+    const label = document.createElement("p");
+    label.className = "evo-branch-label mb-2";
+    label.textContent = "Evolves into";
+    const grid = document.createElement("div");
+    grid.className = "row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3 evo-branch";
+    for (const child of branches) {
+      const col = document.createElement("div");
+      col.className = "col";
+      col.append(child.evolvesTo.length === 0 ? stageCard(child.pokemon, true) : renderFamily(child, false));
+      grid.append(col);
+    }
+    wrap.append(label, grid);
+  }
   return wrap;
 }
 
@@ -401,45 +439,8 @@ function renderEvolution(pokemon) {
     evolutionNote.textContent = "";
     return;
   }
-  const shape = evolutionShape(tree);
-  if (shape === "branch") {
-    evolutionNote.textContent = `${tree.pokemon.name} branches into ${tree.evolvesTo.length} evolutions.`;
-    const top = document.createElement("div");
-    top.className = "row justify-content-center mb-3";
-    const topCol = document.createElement("div");
-    topCol.className = "col-12 col-md-8 col-lg-5";
-    topCol.append(stageCard(tree.pokemon, true));
-    top.append(topCol);
-    const label = document.createElement("p");
-    label.className = "evo-branch-label mb-2";
-    label.textContent = "Evolves into";
-    const grid = document.createElement("div");
-    grid.className = "row row-cols-1 row-cols-sm-2 row-cols-xl-4 g-3";
-    for (const child of tree.evolvesTo) {
-      const col = document.createElement("div");
-      col.className = "col";
-      col.append(stageCard(child.pokemon, true));
-      grid.append(col);
-    }
-    evolutionLine.append(top, label, grid);
-  } else if (shape === "single") {
-    evolutionNote.textContent = `${tree.pokemon.name} does not evolve.`;
-    const row = document.createElement("div");
-    row.className = "row";
-    const col = document.createElement("div");
-    col.className = "col-12 col-lg-6";
-    col.append(stageCard(tree.pokemon, true));
-    row.append(col);
-    evolutionLine.append(row);
-  } else if (shape === "line") {
-    const { stages } = lineStages(tree);
-    evolutionNote.textContent = `Every stage from ${stages[0].name} to ${stages[stages.length - 1].name}.`;
-    appendLine(evolutionLine, stages);
-  } else {
-    evolutionNote.textContent = `${tree.pokemon.name}'s family.`;
-    evolutionLine.append(renderNestedFamily(tree));
-  }
-
+  evolutionNote.textContent = evolutionSummary(tree);
+  evolutionLine.append(renderFamily(tree, true));
   if (restoreFocus) {
     evolutionLine.querySelector(".evo-stage.is-selected .evo-pick")?.focus({ preventScroll: true });
   }
@@ -518,14 +519,14 @@ function closeList() {
 }
 
 function renderSuggestions() {
-  const list = matches(search.value);
+  const { shown, total } = matchResult(search.value);
   suggestions.replaceChildren();
   if (!open) {
     closeList();
     return;
   }
 
-  if (list.length === 0) {
+  if (shown.length === 0) {
     const empty = document.createElement("div");
     empty.className = "list-group-item sprite-caption";
     empty.textContent = "No Pokémon by that name.";
@@ -536,7 +537,7 @@ function renderSuggestions() {
     return;
   }
 
-  list.forEach((pokemon, index) => {
+  shown.forEach((pokemon, index) => {
     const option = document.createElement("button");
     option.type = "button";
     option.className = "list-group-item list-group-item-action d-flex align-items-center gap-3";
@@ -568,6 +569,13 @@ function renderSuggestions() {
     suggestions.append(option);
   });
 
+  if (total > shown.length) {
+    const more = document.createElement("div");
+    more.className = "list-group-item sprite-caption";
+    more.textContent = `Showing ${shown.length} of ${total}. Keep typing to narrow the list.`;
+    suggestions.append(more);
+  }
+
   suggestions.hidden = false;
   search.setAttribute("aria-expanded", "true");
   const active = suggestions.querySelector(".active");
@@ -582,11 +590,11 @@ function choose(pokemon) {
 }
 
 function moveActive(delta) {
-  const list = matches(search.value);
-  if (!list.length) return;
+  const { shown } = matchResult(search.value);
+  if (!shown.length) return;
   open = true;
-  if (activeIndex === -1) activeIndex = delta > 0 ? 0 : list.length - 1;
-  else activeIndex = (activeIndex + delta + list.length) % list.length;
+  if (activeIndex === -1) activeIndex = delta > 0 ? 0 : shown.length - 1;
+  else activeIndex = (activeIndex + delta + shown.length) % shown.length;
   renderSuggestions();
   suggestions.querySelector(".active")?.scrollIntoView({ block: "nearest" });
 }
@@ -617,8 +625,8 @@ search.addEventListener("keydown", (event) => {
     closeList();
   } else if (event.key === "Enter") {
     event.preventDefault();
-    const list = matches(search.value);
-    const picked = list[activeIndex] || (list.length === 1 ? list[0] : null);
+    const { shown } = matchResult(search.value);
+    const picked = shown[activeIndex] || (shown.length === 1 ? shown[0] : null);
     if (picked) choose(picked);
   }
 });
