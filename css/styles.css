@@ -45,32 +45,11 @@ h3,
   color: var(--ink);
 }
 
-.navbar-text {
-  color: var(--muted);
-  font-weight: 700;
-}
-
-.pokeball {
-  width: 1.9rem;
-  height: 1.9rem;
-  border-radius: 50%;
-  border: 2px solid #241c33;
-  background: linear-gradient(#ee3a34 0 46%, #241c33 46% 54%, #f4f4f4 54% 100%);
-  position: relative;
+.site-logo {
+  width: 30px;
+  height: 30px;
   flex: none;
-}
-
-.pokeball::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0.55rem;
-  height: 0.55rem;
-  transform: translate(-50%, -50%);
-  background: #fff;
-  border: 2px solid #241c33;
-  border-radius: 50%;
+  image-rendering: pixelated;
 }
 
 .hero {
