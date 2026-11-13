@@ -5,6 +5,7 @@
  * the shiny artwork switch, and the variant section. Pokédex data comes
  * from js/catalog.js. Ball cards come from matchBalls() in js/matching.js.
  * Per-form obtainability comes from rulesFor() in js/form-rules.js.
+ * The last Pokémon comes from js/preferences.js.
  */
 
 const ITEM_SPRITE = "assets/items/";
@@ -54,7 +55,7 @@ const artCaption = document.querySelector("#art-caption");
 const artLock = document.querySelector("#art-lock");
 
 let activeIndex = -1;
-let currentSlug = "gengar";
+let currentSlug = DEFAULT_POKEMON_SLUG;
 let open = false;
 let showAll = false;
 let shinyOn = false;
@@ -518,6 +519,7 @@ function selectPokemon(pokemon) {
   renderEvolution(pokemon);
   renderVariants(pokemon);
   document.title = `${pokemon.name} · Best Poké Ball`;
+  rememberLastViewed(pokemon.slug);
   rememberLocation(pokemon);
 }
 
@@ -679,11 +681,21 @@ shinyToggle.addEventListener("change", () => {
   renderVariants(pokemon);
 });
 
+function hashSlug() {
+  try {
+    return decodeURIComponent(location.hash.replace("#", ""));
+  } catch {
+    return "";
+  }
+}
+
 loadCatalog()
   .then((loaded) => {
     catalog = loaded;
-    const fromHash = catalog.bySlug.get(decodeURIComponent(location.hash.replace("#", "")));
-    const initialPokemon = fromHash || catalog.bySlug.get("gengar");
+    const fromHash = catalog.bySlug.get(hashSlug());
+    const saved = catalog.bySlug.get(readLastViewed());
+    const initialPokemon = fromHash || saved || catalog.bySlug.get(DEFAULT_POKEMON_SLUG);
+    if (!initialPokemon) return;
     search.value = initialPokemon.name;
     selectPokemon(initialPokemon);
   })
