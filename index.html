@@ -51,7 +51,7 @@
             class="form-control form-control-lg rounded-4"
             type="search"
             placeholder="Try Gengar, Pikachu, Sylveon…"
-            value="Gengar"
+            value="Bulbasaur"
             role="combobox"
             aria-expanded="false"
             aria-controls="suggestions"
@@ -69,11 +69,11 @@
       </form>
 
       <div class="sample-row text-center mt-3" role="group" aria-label="Sample Pokémon">
-        <button type="button" class="btn btn-light border sample-btn" data-slug="bulbasaur" aria-pressed="false">Bulbasaur</button>
+        <button type="button" class="btn btn-outline-danger sample-btn" data-slug="bulbasaur" aria-pressed="true">Bulbasaur</button>
         <button type="button" class="btn btn-light border sample-btn" data-slug="charizard" aria-pressed="false">Charizard</button>
         <button type="button" class="btn btn-light border sample-btn" data-slug="vulpix" aria-pressed="false">Vulpix</button>
         <button type="button" class="btn btn-light border sample-btn" data-slug="pikachu" aria-pressed="false">Pikachu</button>
-        <button type="button" class="btn btn-outline-danger sample-btn" data-slug="gengar" aria-pressed="true">Gengar</button>
+        <button type="button" class="btn btn-light border sample-btn" data-slug="gengar" aria-pressed="false">Gengar</button>
         <button type="button" class="btn btn-light border sample-btn" data-slug="lapras" aria-pressed="false">Lapras</button>
         <button type="button" class="btn btn-light border sample-btn" data-slug="umbreon" aria-pressed="false">Umbreon</button>
         <button type="button" class="btn btn-light border sample-btn" data-slug="sylveon" aria-pressed="false">Sylveon</button>
@@ -86,8 +86,8 @@
               <div class="sprite-stage mx-auto">
                 <img
                   id="pokemon-art"
-                  src="assets/home/94.webp"
-                  alt="Gengar, Pokémon HOME artwork"
+                  src="assets/home/1.webp"
+                  alt="Bulbasaur, Pokémon HOME artwork"
                   width="512"
                   height="512">
               </div>
@@ -96,10 +96,10 @@
             </div>
             <div class="col text-center text-sm-start">
               <p class="eyebrow text-uppercase fw-bold mb-1">Selected Pokémon</p>
-              <h2 id="pokemon-name" class="pokemon-name mb-1" tabindex="-1">Gengar</h2>
-              <p id="pokemon-dex" class="sprite-caption mb-3">No. 094</p>
+              <h2 id="pokemon-name" class="pokemon-name mb-1" tabindex="-1">Bulbasaur</h2>
+              <p id="pokemon-dex" class="sprite-caption mb-3">No. 001</p>
               <div id="pokemon-types" class="d-flex flex-wrap gap-2 justify-content-center justify-content-sm-start">
-                <span class="badge rounded-pill type-badge type-ghost">Ghost</span>
+                <span class="badge rounded-pill type-badge type-grass">Grass</span>
                 <span class="badge rounded-pill type-badge type-poison">Poison</span>
               </div>
             </div>
@@ -112,15 +112,15 @@
           <h2 id="results-heading" class="h4 mb-0">Ball matches</h2>
         </div>
         <p id="results-note" class="sprite-caption mb-3">
-          Matched to Gengar on colour.
+          Matched to Bulbasaur on colour.
         </p>
         <div id="featured-balls" class="row g-3">
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-4">
             <article class="card soft-card ball-card rounded-4 h-100" data-accent="1">
               <div class="card-body d-flex gap-3 align-items-center">
                 <div class="ball-plate">
                     <img
-                    src="assets/items/master-ball.png"
+                    src="assets/items/friend-ball.png"
                     alt=""
                     width="60"
                     height="60">
@@ -128,19 +128,19 @@
                 <div>
                   <div class="d-flex align-items-center gap-2 mb-1">
                     <span class="rank-badge" aria-hidden="true">1</span>
-                    <h3 class="h5 mb-0"><span class="visually-hidden">Match 1: </span>Master Ball</h3>
+                    <h3 class="h5 mb-0"><span class="visually-hidden">Match 1: </span>Friend Ball</h3>
                   </div>
-                  <p class="mb-0 ball-reason">Purple shell beside Gengar's purple coloring</p>
+                  <p class="mb-0 ball-reason">Green shell beside Bulbasaur's green coloring</p>
                 </div>
               </div>
             </article>
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-lg-4">
             <article class="card soft-card ball-card rounded-4 h-100" data-accent="2">
               <div class="card-body d-flex gap-3 align-items-center">
                 <div class="ball-plate">
                     <img
-                    src="assets/items/beast-ball.png"
+                    src="assets/items/safari-ball.png"
                     alt=""
                     width="60"
                     height="60">
@@ -148,9 +148,29 @@
                 <div>
                   <div class="d-flex align-items-center gap-2 mb-1">
                     <span class="rank-badge" aria-hidden="true">2</span>
-                    <h3 class="h5 mb-0"><span class="visually-hidden">Match 2: </span>Beast Ball</h3>
+                    <h3 class="h5 mb-0"><span class="visually-hidden">Match 2: </span>Safari Ball</h3>
                   </div>
-                  <p class="mb-0 ball-reason">Blue shell beside Gengar's purple coloring</p>
+                  <p class="mb-0 ball-reason">Green shell beside Bulbasaur's green coloring</p>
+                </div>
+              </div>
+            </article>
+          </div>
+          <div class="col-12 col-lg-4">
+            <article class="card soft-card ball-card rounded-4 h-100" data-accent="3">
+              <div class="card-body d-flex gap-3 align-items-center">
+                <div class="ball-plate">
+                    <img
+                    src="assets/items/net-ball.png"
+                    alt=""
+                    width="60"
+                    height="60">
+                </div>
+                <div>
+                  <div class="d-flex align-items-center gap-2 mb-1">
+                    <span class="rank-badge" aria-hidden="true">3</span>
+                    <h3 class="h5 mb-0"><span class="visually-hidden">Match 3: </span>Net Ball</h3>
+                  </div>
+                  <p class="mb-0 ball-reason">Teal shell beside Bulbasaur's teal coloring</p>
                 </div>
               </div>
             </article>
@@ -163,7 +183,7 @@
           <h2 id="evolution-heading" class="h4 mb-0">Evolution line</h2>
         </div>
         <p id="evolution-note" class="sprite-caption mb-3">
-          Every stage from Gastly to Gengar.
+          Every stage from Bulbasaur to Venusaur.
         </p>
         <div id="evolution-line"></div>
       </section>
@@ -203,6 +223,7 @@
     <script src="js/form-rules.js"></script>
     <script src="js/catalog.js"></script>
     <script src="js/matching.js"></script>
+    <script src="js/preferences.js"></script>
     <script src="js/app.js"></script>
   </body>
 </html>
