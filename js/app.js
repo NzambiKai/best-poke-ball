@@ -45,13 +45,13 @@ const typesEl = document.querySelector("#pokemon-types");
 const sampleButtons = [...document.querySelectorAll(".sample-btn")];
 const featuredBalls = document.querySelector("#featured-balls");
 const resultsNote = document.querySelector("#results-note");
+const evolutionSection = document.querySelector("#evolution-section");
 const evolutionLine = document.querySelector("#evolution-line");
 const evolutionNote = document.querySelector("#evolution-note");
 const variantSection = document.querySelector("#variant-section");
 const variantLine = document.querySelector("#variant-line");
 const variantNote = document.querySelector("#variant-note");
 const shinyToggle = document.querySelector("#shiny-toggle");
-const artCaption = document.querySelector("#art-caption");
 const artLock = document.querySelector("#art-lock");
 
 let activeIndex = -1;
@@ -107,16 +107,12 @@ function applyHomeSprite(image, pokemon) {
   } else {
     image.removeAttribute("title");
   }
-  image.onload = () => {
-    if (image.dataset.spriteToken !== token) return;
-    if (image === art) syncArtCaption();
-  };
   image.onerror = () => {
     if (image.dataset.spriteToken !== token) return;
     image.onerror = null;
   };
   image.src = choice.src;
-  if (image === art) syncArtCaption();
+  if (image === art) syncArtLock();
 }
 
 function homeAlt(pokemon) {
@@ -125,22 +121,12 @@ function homeAlt(pokemon) {
     : `${pokemon.name}, Pokémon HOME artwork`;
 }
 
-function syncArtCaption() {
-  if (!artCaption) return;
+function syncArtLock() {
+  if (!artLock) return;
   const pokemon = catalog.bySlug.get(art.dataset.spriteSlug || currentSlug);
   const treatment = pokemon ? shinyTreatment(pokemon) : "off";
-  if (artLock) {
-    artLock.replaceChildren();
-    if (treatment === "locked") artLock.append(lockBadge());
-  }
-  if (treatment === "off" || treatment === "locked") {
-    artCaption.textContent = "Pokémon HOME artwork";
-    return;
-  }
-  artCaption.textContent =
-    art.dataset.fellBack === "1"
-      ? "Regular HOME artwork (shiny file missing)"
-      : "Shiny Pokémon HOME artwork";
+  artLock.replaceChildren();
+  if (treatment === "locked") artLock.append(lockBadge());
 }
 
 function refreshHomeArt() {
@@ -150,7 +136,7 @@ function refreshHomeArt() {
     applyHomeSprite(image, pokemon);
     if (image === art) image.alt = homeAlt(pokemon);
   });
-  syncArtCaption();
+  syncArtLock();
 }
 
 function matchResult(query) {
@@ -383,7 +369,6 @@ function takeLine(node) {
 function evolutionSummary(node) {
   const { stages, tail } = takeLine(node);
   if (tail.evolvesTo.length === 0) {
-    if (stages.length === 1) return `${node.pokemon.name} does not evolve.`;
     return `Every stage from ${stages[0].name} to ${stages[stages.length - 1].name}.`;
   }
   if (stages.length === 1 && tail.evolvesTo.every((child) => child.evolvesTo.length === 0)) {
@@ -395,16 +380,6 @@ function evolutionSummary(node) {
 function renderFamily(node, top) {
   const { stages, tail } = takeLine(node);
   const branches = tail.evolvesTo;
-  if (top && stages.length === 1 && branches.length === 0) {
-    const row = document.createElement("div");
-    row.className = "row";
-    const col = document.createElement("div");
-    col.className = "col-12 col-lg-6";
-    col.append(stageCard(stages[0], true));
-    row.append(col);
-    return row;
-  }
-
   const wrap = document.createElement("div");
   wrap.className = top ? "evo-tree" : "evo-tree evo-tree-nested";
   if (stages.length === 1 && branches.length > 0 && top) {
@@ -442,16 +417,28 @@ function renderFamily(node, top) {
   return wrap;
 }
 
+function hasEvolutionLine(node) {
+  const { stages, tail } = takeLine(node);
+  return stages.length > 1 || tail.evolvesTo.length > 0;
+}
+
+function hideDetail(section, note, body) {
+  section.hidden = true;
+  note.textContent = "";
+  body.replaceChildren();
+}
+
 function renderEvolution(pokemon) {
   const tree = catalog.familyTree(pokemon.slug);
   const restoreFocus =
     evolutionLine.contains(document.activeElement) ||
     variantLine.contains(document.activeElement);
-  evolutionLine.replaceChildren();
-  if (!tree) {
-    evolutionNote.textContent = "";
+  if (!tree || !hasEvolutionLine(tree)) {
+    hideDetail(evolutionSection, evolutionNote, evolutionLine);
     return;
   }
+  evolutionSection.hidden = false;
+  evolutionLine.replaceChildren();
   evolutionNote.textContent = evolutionSummary(tree);
   evolutionLine.append(renderFamily(tree, true));
   if (restoreFocus) {
@@ -465,9 +452,7 @@ function renderVariants(pokemon) {
   );
   others.sort((a, b) => Number(b.isDefault) - Number(a.isDefault) || a.name.localeCompare(b.name));
   if (others.length === 0) {
-    variantSection.hidden = true;
-    variantNote.textContent = "";
-    variantLine.replaceChildren();
+    hideDetail(variantSection, variantNote, variantLine);
     return;
   }
   variantSection.hidden = false;
@@ -495,7 +480,7 @@ function selectPokemon(pokemon) {
   currentSlug = pokemon.slug;
   applyHomeSprite(art, pokemon);
   art.alt = homeAlt(pokemon);
-  syncArtCaption();
+  syncArtLock();
   nameEl.textContent = pokemon.name;
   dexEl.textContent = dexNumber(pokemon);
   typesEl.replaceChildren();
