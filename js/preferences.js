@@ -1,16 +1,17 @@
 "use strict";
 
 /**
- * Remembers the last Pokémon the visitor looked at.
- * Only a slug is stored. The Pokédex and the page stay out of this file.
+ * Remembers the last Pokémon and whether Shiny is on.
+ * The Pokédex and the page stay out of this file.
  * Missing, invalid, or blocked storage is a silent miss.
  */
 
 const DEFAULT_POKEMON_SLUG = "bulbasaur";
 const LAST_VIEWED_KEY = "best-poke-ball.last-viewed";
+const SHINY_KEY = "best-poke-ball.shiny";
 const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
-function lastViewedStorage() {
+function preferenceStorage() {
   try {
     if (typeof localStorage === "undefined" || !localStorage) return null;
     return localStorage;
@@ -20,7 +21,7 @@ function lastViewedStorage() {
 }
 
 function readLastViewed() {
-  const storage = lastViewedStorage();
+  const storage = preferenceStorage();
   if (!storage) return null;
   try {
     const value = storage.getItem(LAST_VIEWED_KEY);
@@ -33,11 +34,31 @@ function readLastViewed() {
 
 function rememberLastViewed(slug) {
   if (typeof slug !== "string" || !SLUG_PATTERN.test(slug)) return;
-  const storage = lastViewedStorage();
+  const storage = preferenceStorage();
   if (!storage) return;
   try {
     storage.setItem(LAST_VIEWED_KEY, slug);
   } catch {
     // Private mode, a full disk, or a blocked store. The page still shows the Pokémon.
+  }
+}
+
+function readShiny() {
+  const storage = preferenceStorage();
+  if (!storage) return false;
+  try {
+    return storage.getItem(SHINY_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function rememberShiny(on) {
+  const storage = preferenceStorage();
+  if (!storage) return;
+  try {
+    storage.setItem(SHINY_KEY, on ? "1" : "0");
+  } catch {
+    // The switch still updates the artwork for this visit.
   }
 }
