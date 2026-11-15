@@ -5,7 +5,7 @@
  * the shiny artwork switch, and the variant section. Pokédex data comes
  * from js/catalog.js. Ball cards come from matchBalls() in js/matching.js.
  * Per-form obtainability comes from rulesFor() in js/form-rules.js.
- * The last Pokémon comes from js/preferences.js.
+ * The last Pokémon and the Shiny switch come from js/preferences.js.
  */
 
 const ITEM_SPRITE = "assets/items/";
@@ -667,11 +667,20 @@ for (const button of sampleButtons) {
   });
 }
 
-shinyOn = new URLSearchParams(location.search).get("shiny") === "1";
+function shinyRequested() {
+  const params = new URLSearchParams(location.search);
+  if (!params.has("shiny")) return null;
+  return params.get("shiny") === "1";
+}
+
+const requestedShiny = shinyRequested();
+shinyOn = requestedShiny === null ? readShiny() : requestedShiny;
 shinyToggle.checked = shinyOn;
 shinyToggle.toggleAttribute("checked", shinyOn);
+rememberShiny(shinyOn);
 shinyToggle.addEventListener("change", () => {
   shinyOn = shinyToggle.checked;
+  rememberShiny(shinyOn);
   const pokemon = catalog.bySlug.get(currentSlug);
   rememberLocation(pokemon);
   refreshHomeArt();
