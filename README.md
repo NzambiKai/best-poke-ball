@@ -1,6 +1,6 @@
 # Best Poké Ball
 
-Fan-made quick reference for Poké Balls that suit a Pokémon's look and vibe.
+Fan-made quick reference for which Poké Balls best match a Pokémon's colors.
 
 Best Poké Ball is not affiliated with Nintendo, Game Freak, or The Pokémon Company.
 

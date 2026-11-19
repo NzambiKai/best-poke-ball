@@ -208,7 +208,7 @@ function featuredCard(card, index, count) {
   body.className = "card-body d-flex gap-3 align-items-center";
   const copy = document.createElement("div");
   const headingRow = document.createElement("div");
-  headingRow.className = "d-flex align-items-center gap-2 mb-1";
+  headingRow.className = "d-flex align-items-center gap-2";
   const rank = document.createElement("span");
   rank.className = "rank-badge";
   rank.setAttribute("aria-hidden", "true");
@@ -227,10 +227,7 @@ function featuredCard(card, index, count) {
   } else {
     headingRow.append(rank, heading);
   }
-  const reason = document.createElement("p");
-  reason.className = "mb-0 ball-reason";
-  reason.textContent = card.reason;
-  copy.append(headingRow, reason);
+  copy.append(headingRow);
   body.append(ballPlate(card.ball), copy);
   article.append(body);
   column.append(article);
@@ -343,10 +340,7 @@ function stageCard(pokemon, markLine) {
       title.append(pill);
     }
     title.append(document.createTextNode(card.name));
-    const reason = document.createElement("p");
-    reason.className = "mb-0 evo-reason";
-    reason.textContent = card.reason;
-    text.append(title, reason);
+    text.append(title);
     item.append(ball, text);
     list.append(item);
   });
