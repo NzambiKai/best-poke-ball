@@ -68,40 +68,6 @@
     }
   },
   {
-    "slug": "venusaur-gmax",
-    "name": "Gigantamax Venusaur",
-    "dex": 3,
-    "speciesSlug": "venusaur",
-    "speciesName": "Venusaur",
-    "types": [
-      "grass",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10195.webp",
-      "shiny": "assets/home/shiny/10195.webp"
-    }
-  },
-  {
-    "slug": "venusaur-mega",
-    "name": "Mega Venusaur",
-    "dex": 3,
-    "speciesSlug": "venusaur",
-    "speciesName": "Venusaur",
-    "types": [
-      "grass",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10033.webp",
-      "shiny": "assets/home/shiny/10033.webp"
-    }
-  },
-  {
     "slug": "charmander",
     "name": "Charmander",
     "dex": 4,
@@ -151,57 +117,6 @@
     }
   },
   {
-    "slug": "charizard-gmax",
-    "name": "Gigantamax Charizard",
-    "dex": 6,
-    "speciesSlug": "charizard",
-    "speciesName": "Charizard",
-    "types": [
-      "fire",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10196.webp",
-      "shiny": "assets/home/shiny/10196.webp"
-    }
-  },
-  {
-    "slug": "charizard-mega-x",
-    "name": "Mega Charizard X",
-    "dex": 6,
-    "speciesSlug": "charizard",
-    "speciesName": "Charizard",
-    "types": [
-      "fire",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10034.webp",
-      "shiny": "assets/home/shiny/10034.webp"
-    }
-  },
-  {
-    "slug": "charizard-mega-y",
-    "name": "Mega Charizard Y",
-    "dex": 6,
-    "speciesSlug": "charizard",
-    "speciesName": "Charizard",
-    "types": [
-      "fire",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10035.webp",
-      "shiny": "assets/home/shiny/10035.webp"
-    }
-  },
-  {
     "slug": "squirtle",
     "name": "Squirtle",
     "dex": 7,
@@ -247,38 +162,6 @@
     "sprites": {
       "home": "assets/home/9.webp",
       "shiny": "assets/home/shiny/9.webp"
-    }
-  },
-  {
-    "slug": "blastoise-gmax",
-    "name": "Gigantamax Blastoise",
-    "dex": 9,
-    "speciesSlug": "blastoise",
-    "speciesName": "Blastoise",
-    "types": [
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10197.webp",
-      "shiny": "assets/home/shiny/10197.webp"
-    }
-  },
-  {
-    "slug": "blastoise-mega",
-    "name": "Mega Blastoise",
-    "dex": 9,
-    "speciesSlug": "blastoise",
-    "speciesName": "Blastoise",
-    "types": [
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10036.webp",
-      "shiny": "assets/home/shiny/10036.webp"
     }
   },
   {
@@ -348,23 +231,6 @@
     }
   },
   {
-    "slug": "butterfree-gmax",
-    "name": "Gigantamax Butterfree",
-    "dex": 12,
-    "speciesSlug": "butterfree",
-    "speciesName": "Butterfree",
-    "types": [
-      "bug",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10198.webp",
-      "shiny": "assets/home/shiny/10198.webp"
-    }
-  },
-  {
     "slug": "weedle",
     "name": "Weedle",
     "dex": 13,
@@ -416,23 +282,6 @@
     }
   },
   {
-    "slug": "beedrill-mega",
-    "name": "Mega Beedrill",
-    "dex": 15,
-    "speciesSlug": "beedrill",
-    "speciesName": "Beedrill",
-    "types": [
-      "bug",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10090.webp",
-      "shiny": "assets/home/shiny/10090.webp"
-    }
-  },
-  {
     "slug": "pidgey",
     "name": "Pidgey",
     "dex": 16,
@@ -481,23 +330,6 @@
     "sprites": {
       "home": "assets/home/18.webp",
       "shiny": "assets/home/shiny/18.webp"
-    }
-  },
-  {
-    "slug": "pidgeot-mega",
-    "name": "Mega Pidgeot",
-    "dex": 18,
-    "speciesSlug": "pidgeot",
-    "speciesName": "Pidgeot",
-    "types": [
-      "normal",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10073.webp",
-      "shiny": "assets/home/shiny/10073.webp"
     }
   },
   {
@@ -596,23 +428,6 @@
     "sprites": {
       "home": "assets/home/female/20.webp",
       "shiny": "assets/home/shiny/female/20.webp"
-    }
-  },
-  {
-    "slug": "raticate-totem-alola",
-    "name": "Totem Alolan Raticate",
-    "dex": 20,
-    "speciesSlug": "raticate",
-    "speciesName": "Raticate",
-    "types": [
-      "dark",
-      "normal"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10093.webp",
-      "shiny": "assets/home/shiny/10093.webp"
     }
   },
   {
@@ -727,22 +542,6 @@
     "sprites": {
       "home": "assets/home/female/25.webp",
       "shiny": "assets/home/shiny/female/25.webp"
-    }
-  },
-  {
-    "slug": "pikachu-gmax",
-    "name": "Gigantamax Pikachu",
-    "dex": 25,
-    "speciesSlug": "pikachu",
-    "speciesName": "Pikachu",
-    "types": [
-      "electric"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10199.webp",
-      "shiny": "assets/home/shiny/10199.webp"
     }
   },
   {
@@ -904,38 +703,6 @@
     "sprites": {
       "home": "assets/home/female/26.webp",
       "shiny": "assets/home/shiny/female/26.webp"
-    }
-  },
-  {
-    "slug": "raichu-mega-x",
-    "name": "Mega Raichu X",
-    "dex": 26,
-    "speciesSlug": "raichu",
-    "speciesName": "Raichu",
-    "types": [
-      "electric"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10304.webp",
-      "shiny": "assets/home/shiny/10304.webp"
-    }
-  },
-  {
-    "slug": "raichu-mega-y",
-    "name": "Mega Raichu Y",
-    "dex": 26,
-    "speciesSlug": "raichu",
-    "speciesName": "Raichu",
-    "types": [
-      "electric"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10305.webp",
-      "shiny": "assets/home/shiny/10305.webp"
     }
   },
   {
@@ -1132,23 +899,6 @@
     "sprites": {
       "home": "assets/home/36.webp",
       "shiny": "assets/home/shiny/36.webp"
-    }
-  },
-  {
-    "slug": "clefable-mega",
-    "name": "Mega Clefable",
-    "dex": 36,
-    "speciesSlug": "clefable",
-    "speciesName": "Clefable",
-    "types": [
-      "fairy",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10278.webp",
-      "shiny": "assets/home/shiny/10278.webp"
     }
   },
   {
@@ -1586,22 +1336,6 @@
     }
   },
   {
-    "slug": "meowth-gmax",
-    "name": "Gigantamax Meowth",
-    "dex": 52,
-    "speciesSlug": "meowth",
-    "speciesName": "Meowth",
-    "types": [
-      "normal"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10200.webp",
-      "shiny": "assets/home/shiny/10200.webp"
-    }
-  },
-  {
     "slug": "persian",
     "name": "Persian",
     "dex": 53,
@@ -1893,22 +1627,6 @@
     }
   },
   {
-    "slug": "alakazam-mega",
-    "name": "Mega Alakazam",
-    "dex": 65,
-    "speciesSlug": "alakazam",
-    "speciesName": "Alakazam",
-    "types": [
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10037.webp",
-      "shiny": "assets/home/shiny/10037.webp"
-    }
-  },
-  {
     "slug": "machop",
     "name": "Machop",
     "dex": 66,
@@ -1954,22 +1672,6 @@
     "sprites": {
       "home": "assets/home/68.webp",
       "shiny": "assets/home/shiny/68.webp"
-    }
-  },
-  {
-    "slug": "machamp-gmax",
-    "name": "Gigantamax Machamp",
-    "dex": 68,
-    "speciesSlug": "machamp",
-    "speciesName": "Machamp",
-    "types": [
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10201.webp",
-      "shiny": "assets/home/shiny/10201.webp"
     }
   },
   {
@@ -2021,23 +1723,6 @@
     "sprites": {
       "home": "assets/home/71.webp",
       "shiny": "assets/home/shiny/71.webp"
-    }
-  },
-  {
-    "slug": "victreebel-mega",
-    "name": "Mega Victreebel",
-    "dex": 71,
-    "speciesSlug": "victreebel",
-    "speciesName": "Victreebel",
-    "types": [
-      "grass",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10279.webp",
-      "shiny": "assets/home/shiny/10279.webp"
     }
   },
   {
@@ -2306,23 +1991,6 @@
     "sprites": {
       "home": "assets/home/10165.webp",
       "shiny": "assets/home/shiny/10165.webp"
-    }
-  },
-  {
-    "slug": "slowbro-mega",
-    "name": "Mega Slowbro",
-    "dex": 80,
-    "speciesSlug": "slowbro",
-    "speciesName": "Slowbro",
-    "types": [
-      "water",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10071.webp",
-      "shiny": "assets/home/shiny/10071.webp"
     }
   },
   {
@@ -2644,40 +2312,6 @@
     }
   },
   {
-    "slug": "gengar-gmax",
-    "name": "Gigantamax Gengar",
-    "dex": 94,
-    "speciesSlug": "gengar",
-    "speciesName": "Gengar",
-    "types": [
-      "ghost",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10202.webp",
-      "shiny": "assets/home/shiny/10202.webp"
-    }
-  },
-  {
-    "slug": "gengar-mega",
-    "name": "Mega Gengar",
-    "dex": 94,
-    "speciesSlug": "gengar",
-    "speciesName": "Gengar",
-    "types": [
-      "ghost",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10038.webp",
-      "shiny": "assets/home/shiny/10038.webp"
-    }
-  },
-  {
     "slug": "onix",
     "name": "Onix",
     "dex": 95,
@@ -2772,22 +2406,6 @@
     "sprites": {
       "home": "assets/home/99.webp",
       "shiny": "assets/home/shiny/99.webp"
-    }
-  },
-  {
-    "slug": "kingler-gmax",
-    "name": "Gigantamax Kingler",
-    "dex": 99,
-    "speciesSlug": "kingler",
-    "speciesName": "Kingler",
-    "types": [
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10203.webp",
-      "shiny": "assets/home/shiny/10203.webp"
     }
   },
   {
@@ -2954,23 +2572,6 @@
     "sprites": {
       "home": "assets/home/10115.webp",
       "shiny": "assets/home/shiny/10115.webp"
-    }
-  },
-  {
-    "slug": "marowak-totem",
-    "name": "Totem Alolan Marowak",
-    "dex": 105,
-    "speciesSlug": "marowak",
-    "speciesName": "Marowak",
-    "types": [
-      "fire",
-      "ghost"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10149.webp",
-      "shiny": "assets/home/shiny/10149.webp"
     }
   },
   {
@@ -3187,22 +2788,6 @@
     }
   },
   {
-    "slug": "kangaskhan-mega",
-    "name": "Mega Kangaskhan",
-    "dex": 115,
-    "speciesSlug": "kangaskhan",
-    "speciesName": "Kangaskhan",
-    "types": [
-      "normal"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10039.webp",
-      "shiny": "assets/home/shiny/10039.webp"
-    }
-  },
-  {
     "slug": "horsea",
     "name": "Horsea",
     "dex": 116,
@@ -3329,23 +2914,6 @@
     "sprites": {
       "home": "assets/home/121.webp",
       "shiny": "assets/home/shiny/121.webp"
-    }
-  },
-  {
-    "slug": "starmie-mega",
-    "name": "Mega Starmie",
-    "dex": 121,
-    "speciesSlug": "starmie",
-    "speciesName": "Starmie",
-    "types": [
-      "water",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10280.webp",
-      "shiny": "assets/home/shiny/10280.webp"
     }
   },
   {
@@ -3482,23 +3050,6 @@
     }
   },
   {
-    "slug": "pinsir-mega",
-    "name": "Mega Pinsir",
-    "dex": 127,
-    "speciesSlug": "pinsir",
-    "speciesName": "Pinsir",
-    "types": [
-      "bug",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10040.webp",
-      "shiny": "assets/home/shiny/10040.webp"
-    }
-  },
-  {
     "slug": "tauros",
     "name": "Tauros",
     "dex": 128,
@@ -3631,23 +3182,6 @@
     }
   },
   {
-    "slug": "gyarados-mega",
-    "name": "Mega Gyarados",
-    "dex": 130,
-    "speciesSlug": "gyarados",
-    "speciesName": "Gyarados",
-    "types": [
-      "water",
-      "dark"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10041.webp",
-      "shiny": "assets/home/shiny/10041.webp"
-    }
-  },
-  {
     "slug": "lapras",
     "name": "Lapras",
     "dex": 131,
@@ -3662,23 +3196,6 @@
     "sprites": {
       "home": "assets/home/131.webp",
       "shiny": "assets/home/shiny/131.webp"
-    }
-  },
-  {
-    "slug": "lapras-gmax",
-    "name": "Gigantamax Lapras",
-    "dex": 131,
-    "speciesSlug": "lapras",
-    "speciesName": "Lapras",
-    "types": [
-      "water",
-      "ice"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10204.webp",
-      "shiny": "assets/home/shiny/10204.webp"
     }
   },
   {
@@ -3727,22 +3244,6 @@
     "sprites": {
       "home": "assets/home/female/133.webp",
       "shiny": "assets/home/shiny/female/133.webp"
-    }
-  },
-  {
-    "slug": "eevee-gmax",
-    "name": "Gigantamax Eevee",
-    "dex": 133,
-    "speciesSlug": "eevee",
-    "speciesName": "Eevee",
-    "types": [
-      "normal"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10205.webp",
-      "shiny": "assets/home/shiny/10205.webp"
     }
   },
   {
@@ -3895,23 +3396,6 @@
     }
   },
   {
-    "slug": "aerodactyl-mega",
-    "name": "Mega Aerodactyl",
-    "dex": 142,
-    "speciesSlug": "aerodactyl",
-    "speciesName": "Aerodactyl",
-    "types": [
-      "rock",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10042.webp",
-      "shiny": "assets/home/shiny/10042.webp"
-    }
-  },
-  {
     "slug": "snorlax",
     "name": "Snorlax",
     "dex": 143,
@@ -3925,22 +3409,6 @@
     "sprites": {
       "home": "assets/home/143.webp",
       "shiny": "assets/home/shiny/143.webp"
-    }
-  },
-  {
-    "slug": "snorlax-gmax",
-    "name": "Gigantamax Snorlax",
-    "dex": 143,
-    "speciesSlug": "snorlax",
-    "speciesName": "Snorlax",
-    "types": [
-      "normal"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10206.webp",
-      "shiny": "assets/home/shiny/10206.webp"
     }
   },
   {
@@ -4095,23 +3563,6 @@
     }
   },
   {
-    "slug": "dragonite-mega",
-    "name": "Mega Dragonite",
-    "dex": 149,
-    "speciesSlug": "dragonite",
-    "speciesName": "Dragonite",
-    "types": [
-      "dragon",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10281.webp",
-      "shiny": "assets/home/shiny/10281.webp"
-    }
-  },
-  {
     "slug": "mewtwo",
     "name": "Mewtwo",
     "dex": 150,
@@ -4125,39 +3576,6 @@
     "sprites": {
       "home": "assets/home/150.webp",
       "shiny": "assets/home/shiny/150.webp"
-    }
-  },
-  {
-    "slug": "mewtwo-mega-x",
-    "name": "Mega Mewtwo X",
-    "dex": 150,
-    "speciesSlug": "mewtwo",
-    "speciesName": "Mewtwo",
-    "types": [
-      "psychic",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10043.webp",
-      "shiny": "assets/home/shiny/10043.webp"
-    }
-  },
-  {
-    "slug": "mewtwo-mega-y",
-    "name": "Mega Mewtwo Y",
-    "dex": 150,
-    "speciesSlug": "mewtwo",
-    "speciesName": "Mewtwo",
-    "types": [
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10044.webp",
-      "shiny": "assets/home/shiny/10044.webp"
     }
   },
   {
@@ -4238,23 +3656,6 @@
     "sprites": {
       "home": "assets/home/female/154.webp",
       "shiny": "assets/home/shiny/female/154.webp"
-    }
-  },
-  {
-    "slug": "meganium-mega",
-    "name": "Mega Meganium",
-    "dex": 154,
-    "speciesSlug": "meganium",
-    "speciesName": "Meganium",
-    "types": [
-      "grass",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10282.webp",
-      "shiny": "assets/home/shiny/10282.webp"
     }
   },
   {
@@ -4368,23 +3769,6 @@
     "sprites": {
       "home": "assets/home/160.webp",
       "shiny": "assets/home/shiny/160.webp"
-    }
-  },
-  {
-    "slug": "feraligatr-mega",
-    "name": "Mega Feraligatr",
-    "dex": 160,
-    "speciesSlug": "feraligatr",
-    "speciesName": "Feraligatr",
-    "types": [
-      "water",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10283.webp",
-      "shiny": "assets/home/shiny/10283.webp"
     }
   },
   {
@@ -4785,23 +4169,6 @@
     "sprites": {
       "home": "assets/home/181.webp",
       "shiny": "assets/home/shiny/181.webp"
-    }
-  },
-  {
-    "slug": "ampharos-mega",
-    "name": "Mega Ampharos",
-    "dex": 181,
-    "speciesSlug": "ampharos",
-    "speciesName": "Ampharos",
-    "types": [
-      "electric",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10045.webp",
-      "shiny": "assets/home/shiny/10045.webp"
     }
   },
   {
@@ -5883,23 +5250,6 @@
     }
   },
   {
-    "slug": "steelix-mega",
-    "name": "Mega Steelix",
-    "dex": 208,
-    "speciesSlug": "steelix",
-    "speciesName": "Steelix",
-    "types": [
-      "steel",
-      "ground"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10072.webp",
-      "shiny": "assets/home/shiny/10072.webp"
-    }
-  },
-  {
     "slug": "snubbull",
     "name": "Snubbull",
     "dex": 209,
@@ -6000,23 +5350,6 @@
     }
   },
   {
-    "slug": "scizor-mega",
-    "name": "Mega Scizor",
-    "dex": 212,
-    "speciesSlug": "scizor",
-    "speciesName": "Scizor",
-    "types": [
-      "bug",
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10046.webp",
-      "shiny": "assets/home/shiny/10046.webp"
-    }
-  },
-  {
     "slug": "shuckle",
     "name": "Shuckle",
     "dex": 213,
@@ -6065,23 +5398,6 @@
     "sprites": {
       "home": "assets/home/female/214.webp",
       "shiny": "assets/home/shiny/female/214.webp"
-    }
-  },
-  {
-    "slug": "heracross-mega",
-    "name": "Mega Heracross",
-    "dex": 214,
-    "speciesSlug": "heracross",
-    "speciesName": "Heracross",
-    "types": [
-      "bug",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10047.webp",
-      "shiny": "assets/home/shiny/10047.webp"
     }
   },
   {
@@ -6417,23 +5733,6 @@
     }
   },
   {
-    "slug": "skarmory-mega",
-    "name": "Mega Skarmory",
-    "dex": 227,
-    "speciesSlug": "skarmory",
-    "speciesName": "Skarmory",
-    "types": [
-      "steel",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10284.webp",
-      "shiny": "assets/home/shiny/10284.webp"
-    }
-  },
-  {
     "slug": "houndour",
     "name": "Houndour",
     "dex": 228,
@@ -6482,23 +5781,6 @@
     "sprites": {
       "home": "assets/home/female/229.webp",
       "shiny": "assets/home/shiny/female/229.webp"
-    }
-  },
-  {
-    "slug": "houndoom-mega",
-    "name": "Mega Houndoom",
-    "dex": 229,
-    "speciesSlug": "houndoom",
-    "speciesName": "Houndoom",
-    "types": [
-      "dark",
-      "fire"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10048.webp",
-      "shiny": "assets/home/shiny/10048.webp"
     }
   },
   {
@@ -6827,23 +6109,6 @@
     }
   },
   {
-    "slug": "tyranitar-mega",
-    "name": "Mega Tyranitar",
-    "dex": 248,
-    "speciesSlug": "tyranitar",
-    "speciesName": "Tyranitar",
-    "types": [
-      "rock",
-      "dark"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10049.webp",
-      "shiny": "assets/home/shiny/10049.webp"
-    }
-  },
-  {
     "slug": "lugia",
     "name": "Lugia",
     "dex": 249,
@@ -6940,23 +6205,6 @@
     "sprites": {
       "home": "assets/home/254.webp",
       "shiny": "assets/home/shiny/254.webp"
-    }
-  },
-  {
-    "slug": "sceptile-mega",
-    "name": "Mega Sceptile",
-    "dex": 254,
-    "speciesSlug": "sceptile",
-    "speciesName": "Sceptile",
-    "types": [
-      "grass",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10065.webp",
-      "shiny": "assets/home/shiny/10065.webp"
     }
   },
   {
@@ -7060,23 +6308,6 @@
     }
   },
   {
-    "slug": "blaziken-mega",
-    "name": "Mega Blaziken",
-    "dex": 257,
-    "speciesSlug": "blaziken",
-    "speciesName": "Blaziken",
-    "types": [
-      "fire",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10050.webp",
-      "shiny": "assets/home/shiny/10050.webp"
-    }
-  },
-  {
     "slug": "mudkip",
     "name": "Mudkip",
     "dex": 258,
@@ -7124,23 +6355,6 @@
     "sprites": {
       "home": "assets/home/260.webp",
       "shiny": "assets/home/shiny/260.webp"
-    }
-  },
-  {
-    "slug": "swampert-mega",
-    "name": "Mega Swampert",
-    "dex": 260,
-    "speciesSlug": "swampert",
-    "speciesName": "Swampert",
-    "types": [
-      "water",
-      "ground"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10064.webp",
-      "shiny": "assets/home/shiny/10064.webp"
     }
   },
   {
@@ -7629,23 +6843,6 @@
     }
   },
   {
-    "slug": "gardevoir-mega",
-    "name": "Mega Gardevoir",
-    "dex": 282,
-    "speciesSlug": "gardevoir",
-    "speciesName": "Gardevoir",
-    "types": [
-      "psychic",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10051.webp",
-      "shiny": "assets/home/shiny/10051.webp"
-    }
-  },
-  {
     "slug": "surskit",
     "name": "Surskit",
     "dex": 283,
@@ -7974,23 +7171,6 @@
     }
   },
   {
-    "slug": "sableye-mega",
-    "name": "Mega Sableye",
-    "dex": 302,
-    "speciesSlug": "sableye",
-    "speciesName": "Sableye",
-    "types": [
-      "dark",
-      "ghost"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10066.webp",
-      "shiny": "assets/home/shiny/10066.webp"
-    }
-  },
-  {
     "slug": "mawile",
     "name": "Mawile",
     "dex": 303,
@@ -8005,23 +7185,6 @@
     "sprites": {
       "home": "assets/home/303.webp",
       "shiny": "assets/home/shiny/303.webp"
-    }
-  },
-  {
-    "slug": "mawile-mega",
-    "name": "Mega Mawile",
-    "dex": 303,
-    "speciesSlug": "mawile",
-    "speciesName": "Mawile",
-    "types": [
-      "steel",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10052.webp",
-      "shiny": "assets/home/shiny/10052.webp"
     }
   },
   {
@@ -8073,22 +7236,6 @@
     "sprites": {
       "home": "assets/home/306.webp",
       "shiny": "assets/home/shiny/306.webp"
-    }
-  },
-  {
-    "slug": "aggron-mega",
-    "name": "Mega Aggron",
-    "dex": 306,
-    "speciesSlug": "aggron",
-    "speciesName": "Aggron",
-    "types": [
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10053.webp",
-      "shiny": "assets/home/shiny/10053.webp"
     }
   },
   {
@@ -8160,23 +7307,6 @@
     }
   },
   {
-    "slug": "medicham-mega",
-    "name": "Mega Medicham",
-    "dex": 308,
-    "speciesSlug": "medicham",
-    "speciesName": "Medicham",
-    "types": [
-      "fighting",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10054.webp",
-      "shiny": "assets/home/shiny/10054.webp"
-    }
-  },
-  {
     "slug": "electrike",
     "name": "Electrike",
     "dex": 309,
@@ -8206,22 +7336,6 @@
     "sprites": {
       "home": "assets/home/310.webp",
       "shiny": "assets/home/shiny/310.webp"
-    }
-  },
-  {
-    "slug": "manectric-mega",
-    "name": "Mega Manectric",
-    "dex": 310,
-    "speciesSlug": "manectric",
-    "speciesName": "Manectric",
-    "types": [
-      "electric"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10055.webp",
-      "shiny": "assets/home/shiny/10055.webp"
     }
   },
   {
@@ -8421,23 +7535,6 @@
     }
   },
   {
-    "slug": "sharpedo-mega",
-    "name": "Mega Sharpedo",
-    "dex": 319,
-    "speciesSlug": "sharpedo",
-    "speciesName": "Sharpedo",
-    "types": [
-      "water",
-      "dark"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10070.webp",
-      "shiny": "assets/home/shiny/10070.webp"
-    }
-  },
-  {
     "slug": "wailmer",
     "name": "Wailmer",
     "dex": 320,
@@ -8535,23 +7632,6 @@
     "sprites": {
       "home": "assets/home/female/323.webp",
       "shiny": "assets/home/shiny/female/323.webp"
-    }
-  },
-  {
-    "slug": "camerupt-mega",
-    "name": "Mega Camerupt",
-    "dex": 323,
-    "speciesSlug": "camerupt",
-    "speciesName": "Camerupt",
-    "types": [
-      "fire",
-      "ground"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10087.webp",
-      "shiny": "assets/home/shiny/10087.webp"
     }
   },
   {
@@ -8750,23 +7830,6 @@
     "sprites": {
       "home": "assets/home/334.webp",
       "shiny": "assets/home/shiny/334.webp"
-    }
-  },
-  {
-    "slug": "altaria-mega",
-    "name": "Mega Altaria",
-    "dex": 334,
-    "speciesSlug": "altaria",
-    "speciesName": "Altaria",
-    "types": [
-      "dragon",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10067.webp",
-      "shiny": "assets/home/shiny/10067.webp"
     }
   },
   {
@@ -9069,54 +8132,6 @@
     }
   },
   {
-    "slug": "castform-rainy",
-    "name": "Rainy Castform",
-    "dex": 351,
-    "speciesSlug": "castform",
-    "speciesName": "Castform",
-    "types": [
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10014.webp",
-      "shiny": "assets/home/shiny/10014.webp"
-    }
-  },
-  {
-    "slug": "castform-snowy",
-    "name": "Snowy Castform",
-    "dex": 351,
-    "speciesSlug": "castform",
-    "speciesName": "Castform",
-    "types": [
-      "ice"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10015.webp",
-      "shiny": "assets/home/shiny/10015.webp"
-    }
-  },
-  {
-    "slug": "castform-sunny",
-    "name": "Sunny Castform",
-    "dex": 351,
-    "speciesSlug": "castform",
-    "speciesName": "Castform",
-    "types": [
-      "fire"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10013.webp",
-      "shiny": "assets/home/shiny/10013.webp"
-    }
-  },
-  {
     "slug": "kecleon",
     "name": "Kecleon",
     "dex": 352,
@@ -9162,22 +8177,6 @@
     "sprites": {
       "home": "assets/home/354.webp",
       "shiny": "assets/home/shiny/354.webp"
-    }
-  },
-  {
-    "slug": "banette-mega",
-    "name": "Mega Banette",
-    "dex": 354,
-    "speciesSlug": "banette",
-    "speciesName": "Banette",
-    "types": [
-      "ghost"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10056.webp",
-      "shiny": "assets/home/shiny/10056.webp"
     }
   },
   {
@@ -9246,23 +8245,6 @@
     }
   },
   {
-    "slug": "chimecho-mega",
-    "name": "Mega Chimecho",
-    "dex": 358,
-    "speciesSlug": "chimecho",
-    "speciesName": "Chimecho",
-    "types": [
-      "psychic",
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10306.webp",
-      "shiny": "assets/home/shiny/10306.webp"
-    }
-  },
-  {
     "slug": "absol",
     "name": "Absol",
     "dex": 359,
@@ -9276,39 +8258,6 @@
     "sprites": {
       "home": "assets/home/359.webp",
       "shiny": "assets/home/shiny/359.webp"
-    }
-  },
-  {
-    "slug": "absol-mega",
-    "name": "Mega Absol",
-    "dex": 359,
-    "speciesSlug": "absol",
-    "speciesName": "Absol",
-    "types": [
-      "dark"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10057.webp",
-      "shiny": "assets/home/shiny/10057.webp"
-    }
-  },
-  {
-    "slug": "absol-mega-z",
-    "name": "Mega Absol Z",
-    "dex": 359,
-    "speciesSlug": "absol",
-    "speciesName": "Absol",
-    "types": [
-      "dark",
-      "ghost"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10307.webp",
-      "shiny": "assets/home/shiny/10307.webp"
     }
   },
   {
@@ -9357,22 +8306,6 @@
     "sprites": {
       "home": "assets/home/362.webp",
       "shiny": "assets/home/shiny/362.webp"
-    }
-  },
-  {
-    "slug": "glalie-mega",
-    "name": "Mega Glalie",
-    "dex": 362,
-    "speciesSlug": "glalie",
-    "speciesName": "Glalie",
-    "types": [
-      "ice"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10074.webp",
-      "shiny": "assets/home/shiny/10074.webp"
     }
   },
   {
@@ -9574,23 +8507,6 @@
     }
   },
   {
-    "slug": "salamence-mega",
-    "name": "Mega Salamence",
-    "dex": 373,
-    "speciesSlug": "salamence",
-    "speciesName": "Salamence",
-    "types": [
-      "dragon",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10089.webp",
-      "shiny": "assets/home/shiny/10089.webp"
-    }
-  },
-  {
     "slug": "beldum",
     "name": "Beldum",
     "dex": 374,
@@ -9639,23 +8555,6 @@
     "sprites": {
       "home": "assets/home/376.webp",
       "shiny": "assets/home/shiny/376.webp"
-    }
-  },
-  {
-    "slug": "metagross-mega",
-    "name": "Mega Metagross",
-    "dex": 376,
-    "speciesSlug": "metagross",
-    "speciesName": "Metagross",
-    "types": [
-      "steel",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10076.webp",
-      "shiny": "assets/home/shiny/10076.webp"
     }
   },
   {
@@ -9724,23 +8623,6 @@
     }
   },
   {
-    "slug": "latias-mega",
-    "name": "Mega Latias",
-    "dex": 380,
-    "speciesSlug": "latias",
-    "speciesName": "Latias",
-    "types": [
-      "dragon",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10062.webp",
-      "shiny": "assets/home/shiny/10062.webp"
-    }
-  },
-  {
     "slug": "latios",
     "name": "Latios",
     "dex": 381,
@@ -9755,23 +8637,6 @@
     "sprites": {
       "home": "assets/home/381.webp",
       "shiny": "assets/home/shiny/381.webp"
-    }
-  },
-  {
-    "slug": "latios-mega",
-    "name": "Mega Latios",
-    "dex": 381,
-    "speciesSlug": "latios",
-    "speciesName": "Latios",
-    "types": [
-      "dragon",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10063.webp",
-      "shiny": "assets/home/shiny/10063.webp"
     }
   },
   {
@@ -9791,22 +8656,6 @@
     }
   },
   {
-    "slug": "kyogre-primal",
-    "name": "Primal Kyogre",
-    "dex": 382,
-    "speciesSlug": "kyogre",
-    "speciesName": "Kyogre",
-    "types": [
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10077.webp",
-      "shiny": "assets/home/shiny/10077.webp"
-    }
-  },
-  {
     "slug": "groudon",
     "name": "Groudon",
     "dex": 383,
@@ -9820,23 +8669,6 @@
     "sprites": {
       "home": "assets/home/383.webp",
       "shiny": "assets/home/shiny/383.webp"
-    }
-  },
-  {
-    "slug": "groudon-primal",
-    "name": "Primal Groudon",
-    "dex": 383,
-    "speciesSlug": "groudon",
-    "speciesName": "Groudon",
-    "types": [
-      "ground",
-      "fire"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10078.webp",
-      "shiny": "assets/home/shiny/10078.webp"
     }
   },
   {
@@ -9854,23 +8686,6 @@
     "sprites": {
       "home": "assets/home/384.webp",
       "shiny": "assets/home/shiny/384.webp"
-    }
-  },
-  {
-    "slug": "rayquaza-mega",
-    "name": "Mega Rayquaza",
-    "dex": 384,
-    "speciesSlug": "rayquaza",
-    "speciesName": "Rayquaza",
-    "types": [
-      "dragon",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10079.webp",
-      "shiny": "assets/home/shiny/10079.webp"
     }
   },
   {
@@ -10202,23 +9017,6 @@
     "sprites": {
       "home": "assets/home/female/398.webp",
       "shiny": "assets/home/shiny/female/398.webp"
-    }
-  },
-  {
-    "slug": "staraptor-mega",
-    "name": "Mega Staraptor",
-    "dex": 398,
-    "speciesSlug": "staraptor",
-    "speciesName": "Staraptor",
-    "types": [
-      "fighting",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10308.webp",
-      "shiny": "assets/home/shiny/10308.webp"
     }
   },
   {
@@ -10860,22 +9658,6 @@
     }
   },
   {
-    "slug": "cherrim-sunshine",
-    "name": "Sunshine Cherrim",
-    "dex": 421,
-    "speciesSlug": "cherrim",
-    "speciesName": "Cherrim",
-    "types": [
-      "grass"
-    ],
-    "kind": "form",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/421-sunshine.webp",
-      "shiny": "assets/home/shiny/421-sunshine.webp"
-    }
-  },
-  {
     "slug": "shellos",
     "name": "Shellos",
     "dex": 422,
@@ -11037,23 +9819,6 @@
     "sprites": {
       "home": "assets/home/428.webp",
       "shiny": "assets/home/shiny/428.webp"
-    }
-  },
-  {
-    "slug": "lopunny-mega",
-    "name": "Mega Lopunny",
-    "dex": 428,
-    "speciesSlug": "lopunny",
-    "speciesName": "Lopunny",
-    "types": [
-      "normal",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10088.webp",
-      "shiny": "assets/home/shiny/10088.webp"
     }
   },
   {
@@ -11391,39 +10156,6 @@
     }
   },
   {
-    "slug": "garchomp-mega",
-    "name": "Mega Garchomp",
-    "dex": 445,
-    "speciesSlug": "garchomp",
-    "speciesName": "Garchomp",
-    "types": [
-      "dragon",
-      "ground"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10058.webp",
-      "shiny": "assets/home/shiny/10058.webp"
-    }
-  },
-  {
-    "slug": "garchomp-mega-z",
-    "name": "Mega Garchomp Z",
-    "dex": 445,
-    "speciesSlug": "garchomp",
-    "speciesName": "Garchomp",
-    "types": [
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10309.webp",
-      "shiny": "assets/home/shiny/10309.webp"
-    }
-  },
-  {
     "slug": "munchlax",
     "name": "Munchlax",
     "dex": 446,
@@ -11470,40 +10202,6 @@
     "sprites": {
       "home": "assets/home/448.webp",
       "shiny": "assets/home/shiny/448.webp"
-    }
-  },
-  {
-    "slug": "lucario-mega",
-    "name": "Mega Lucario",
-    "dex": 448,
-    "speciesSlug": "lucario",
-    "speciesName": "Lucario",
-    "types": [
-      "fighting",
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10059.webp",
-      "shiny": "assets/home/shiny/10059.webp"
-    }
-  },
-  {
-    "slug": "lucario-mega-z",
-    "name": "Mega Lucario Z",
-    "dex": 448,
-    "speciesSlug": "lucario",
-    "speciesName": "Lucario",
-    "types": [
-      "fighting",
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10310.webp",
-      "shiny": "assets/home/shiny/10310.webp"
     }
   },
   {
@@ -11838,23 +10536,6 @@
     }
   },
   {
-    "slug": "abomasnow-mega",
-    "name": "Mega Abomasnow",
-    "dex": 460,
-    "speciesSlug": "abomasnow",
-    "speciesName": "Abomasnow",
-    "types": [
-      "grass",
-      "ice"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10060.webp",
-      "shiny": "assets/home/shiny/10060.webp"
-    }
-  },
-  {
     "slug": "weavile",
     "name": "Weavile",
     "dex": 461,
@@ -12170,23 +10851,6 @@
     }
   },
   {
-    "slug": "gallade-mega",
-    "name": "Mega Gallade",
-    "dex": 475,
-    "speciesSlug": "gallade",
-    "speciesName": "Gallade",
-    "types": [
-      "psychic",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10068.webp",
-      "shiny": "assets/home/shiny/10068.webp"
-    }
-  },
-  {
     "slug": "probopass",
     "name": "Probopass",
     "dex": 476,
@@ -12234,23 +10898,6 @@
     "sprites": {
       "home": "assets/home/478.webp",
       "shiny": "assets/home/shiny/478.webp"
-    }
-  },
-  {
-    "slug": "froslass-mega",
-    "name": "Mega Froslass",
-    "dex": 478,
-    "speciesSlug": "froslass",
-    "speciesName": "Froslass",
-    "types": [
-      "ice",
-      "ghost"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10285.webp",
-      "shiny": "assets/home/shiny/10285.webp"
     }
   },
   {
@@ -12489,23 +11136,6 @@
     }
   },
   {
-    "slug": "heatran-mega",
-    "name": "Mega Heatran",
-    "dex": 485,
-    "speciesSlug": "heatran",
-    "speciesName": "Heatran",
-    "types": [
-      "fire",
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10311.webp",
-      "shiny": "assets/home/shiny/10311.webp"
-    }
-  },
-  {
     "slug": "regigigas",
     "name": "Regigigas",
     "dex": 486,
@@ -12620,22 +11250,6 @@
     }
   },
   {
-    "slug": "darkrai-mega",
-    "name": "Mega Darkrai",
-    "dex": 491,
-    "speciesSlug": "darkrai",
-    "speciesName": "Darkrai",
-    "types": [
-      "dark"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10312.webp",
-      "shiny": "assets/home/shiny/10312.webp"
-    }
-  },
-  {
     "slug": "shaymin-land",
     "name": "Shaymin",
     "dex": 492,
@@ -12682,22 +11296,6 @@
     "sprites": {
       "home": "assets/home/493.webp",
       "shiny": "assets/home/shiny/493.webp"
-    }
-  },
-  {
-    "slug": "arceus-unknown",
-    "name": "??? Arceus",
-    "dex": 493,
-    "speciesSlug": "arceus",
-    "speciesName": "Arceus",
-    "types": [
-      "unknown"
-    ],
-    "kind": "form",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/493-unknown.webp",
-      "shiny": "assets/home/shiny/493-unknown.webp"
     }
   },
   {
@@ -13085,23 +11683,6 @@
     "sprites": {
       "home": "assets/home/500.webp",
       "shiny": "assets/home/shiny/500.webp"
-    }
-  },
-  {
-    "slug": "emboar-mega",
-    "name": "Mega Emboar",
-    "dex": 500,
-    "speciesSlug": "emboar",
-    "speciesName": "Emboar",
-    "types": [
-      "fire",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10286.webp",
-      "shiny": "assets/home/shiny/10286.webp"
     }
   },
   {
@@ -13625,23 +12206,6 @@
     }
   },
   {
-    "slug": "excadrill-mega",
-    "name": "Mega Excadrill",
-    "dex": 530,
-    "speciesSlug": "excadrill",
-    "speciesName": "Excadrill",
-    "types": [
-      "ground",
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10287.webp",
-      "shiny": "assets/home/shiny/10287.webp"
-    }
-  },
-  {
     "slug": "audino",
     "name": "Audino",
     "dex": 531,
@@ -13655,23 +12219,6 @@
     "sprites": {
       "home": "assets/home/531.webp",
       "shiny": "assets/home/shiny/531.webp"
-    }
-  },
-  {
-    "slug": "audino-mega",
-    "name": "Mega Audino",
-    "dex": 531,
-    "speciesSlug": "audino",
-    "speciesName": "Audino",
-    "types": [
-      "normal",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10069.webp",
-      "shiny": "assets/home/shiny/10069.webp"
     }
   },
   {
@@ -13904,23 +12451,6 @@
     "sprites": {
       "home": "assets/home/545.webp",
       "shiny": "assets/home/shiny/545.webp"
-    }
-  },
-  {
-    "slug": "scolipede-mega",
-    "name": "Mega Scolipede",
-    "dex": 545,
-    "speciesSlug": "scolipede",
-    "speciesName": "Scolipede",
-    "types": [
-      "bug",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10288.webp",
-      "shiny": "assets/home/shiny/10288.webp"
     }
   },
   {
@@ -14170,40 +12700,6 @@
     }
   },
   {
-    "slug": "darmanitan-zen",
-    "name": "Zen Darmanitan",
-    "dex": 555,
-    "speciesSlug": "darmanitan",
-    "speciesName": "Darmanitan",
-    "types": [
-      "fire",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10017.webp",
-      "shiny": "assets/home/shiny/10017.webp"
-    }
-  },
-  {
-    "slug": "darmanitan-galar-zen",
-    "name": "Zen Galarian Darmanitan",
-    "dex": 555,
-    "speciesSlug": "darmanitan",
-    "speciesName": "Darmanitan",
-    "types": [
-      "ice",
-      "fire"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10178.webp",
-      "shiny": "assets/home/shiny/10178.webp"
-    }
-  },
-  {
     "slug": "maractus",
     "name": "Maractus",
     "dex": 556,
@@ -14285,23 +12781,6 @@
     "sprites": {
       "home": "assets/home/560.webp",
       "shiny": "assets/home/shiny/560.webp"
-    }
-  },
-  {
-    "slug": "scrafty-mega",
-    "name": "Mega Scrafty",
-    "dex": 560,
-    "speciesSlug": "scrafty",
-    "speciesName": "Scrafty",
-    "types": [
-      "dark",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10289.webp",
-      "shiny": "assets/home/shiny/10289.webp"
     }
   },
   {
@@ -14468,22 +12947,6 @@
     "sprites": {
       "home": "assets/home/569.webp",
       "shiny": "assets/home/shiny/569.webp"
-    }
-  },
-  {
-    "slug": "garbodor-gmax",
-    "name": "Gigantamax Garbodor",
-    "dex": 569,
-    "speciesSlug": "garbodor",
-    "speciesName": "Garbodor",
-    "types": [
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10207.webp",
-      "shiny": "assets/home/shiny/10207.webp"
     }
   },
   {
@@ -15231,22 +13694,6 @@
     }
   },
   {
-    "slug": "eelektross-mega",
-    "name": "Mega Eelektross",
-    "dex": 604,
-    "speciesSlug": "eelektross",
-    "speciesName": "Eelektross",
-    "types": [
-      "electric"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10290.webp",
-      "shiny": "assets/home/shiny/10290.webp"
-    }
-  },
-  {
     "slug": "elgyem",
     "name": "Elgyem",
     "dex": 605,
@@ -15327,23 +13774,6 @@
     "sprites": {
       "home": "assets/home/609.webp",
       "shiny": "assets/home/shiny/609.webp"
-    }
-  },
-  {
-    "slug": "chandelure-mega",
-    "name": "Mega Chandelure",
-    "dex": 609,
-    "speciesSlug": "chandelure",
-    "speciesName": "Chandelure",
-    "types": [
-      "ghost",
-      "fire"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10291.webp",
-      "shiny": "assets/home/shiny/10291.webp"
     }
   },
   {
@@ -15588,23 +14018,6 @@
     "sprites": {
       "home": "assets/home/623.webp",
       "shiny": "assets/home/shiny/623.webp"
-    }
-  },
-  {
-    "slug": "golurk-mega",
-    "name": "Mega Golurk",
-    "dex": 623,
-    "speciesSlug": "golurk",
-    "speciesName": "Golurk",
-    "types": [
-      "ground",
-      "ghost"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10313.webp",
-      "shiny": "assets/home/shiny/10313.webp"
     }
   },
   {
@@ -16148,23 +14561,6 @@
     }
   },
   {
-    "slug": "meloetta-pirouette",
-    "name": "Pirouette Meloetta",
-    "dex": 648,
-    "speciesSlug": "meloetta",
-    "speciesName": "Meloetta",
-    "types": [
-      "normal",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10018.webp",
-      "shiny": "assets/home/shiny/10018.webp"
-    }
-  },
-  {
     "slug": "genesect",
     "name": "Genesect",
     "dex": 649,
@@ -16299,23 +14695,6 @@
     }
   },
   {
-    "slug": "chesnaught-mega",
-    "name": "Mega Chesnaught",
-    "dex": 652,
-    "speciesSlug": "chesnaught",
-    "speciesName": "Chesnaught",
-    "types": [
-      "grass",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10292.webp",
-      "shiny": "assets/home/shiny/10292.webp"
-    }
-  },
-  {
     "slug": "fennekin",
     "name": "Fennekin",
     "dex": 653,
@@ -16362,23 +14741,6 @@
     "sprites": {
       "home": "assets/home/655.webp",
       "shiny": "assets/home/shiny/655.webp"
-    }
-  },
-  {
-    "slug": "delphox-mega",
-    "name": "Mega Delphox",
-    "dex": 655,
-    "speciesSlug": "delphox",
-    "speciesName": "Delphox",
-    "types": [
-      "fire",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10293.webp",
-      "shiny": "assets/home/shiny/10293.webp"
     }
   },
   {
@@ -16431,23 +14793,6 @@
     }
   },
   {
-    "slug": "greninja-ash",
-    "name": "Ash’s Greninja",
-    "dex": 658,
-    "speciesSlug": "greninja",
-    "speciesName": "Greninja",
-    "types": [
-      "water",
-      "dark"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10117.webp",
-      "shiny": "assets/home/shiny/10117.webp"
-    }
-  },
-  {
     "slug": "greninja-battle-bond",
     "name": "Battle Bond Greninja",
     "dex": 658,
@@ -16462,23 +14807,6 @@
     "sprites": {
       "home": "assets/home/10116.webp",
       "shiny": "assets/home/shiny/10116.webp"
-    }
-  },
-  {
-    "slug": "greninja-mega",
-    "name": "Mega Greninja",
-    "dex": 658,
-    "speciesSlug": "greninja",
-    "speciesName": "Greninja",
-    "types": [
-      "water",
-      "dark"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10294.webp",
-      "shiny": "assets/home/shiny/10294.webp"
     }
   },
   {
@@ -16989,23 +15317,6 @@
     }
   },
   {
-    "slug": "pyroar-mega",
-    "name": "Mega Pyroar",
-    "dex": 668,
-    "speciesSlug": "pyroar",
-    "speciesName": "Pyroar",
-    "types": [
-      "fire",
-      "normal"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10295.webp",
-      "shiny": "assets/home/shiny/10295.webp"
-    }
-  },
-  {
     "slug": "flabebe",
     "name": "Flabébé",
     "dex": 669,
@@ -17131,22 +15442,6 @@
     "sprites": {
       "home": "assets/home/10061.webp",
       "shiny": "assets/home/shiny/10061.webp"
-    }
-  },
-  {
-    "slug": "floette-mega",
-    "name": "Mega Floette",
-    "dex": 670,
-    "speciesSlug": "floette",
-    "speciesName": "Floette",
-    "types": [
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10296.webp",
-      "shiny": "assets/home/shiny/10296.webp"
     }
   },
   {
@@ -17551,38 +15846,6 @@
     }
   },
   {
-    "slug": "meowstic-male-mega",
-    "name": "Mega Meowstic",
-    "dex": 678,
-    "speciesSlug": "meowstic",
-    "speciesName": "Meowstic",
-    "types": [
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10314.webp",
-      "shiny": "assets/home/shiny/10314.webp"
-    }
-  },
-  {
-    "slug": "meowstic-female-mega",
-    "name": "Mega Meowstic",
-    "dex": 678,
-    "speciesSlug": "meowstic",
-    "speciesName": "Meowstic",
-    "types": [
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10326.webp",
-      "shiny": "assets/home/shiny/10326.webp"
-    }
-  },
-  {
     "slug": "honedge",
     "name": "Honedge",
     "dex": 679,
@@ -17631,23 +15894,6 @@
     "sprites": {
       "home": "assets/home/681.webp",
       "shiny": "assets/home/shiny/681.webp"
-    }
-  },
-  {
-    "slug": "aegislash-blade",
-    "name": "Blade Aegislash",
-    "dex": 681,
-    "speciesSlug": "aegislash",
-    "speciesName": "Aegislash",
-    "types": [
-      "steel",
-      "ghost"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10026.webp",
-      "shiny": "assets/home/shiny/10026.webp"
     }
   },
   {
@@ -17749,23 +15995,6 @@
     }
   },
   {
-    "slug": "malamar-mega",
-    "name": "Mega Malamar",
-    "dex": 687,
-    "speciesSlug": "malamar",
-    "speciesName": "Malamar",
-    "types": [
-      "dark",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10297.webp",
-      "shiny": "assets/home/shiny/10297.webp"
-    }
-  },
-  {
     "slug": "binacle",
     "name": "Binacle",
     "dex": 688,
@@ -17800,23 +16029,6 @@
     }
   },
   {
-    "slug": "barbaracle-mega",
-    "name": "Mega Barbaracle",
-    "dex": 689,
-    "speciesSlug": "barbaracle",
-    "speciesName": "Barbaracle",
-    "types": [
-      "rock",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10298.webp",
-      "shiny": "assets/home/shiny/10298.webp"
-    }
-  },
-  {
     "slug": "skrelp",
     "name": "Skrelp",
     "dex": 690,
@@ -17848,23 +16060,6 @@
     "sprites": {
       "home": "assets/home/691.webp",
       "shiny": "assets/home/shiny/691.webp"
-    }
-  },
-  {
-    "slug": "dragalge-mega",
-    "name": "Mega Dragalge",
-    "dex": 691,
-    "speciesSlug": "dragalge",
-    "speciesName": "Dragalge",
-    "types": [
-      "poison",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10299.webp",
-      "shiny": "assets/home/shiny/10299.webp"
     }
   },
   {
@@ -18032,23 +16227,6 @@
     "sprites": {
       "home": "assets/home/701.webp",
       "shiny": "assets/home/shiny/701.webp"
-    }
-  },
-  {
-    "slug": "hawlucha-mega",
-    "name": "Mega Hawlucha",
-    "dex": 701,
-    "speciesSlug": "hawlucha",
-    "speciesName": "Hawlucha",
-    "types": [
-      "fighting",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10300.webp",
-      "shiny": "assets/home/shiny/10300.webp"
     }
   },
   {
@@ -18555,40 +16733,6 @@
     }
   },
   {
-    "slug": "zygarde-complete",
-    "name": "Complete Zygarde",
-    "dex": 718,
-    "speciesSlug": "zygarde",
-    "speciesName": "Zygarde",
-    "types": [
-      "dragon",
-      "ground"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10120.webp",
-      "shiny": "assets/home/shiny/10120.webp"
-    }
-  },
-  {
-    "slug": "zygarde-mega",
-    "name": "Mega Zygarde",
-    "dex": 718,
-    "speciesSlug": "zygarde",
-    "speciesName": "Zygarde",
-    "types": [
-      "dragon",
-      "ground"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10301.webp",
-      "shiny": "assets/home/shiny/10301.webp"
-    }
-  },
-  {
     "slug": "diancie",
     "name": "Diancie",
     "dex": 719,
@@ -18603,23 +16747,6 @@
     "sprites": {
       "home": "assets/home/719.webp",
       "shiny": "assets/home/shiny/719.webp"
-    }
-  },
-  {
-    "slug": "diancie-mega",
-    "name": "Mega Diancie",
-    "dex": 719,
-    "speciesSlug": "diancie",
-    "speciesName": "Diancie",
-    "types": [
-      "rock",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10075.webp",
-      "shiny": "assets/home/shiny/10075.webp"
     }
   },
   {
@@ -18923,22 +17050,6 @@
     }
   },
   {
-    "slug": "gumshoos-totem",
-    "name": "Totem Gumshoos",
-    "dex": 735,
-    "speciesSlug": "gumshoos",
-    "speciesName": "Gumshoos",
-    "types": [
-      "normal"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10121.webp",
-      "shiny": "assets/home/shiny/10121.webp"
-    }
-  },
-  {
     "slug": "grubbin",
     "name": "Grubbin",
     "dex": 736,
@@ -18989,23 +17100,6 @@
     }
   },
   {
-    "slug": "vikavolt-totem",
-    "name": "Totem Vikavolt",
-    "dex": 738,
-    "speciesSlug": "vikavolt",
-    "speciesName": "Vikavolt",
-    "types": [
-      "bug",
-      "electric"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10122.webp",
-      "shiny": "assets/home/shiny/10122.webp"
-    }
-  },
-  {
     "slug": "crabrawler",
     "name": "Crabrawler",
     "dex": 739,
@@ -19036,23 +17130,6 @@
     "sprites": {
       "home": "assets/home/740.webp",
       "shiny": "assets/home/shiny/740.webp"
-    }
-  },
-  {
-    "slug": "crabominable-mega",
-    "name": "Mega Crabominable",
-    "dex": 740,
-    "speciesSlug": "crabominable",
-    "speciesName": "Crabominable",
-    "types": [
-      "fighting",
-      "ice"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10315.webp",
-      "shiny": "assets/home/shiny/10315.webp"
     }
   },
   {
@@ -19158,23 +17235,6 @@
     }
   },
   {
-    "slug": "ribombee-totem",
-    "name": "Totem Ribombee",
-    "dex": 743,
-    "speciesSlug": "ribombee",
-    "speciesName": "Ribombee",
-    "types": [
-      "bug",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10150.webp",
-      "shiny": "assets/home/shiny/10150.webp"
-    }
-  },
-  {
     "slug": "rockruff",
     "name": "Rockruff",
     "dex": 744,
@@ -19268,22 +17328,6 @@
     "sprites": {
       "home": "assets/home/746.webp",
       "shiny": "assets/home/shiny/746.webp"
-    }
-  },
-  {
-    "slug": "wishiwashi-school",
-    "name": "School Wishiwashi",
-    "dex": 746,
-    "speciesSlug": "wishiwashi",
-    "speciesName": "Wishiwashi",
-    "types": [
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10127.webp",
-      "shiny": "assets/home/shiny/10127.webp"
     }
   },
   {
@@ -19387,23 +17431,6 @@
     }
   },
   {
-    "slug": "araquanid-totem",
-    "name": "Totem Araquanid",
-    "dex": 752,
-    "speciesSlug": "araquanid",
-    "speciesName": "Araquanid",
-    "types": [
-      "water",
-      "bug"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10153.webp",
-      "shiny": "assets/home/shiny/10153.webp"
-    }
-  },
-  {
     "slug": "fomantis",
     "name": "Fomantis",
     "dex": 753,
@@ -19433,22 +17460,6 @@
     "sprites": {
       "home": "assets/home/754.webp",
       "shiny": "assets/home/shiny/754.webp"
-    }
-  },
-  {
-    "slug": "lurantis-totem",
-    "name": "Totem Lurantis",
-    "dex": 754,
-    "speciesSlug": "lurantis",
-    "speciesName": "Lurantis",
-    "types": [
-      "grass"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10128.webp",
-      "shiny": "assets/home/shiny/10128.webp"
     }
   },
   {
@@ -19517,23 +17528,6 @@
     "sprites": {
       "home": "assets/home/758.webp",
       "shiny": "assets/home/shiny/758.webp"
-    }
-  },
-  {
-    "slug": "salazzle-totem",
-    "name": "Totem Salazzle",
-    "dex": 758,
-    "speciesSlug": "salazzle",
-    "speciesName": "Salazzle",
-    "types": [
-      "poison",
-      "fire"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10129.webp",
-      "shiny": "assets/home/shiny/10129.webp"
     }
   },
   {
@@ -19699,23 +17693,6 @@
     "sprites": {
       "home": "assets/home/768.webp",
       "shiny": "assets/home/shiny/768.webp"
-    }
-  },
-  {
-    "slug": "golisopod-mega",
-    "name": "Mega Golisopod",
-    "dex": 768,
-    "speciesSlug": "golisopod",
-    "speciesName": "Golisopod",
-    "types": [
-      "bug",
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10316.webp",
-      "shiny": "assets/home/shiny/10316.webp"
     }
   },
   {
@@ -20090,23 +18067,6 @@
     }
   },
   {
-    "slug": "minior-blue",
-    "name": "Blue Core Minior",
-    "dex": 774,
-    "speciesSlug": "minior",
-    "speciesName": "Minior",
-    "types": [
-      "rock",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10140.webp",
-      "shiny": "assets/home/shiny/10140.webp"
-    }
-  },
-  {
     "slug": "minior-blue-meteor",
     "name": "Blue Meteor Minior",
     "dex": 774,
@@ -20121,23 +18081,6 @@
     "sprites": {
       "home": "assets/home/10133.webp",
       "shiny": "assets/home/shiny/10133.webp"
-    }
-  },
-  {
-    "slug": "minior-green",
-    "name": "Green Core Minior",
-    "dex": 774,
-    "speciesSlug": "minior",
-    "speciesName": "Minior",
-    "types": [
-      "rock",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10139.webp",
-      "shiny": "assets/home/shiny/10139.webp"
     }
   },
   {
@@ -20158,23 +18101,6 @@
     }
   },
   {
-    "slug": "minior-indigo",
-    "name": "Indigo Core Minior",
-    "dex": 774,
-    "speciesSlug": "minior",
-    "speciesName": "Minior",
-    "types": [
-      "rock",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10141.webp",
-      "shiny": "assets/home/shiny/10141.webp"
-    }
-  },
-  {
     "slug": "minior-indigo-meteor",
     "name": "Indigo Meteor Minior",
     "dex": 774,
@@ -20189,23 +18115,6 @@
     "sprites": {
       "home": "assets/home/10134.webp",
       "shiny": "assets/home/shiny/10134.webp"
-    }
-  },
-  {
-    "slug": "minior-orange",
-    "name": "Orange Core Minior",
-    "dex": 774,
-    "speciesSlug": "minior",
-    "speciesName": "Minior",
-    "types": [
-      "rock",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10137.webp",
-      "shiny": "assets/home/shiny/10137.webp"
     }
   },
   {
@@ -20226,40 +18135,6 @@
     }
   },
   {
-    "slug": "minior-red",
-    "name": "Red Core Minior",
-    "dex": 774,
-    "speciesSlug": "minior",
-    "speciesName": "Minior",
-    "types": [
-      "rock",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10136.webp",
-      "shiny": "assets/home/shiny/10136.webp"
-    }
-  },
-  {
-    "slug": "minior-violet",
-    "name": "Violet Core Minior",
-    "dex": 774,
-    "speciesSlug": "minior",
-    "speciesName": "Minior",
-    "types": [
-      "rock",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10142.webp",
-      "shiny": "assets/home/shiny/10142.webp"
-    }
-  },
-  {
     "slug": "minior-violet-meteor",
     "name": "Violet Meteor Minior",
     "dex": 774,
@@ -20274,23 +18149,6 @@
     "sprites": {
       "home": "assets/home/10135.webp",
       "shiny": "assets/home/shiny/10135.webp"
-    }
-  },
-  {
-    "slug": "minior-yellow",
-    "name": "Yellow Core Minior",
-    "dex": 774,
-    "speciesSlug": "minior",
-    "speciesName": "Minior",
-    "types": [
-      "rock",
-      "flying"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10138.webp",
-      "shiny": "assets/home/shiny/10138.webp"
     }
   },
   {
@@ -20361,23 +18219,6 @@
     }
   },
   {
-    "slug": "togedemaru-totem",
-    "name": "Totem Togedemaru",
-    "dex": 777,
-    "speciesSlug": "togedemaru",
-    "speciesName": "Togedemaru",
-    "types": [
-      "electric",
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10154.webp",
-      "shiny": "assets/home/shiny/10154.webp"
-    }
-  },
-  {
     "slug": "mimikyu-disguised",
     "name": "Mimikyu",
     "dex": 778,
@@ -20392,57 +18233,6 @@
     "sprites": {
       "home": "assets/home/778.webp",
       "shiny": "assets/home/shiny/778.webp"
-    }
-  },
-  {
-    "slug": "mimikyu-busted",
-    "name": "Busted Mimikyu",
-    "dex": 778,
-    "speciesSlug": "mimikyu",
-    "speciesName": "Mimikyu",
-    "types": [
-      "ghost",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10143.webp",
-      "shiny": "assets/home/shiny/10143.webp"
-    }
-  },
-  {
-    "slug": "mimikyu-totem-busted",
-    "name": "Totem Busted Mimikyu",
-    "dex": 778,
-    "speciesSlug": "mimikyu",
-    "speciesName": "Mimikyu",
-    "types": [
-      "ghost",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10145.webp",
-      "shiny": "assets/home/shiny/10145.webp"
-    }
-  },
-  {
-    "slug": "mimikyu-totem-disguised",
-    "name": "Totem Disguised Mimikyu",
-    "dex": 778,
-    "speciesSlug": "mimikyu",
-    "speciesName": "Mimikyu",
-    "types": [
-      "ghost",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10144.webp",
-      "shiny": "assets/home/shiny/10144.webp"
     }
   },
   {
@@ -20477,23 +18267,6 @@
     "sprites": {
       "home": "assets/home/780.webp",
       "shiny": "assets/home/shiny/780.webp"
-    }
-  },
-  {
-    "slug": "drampa-mega",
-    "name": "Mega Drampa",
-    "dex": 780,
-    "speciesSlug": "drampa",
-    "speciesName": "Drampa",
-    "types": [
-      "normal",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10302.webp",
-      "shiny": "assets/home/shiny/10302.webp"
     }
   },
   {
@@ -20561,23 +18334,6 @@
     "sprites": {
       "home": "assets/home/784.webp",
       "shiny": "assets/home/shiny/784.webp"
-    }
-  },
-  {
-    "slug": "kommo-o-totem",
-    "name": "Totem Kommo-o",
-    "dex": 784,
-    "speciesSlug": "kommo-o",
-    "speciesName": "Kommo-o",
-    "types": [
-      "dragon",
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10146.webp",
-      "shiny": "assets/home/shiny/10146.webp"
     }
   },
   {
@@ -20883,23 +18639,6 @@
     }
   },
   {
-    "slug": "necrozma-ultra",
-    "name": "Ultra Necrozma",
-    "dex": 800,
-    "speciesSlug": "necrozma",
-    "speciesName": "Necrozma",
-    "types": [
-      "psychic",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10157.webp",
-      "shiny": "assets/home/shiny/10157.webp"
-    }
-  },
-  {
     "slug": "magearna",
     "name": "Magearna",
     "dex": 801,
@@ -20914,40 +18653,6 @@
     "sprites": {
       "home": "assets/home/801.webp",
       "shiny": "assets/home/shiny/801.webp"
-    }
-  },
-  {
-    "slug": "magearna-mega",
-    "name": "Mega Magearna",
-    "dex": 801,
-    "speciesSlug": "magearna",
-    "speciesName": "Magearna",
-    "types": [
-      "steel",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10317.webp",
-      "shiny": "assets/home/shiny/10317.webp"
-    }
-  },
-  {
-    "slug": "magearna-original-mega",
-    "name": "Mega Original Magearna",
-    "dex": 801,
-    "speciesSlug": "magearna",
-    "speciesName": "Magearna",
-    "types": [
-      "steel",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10318.webp",
-      "shiny": "assets/home/shiny/10318.webp"
     }
   },
   {
@@ -21068,22 +18773,6 @@
     }
   },
   {
-    "slug": "zeraora-mega",
-    "name": "Mega Zeraora",
-    "dex": 807,
-    "speciesSlug": "zeraora",
-    "speciesName": "Zeraora",
-    "types": [
-      "electric"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10319.webp",
-      "shiny": "assets/home/shiny/10319.webp"
-    }
-  },
-  {
     "slug": "meltan",
     "name": "Meltan",
     "dex": 808,
@@ -21113,22 +18802,6 @@
     "sprites": {
       "home": "assets/home/809.webp",
       "shiny": "assets/home/shiny/809.webp"
-    }
-  },
-  {
-    "slug": "melmetal-gmax",
-    "name": "Gigantamax Melmetal",
-    "dex": 809,
-    "speciesSlug": "melmetal",
-    "speciesName": "Melmetal",
-    "types": [
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10208.webp",
-      "shiny": "assets/home/shiny/10208.webp"
     }
   },
   {
@@ -21180,22 +18853,6 @@
     }
   },
   {
-    "slug": "rillaboom-gmax",
-    "name": "Gigantamax Rillaboom",
-    "dex": 812,
-    "speciesSlug": "rillaboom",
-    "speciesName": "Rillaboom",
-    "types": [
-      "grass"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10209.webp",
-      "shiny": "assets/home/shiny/10209.webp"
-    }
-  },
-  {
     "slug": "scorbunny",
     "name": "Scorbunny",
     "dex": 813,
@@ -21244,22 +18901,6 @@
     }
   },
   {
-    "slug": "cinderace-gmax",
-    "name": "Gigantamax Cinderace",
-    "dex": 815,
-    "speciesSlug": "cinderace",
-    "speciesName": "Cinderace",
-    "types": [
-      "fire"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10210.webp",
-      "shiny": "assets/home/shiny/10210.webp"
-    }
-  },
-  {
     "slug": "sobble",
     "name": "Sobble",
     "dex": 816,
@@ -21305,22 +18946,6 @@
     "sprites": {
       "home": "assets/home/818.webp",
       "shiny": "assets/home/shiny/818.webp"
-    }
-  },
-  {
-    "slug": "inteleon-gmax",
-    "name": "Gigantamax Inteleon",
-    "dex": 818,
-    "speciesSlug": "inteleon",
-    "speciesName": "Inteleon",
-    "types": [
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10211.webp",
-      "shiny": "assets/home/shiny/10211.webp"
     }
   },
   {
@@ -21405,23 +19030,6 @@
     }
   },
   {
-    "slug": "corviknight-gmax",
-    "name": "Gigantamax Corviknight",
-    "dex": 823,
-    "speciesSlug": "corviknight",
-    "speciesName": "Corviknight",
-    "types": [
-      "flying",
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10212.webp",
-      "shiny": "assets/home/shiny/10212.webp"
-    }
-  },
-  {
     "slug": "blipbug",
     "name": "Blipbug",
     "dex": 824,
@@ -21469,23 +19077,6 @@
     "sprites": {
       "home": "assets/home/826.webp",
       "shiny": "assets/home/shiny/826.webp"
-    }
-  },
-  {
-    "slug": "orbeetle-gmax",
-    "name": "Gigantamax Orbeetle",
-    "dex": 826,
-    "speciesSlug": "orbeetle",
-    "speciesName": "Orbeetle",
-    "types": [
-      "bug",
-      "psychic"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10213.webp",
-      "shiny": "assets/home/shiny/10213.webp"
     }
   },
   {
@@ -21618,23 +19209,6 @@
     }
   },
   {
-    "slug": "drednaw-gmax",
-    "name": "Gigantamax Drednaw",
-    "dex": 834,
-    "speciesSlug": "drednaw",
-    "speciesName": "Drednaw",
-    "types": [
-      "water",
-      "rock"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10214.webp",
-      "shiny": "assets/home/shiny/10214.webp"
-    }
-  },
-  {
     "slug": "yamper",
     "name": "Yamper",
     "dex": 835,
@@ -21717,23 +19291,6 @@
     }
   },
   {
-    "slug": "coalossal-gmax",
-    "name": "Gigantamax Coalossal",
-    "dex": 839,
-    "speciesSlug": "coalossal",
-    "speciesName": "Coalossal",
-    "types": [
-      "rock",
-      "fire"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10215.webp",
-      "shiny": "assets/home/shiny/10215.webp"
-    }
-  },
-  {
     "slug": "applin",
     "name": "Applin",
     "dex": 840,
@@ -21768,23 +19325,6 @@
     }
   },
   {
-    "slug": "flapple-gmax",
-    "name": "Gigantamax Flapple",
-    "dex": 841,
-    "speciesSlug": "flapple",
-    "speciesName": "Flapple",
-    "types": [
-      "grass",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10216.webp",
-      "shiny": "assets/home/shiny/10216.webp"
-    }
-  },
-  {
     "slug": "appletun",
     "name": "Appletun",
     "dex": 842,
@@ -21799,23 +19339,6 @@
     "sprites": {
       "home": "assets/home/842.webp",
       "shiny": "assets/home/shiny/842.webp"
-    }
-  },
-  {
-    "slug": "appletun-gmax",
-    "name": "Gigantamax Appletun",
-    "dex": 842,
-    "speciesSlug": "appletun",
-    "speciesName": "Appletun",
-    "types": [
-      "grass",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10217.webp",
-      "shiny": "assets/home/shiny/10217.webp"
     }
   },
   {
@@ -21851,22 +19374,6 @@
     }
   },
   {
-    "slug": "sandaconda-gmax",
-    "name": "Gigantamax Sandaconda",
-    "dex": 844,
-    "speciesSlug": "sandaconda",
-    "speciesName": "Sandaconda",
-    "types": [
-      "ground"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10218.webp",
-      "shiny": "assets/home/shiny/10218.webp"
-    }
-  },
-  {
     "slug": "cramorant",
     "name": "Cramorant",
     "dex": 845,
@@ -21881,40 +19388,6 @@
     "sprites": {
       "home": "assets/home/845.webp",
       "shiny": "assets/home/shiny/845.webp"
-    }
-  },
-  {
-    "slug": "cramorant-gorging",
-    "name": "Gorging Cramorant",
-    "dex": 845,
-    "speciesSlug": "cramorant",
-    "speciesName": "Cramorant",
-    "types": [
-      "flying",
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10183.webp",
-      "shiny": "assets/home/shiny/10183.webp"
-    }
-  },
-  {
-    "slug": "cramorant-gulping",
-    "name": "Gulping Cramorant",
-    "dex": 845,
-    "speciesSlug": "cramorant",
-    "speciesName": "Cramorant",
-    "types": [
-      "flying",
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10182.webp",
-      "shiny": "assets/home/shiny/10182.webp"
     }
   },
   {
@@ -21984,40 +19457,6 @@
     }
   },
   {
-    "slug": "toxtricity-amped-gmax",
-    "name": "Gigantamax Amped Toxtricity",
-    "dex": 849,
-    "speciesSlug": "toxtricity",
-    "speciesName": "Toxtricity",
-    "types": [
-      "electric",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10219.webp",
-      "shiny": "assets/home/shiny/10219.webp"
-    }
-  },
-  {
-    "slug": "toxtricity-low-key-gmax",
-    "name": "Gigantamax Low Key Toxtricity",
-    "dex": 849,
-    "speciesSlug": "toxtricity",
-    "speciesName": "Toxtricity",
-    "types": [
-      "electric",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10228.webp",
-      "shiny": "assets/home/shiny/10228.webp"
-    }
-  },
-  {
     "slug": "toxtricity-low-key",
     "name": "Low Key Toxtricity",
     "dex": 849,
@@ -22066,23 +19505,6 @@
     "sprites": {
       "home": "assets/home/851.webp",
       "shiny": "assets/home/shiny/851.webp"
-    }
-  },
-  {
-    "slug": "centiskorch-gmax",
-    "name": "Gigantamax Centiskorch",
-    "dex": 851,
-    "speciesSlug": "centiskorch",
-    "speciesName": "Centiskorch",
-    "types": [
-      "fire",
-      "bug"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10220.webp",
-      "shiny": "assets/home/shiny/10220.webp"
     }
   },
   {
@@ -22199,23 +19621,6 @@
     }
   },
   {
-    "slug": "hatterene-gmax",
-    "name": "Gigantamax Hatterene",
-    "dex": 858,
-    "speciesSlug": "hatterene",
-    "speciesName": "Hatterene",
-    "types": [
-      "psychic",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10221.webp",
-      "shiny": "assets/home/shiny/10221.webp"
-    }
-  },
-  {
     "slug": "impidimp",
     "name": "Impidimp",
     "dex": 859,
@@ -22264,23 +19669,6 @@
     "sprites": {
       "home": "assets/home/861.webp",
       "shiny": "assets/home/shiny/861.webp"
-    }
-  },
-  {
-    "slug": "grimmsnarl-gmax",
-    "name": "Gigantamax Grimmsnarl",
-    "dex": 861,
-    "speciesSlug": "grimmsnarl",
-    "speciesName": "Grimmsnarl",
-    "types": [
-      "dark",
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10222.webp",
-      "shiny": "assets/home/shiny/10222.webp"
     }
   },
   {
@@ -22524,22 +19912,6 @@
     "sprites": {
       "home": "assets/home/869-caramel-swirl-strawberry-sweet.webp",
       "shiny": "assets/home/shiny/869-caramel-swirl-strawberry-sweet.webp"
-    }
-  },
-  {
-    "slug": "alcremie-gmax",
-    "name": "Gigantamax Alcremie",
-    "dex": 869,
-    "speciesSlug": "alcremie",
-    "speciesName": "Alcremie",
-    "types": [
-      "fairy"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10223.webp",
-      "shiny": "assets/home/shiny/10223.webp"
     }
   },
   {
@@ -23439,22 +20811,6 @@
     }
   },
   {
-    "slug": "falinks-mega",
-    "name": "Mega Falinks",
-    "dex": 870,
-    "speciesSlug": "falinks",
-    "speciesName": "Falinks",
-    "types": [
-      "fighting"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10303.webp",
-      "shiny": "assets/home/shiny/10303.webp"
-    }
-  },
-  {
     "slug": "pincurchin",
     "name": "Pincurchin",
     "dex": 871,
@@ -23653,22 +21009,6 @@
     }
   },
   {
-    "slug": "copperajah-gmax",
-    "name": "Gigantamax Copperajah",
-    "dex": 879,
-    "speciesSlug": "copperajah",
-    "speciesName": "Copperajah",
-    "types": [
-      "steel"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10224.webp",
-      "shiny": "assets/home/shiny/10224.webp"
-    }
-  },
-  {
     "slug": "dracozolt",
     "name": "Dracozolt",
     "dex": 880,
@@ -23751,23 +21091,6 @@
     "sprites": {
       "home": "assets/home/884.webp",
       "shiny": "assets/home/shiny/884.webp"
-    }
-  },
-  {
-    "slug": "duraludon-gmax",
-    "name": "Gigantamax Duraludon",
-    "dex": 884,
-    "speciesSlug": "duraludon",
-    "speciesName": "Duraludon",
-    "types": [
-      "steel",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10225.webp",
-      "shiny": "assets/home/shiny/10225.webp"
     }
   },
   {
@@ -23905,23 +21228,6 @@
     }
   },
   {
-    "slug": "eternatus-eternamax",
-    "name": "Eternamax Eternatus",
-    "dex": 890,
-    "speciesSlug": "eternatus",
-    "speciesName": "Eternatus",
-    "types": [
-      "poison",
-      "dragon"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10190.webp",
-      "shiny": "assets/home/shiny/10190.webp"
-    }
-  },
-  {
     "slug": "kubfu",
     "name": "Kubfu",
     "dex": 891,
@@ -23952,40 +21258,6 @@
     "sprites": {
       "home": "assets/home/892.webp",
       "shiny": "assets/home/shiny/892.webp"
-    }
-  },
-  {
-    "slug": "urshifu-rapid-strike-gmax",
-    "name": "Gigantamax Rapid Strike Urshifu",
-    "dex": 892,
-    "speciesSlug": "urshifu",
-    "speciesName": "Urshifu",
-    "types": [
-      "fighting",
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10227.webp",
-      "shiny": "assets/home/shiny/10227.webp"
-    }
-  },
-  {
-    "slug": "urshifu-single-strike-gmax",
-    "name": "Gigantamax Single Strike Urshifu",
-    "dex": 892,
-    "speciesSlug": "urshifu",
-    "speciesName": "Urshifu",
-    "types": [
-      "fighting",
-      "dark"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10226.webp",
-      "shiny": "assets/home/shiny/10226.webp"
     }
   },
   {
@@ -25181,23 +22453,6 @@
     }
   },
   {
-    "slug": "scovillain-mega",
-    "name": "Mega Scovillain",
-    "dex": 952,
-    "speciesSlug": "scovillain",
-    "speciesName": "Scovillain",
-    "types": [
-      "grass",
-      "fire"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10320.webp",
-      "shiny": "assets/home/shiny/10320.webp"
-    }
-  },
-  {
     "slug": "rellor",
     "name": "Rellor",
     "dex": 953,
@@ -25512,23 +22767,6 @@
     }
   },
   {
-    "slug": "glimmora-mega",
-    "name": "Mega Glimmora",
-    "dex": 970,
-    "speciesSlug": "glimmora",
-    "speciesName": "Glimmora",
-    "types": [
-      "rock",
-      "poison"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10321.webp",
-      "shiny": "assets/home/shiny/10321.webp"
-    }
-  },
-  {
     "slug": "greavard",
     "name": "Greavard",
     "dex": 971,
@@ -25674,57 +22912,6 @@
     "sprites": {
       "home": "assets/home/10258.webp",
       "shiny": "assets/home/shiny/10258.webp"
-    }
-  },
-  {
-    "slug": "tatsugiri-curly-mega",
-    "name": "Mega Curly Tatsugiri",
-    "dex": 978,
-    "speciesSlug": "tatsugiri",
-    "speciesName": "Tatsugiri",
-    "types": [
-      "dragon",
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10322.webp",
-      "shiny": "assets/home/shiny/10322.webp"
-    }
-  },
-  {
-    "slug": "tatsugiri-droopy-mega",
-    "name": "Mega Droopy Tatsugiri",
-    "dex": 978,
-    "speciesSlug": "tatsugiri",
-    "speciesName": "Tatsugiri",
-    "types": [
-      "dragon",
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10323.webp",
-      "shiny": "assets/home/shiny/10323.webp"
-    }
-  },
-  {
-    "slug": "tatsugiri-stretchy-mega",
-    "name": "Mega Stretchy Tatsugiri",
-    "dex": 978,
-    "speciesSlug": "tatsugiri",
-    "speciesName": "Tatsugiri",
-    "types": [
-      "dragon",
-      "water"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10324.webp",
-      "shiny": "assets/home/shiny/10324.webp"
     }
   },
   {
@@ -26097,23 +23284,6 @@
     "sprites": {
       "home": "assets/home/998.webp",
       "shiny": "assets/home/shiny/998.webp"
-    }
-  },
-  {
-    "slug": "baxcalibur-mega",
-    "name": "Mega Baxcalibur",
-    "dex": 998,
-    "speciesSlug": "baxcalibur",
-    "speciesName": "Baxcalibur",
-    "types": [
-      "dragon",
-      "ice"
-    ],
-    "kind": "variety",
-    "isDefault": false,
-    "sprites": {
-      "home": "assets/home/10325.webp",
-      "shiny": "assets/home/shiny/10325.webp"
     }
   },
   {

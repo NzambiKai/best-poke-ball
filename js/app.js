@@ -661,8 +661,8 @@ function hashSlug() {
 loadCatalog()
   .then((loaded) => {
     catalog = loaded;
-    const fromHash = catalog.bySlug.get(hashSlug());
-    const saved = catalog.bySlug.get(readLastViewed());
+    const fromHash = catalog.resolve(hashSlug());
+    const saved = catalog.resolve(readLastViewed());
     const initialPokemon = fromHash || saved || catalog.bySlug.get(DEFAULT_POKEMON_SLUG);
     if (!initialPokemon) return;
     search.value = initialPokemon.name;

@@ -26,7 +26,7 @@ sudo apt-get install webp
 node scripts/sync-pokedex.mjs
 ```
 
-The script resolves the current PokeAPI sprites commit first, then downloads ball icons from that commit and records the sha in `data/source.json`. It writes only `data/` and `assets/`. It reads ball ids from [`js/balls.js`](js/balls.js), [`js/overrides.js`](js/overrides.js), and [`js/form-rules.js`](js/form-rules.js), and it always downloads the Poké Ball icon used as the favicon. A HOME sprite that is already in `assets/` is left in place. Cached responses live in `.cache/`, which is gitignored. Re-running does not change the hand-edited rule list, ball catalogue, or overrides.
+The script resolves the current PokeAPI sprites commit first, then downloads ball icons from that commit and records the sha in `data/source.json`. It writes only `data/` and `assets/`. It reads ball ids from [`js/balls.js`](js/balls.js), [`js/overrides.js`](js/overrides.js), and [`js/form-rules.js`](js/form-rules.js), and it always downloads the Poké Ball icon used as the favicon. A HOME sprite that is already in `assets/` is left in place. Cached responses live in `.cache/`, which is gitignored. Re-running does not change the hand-edited rule list, ball catalogue, or overrides. Battle-only forms, Minior's colour cores, and Arceus's ??? type are omitted by `isCatalogueExcluded` before a sprite is downloaded. `data/form-bases.json` maps each omitted slug to the form the page opens instead, and a re-run deletes HOME sprites no remaining entry uses.
 
 ## What's in this mockup
 
@@ -35,8 +35,8 @@ The script resolves the current PokeAPI sprites commit first, then downloads bal
 - Selected Pokémon panel with local Pokémon HOME art and the PokeAPI name. The switch swaps every Pokémon image to the shiny HOME sprite when that file exists, and shows the regular sprite with "No shiny art" when it does not. Ball cards follow the shiny palette whenever shiny art is shown. A form marked `shinyLocked` keeps the regular sprite and the regular palette, and shows a Shiny-locked badge instead of requesting the shiny file
 - One to three ball cards for the selected Pokémon, ranked on colour
 - Evolution line for that family. A straight chain is a row, a split such as Eevee or Wurmple branches, and a later split such as Applin or Kirlia nests under the branch. A regional form stays on that regional line when every stage has the same suffix
-- A Variants section for species that have other forms (regional forms, Mega Evolutions, Gigantamax, gender differences, and other alternate forms). It stays hidden when a Pokémon has none
-- Per-form obtainability in [`js/form-rules.js`](js/form-rules.js). `rulesFor(slug)` returns `cherishOnly` and `shinyLocked`, both false unless that form is listed. The rules cover main-series games only. A Cherish-only form shows a single Cherish Ball card instead of the ranked matches. Original Color Magearna, Zarude, and Dada Zarude are seeded as Cherish-only. Magearna, Original Color Magearna, Zarude, and Dada Zarude are seeded as shiny-locked. The list needs verifying
+- A Variants section for species that have other forms (regional forms, gender differences, and other alternate forms). Battle-only forms are left out of the catalogue. The section stays hidden when a Pokémon has none
+- Per-form obtainability in [`js/form-rules.js`](js/form-rules.js). `rulesFor(slug)` returns `cherishOnly` and `shinyLocked`, both false unless that form is listed. The rules cover main-series games only. A Cherish-only form shows a single Cherish Ball card instead of the ranked matches. Original Color Magearna, Zarude, and Dada Zarude are seeded as Cherish-only. Magearna, Original Color Magearna, Zarude, Dada Zarude, and the seven cap Pikachu forms (original, Hoenn, Sinnoh, Unova, Kalos, Alola, and world) are seeded as shiny-locked. Partner Cap is not. The list needs verifying
 - Fan-project disclaimer in the footer
 
 ## Matching
