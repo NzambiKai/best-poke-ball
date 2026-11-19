@@ -6,6 +6,7 @@
  * from js/catalog.js. Ball cards come from matchBalls() in js/matching.js.
  * Per-form obtainability comes from rulesFor() in js/form-rules.js.
  * The last Pokémon and the Shiny switch come from js/preferences.js.
+ * The address bar comes from js/location.js. Browsing does not write into it.
  */
 
 const ITEM_SPRITE = "assets/items/";
@@ -459,16 +460,6 @@ function renderVariants(pokemon) {
   }
 }
 
-function rememberLocation(pokemon) {
-  const url = new URL(location.href);
-  url.hash = pokemon.slug;
-  if (shinyOn) url.searchParams.set("shiny", "1");
-  else url.searchParams.delete("shiny");
-  const next = `${url.pathname}${url.search}${url.hash}`;
-  const current = `${location.pathname}${location.search}${location.hash}`;
-  if (next !== current) history.replaceState(null, "", next);
-}
-
 function selectPokemon(pokemon) {
   currentSlug = pokemon.slug;
   applyHomeSprite(art, pokemon);
@@ -488,7 +479,6 @@ function selectPokemon(pokemon) {
   renderVariants(pokemon);
   document.title = `${pokemon.name} · Best Poké Ball`;
   rememberLastViewed(pokemon.slug);
-  rememberLocation(pokemon);
 }
 
 function closeList() {
@@ -627,14 +617,8 @@ document.addEventListener("click", (event) => {
   if (!event.target.closest(".search-panel")) closeList();
 });
 
-function shinyRequested() {
-  const params = new URLSearchParams(location.search);
-  if (!params.has("shiny")) return null;
-  return params.get("shiny") === "1";
-}
-
-const requestedShiny = shinyRequested();
-shinyOn = requestedShiny === null ? readShiny() : requestedShiny;
+const incoming = incomingLink();
+shinyOn = incoming.shiny === null ? readShiny() : incoming.shiny;
 shinyToggle.checked = shinyOn;
 shinyToggle.toggleAttribute("checked", shinyOn);
 rememberShiny(shinyOn);
@@ -642,7 +626,6 @@ shinyToggle.addEventListener("change", () => {
   shinyOn = shinyToggle.checked;
   rememberShiny(shinyOn);
   const pokemon = catalog.bySlug.get(currentSlug);
-  rememberLocation(pokemon);
   refreshHomeArt();
   if (!pokemon) return;
   renderFeaturedBalls(pokemon);
@@ -650,23 +633,17 @@ shinyToggle.addEventListener("change", () => {
   renderVariants(pokemon);
 });
 
-function hashSlug() {
-  try {
-    return decodeURIComponent(location.hash.replace("#", ""));
-  } catch {
-    return "";
-  }
-}
-
 loadCatalog()
   .then((loaded) => {
     catalog = loaded;
-    const fromHash = catalog.resolve(hashSlug());
+    const fromHash = catalog.resolve(incoming.slug);
     const saved = catalog.resolve(readLastViewed());
     const initialPokemon = fromHash || saved || catalog.bySlug.get(DEFAULT_POKEMON_SLUG);
-    if (!initialPokemon) return;
-    search.value = initialPokemon.name;
-    selectPokemon(initialPokemon);
+    if (initialPokemon) {
+      search.value = initialPokemon.name;
+      selectPokemon(initialPokemon);
+    }
+    clearBrowseUrl();
   })
   .catch((error) => {
     resultsNote.textContent = "Could not load the Pokédex.";
