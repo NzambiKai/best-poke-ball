@@ -42,7 +42,6 @@ const art = document.querySelector("#pokemon-art");
 const nameEl = document.querySelector("#pokemon-name");
 const dexEl = document.querySelector("#pokemon-dex");
 const typesEl = document.querySelector("#pokemon-types");
-const sampleButtons = [...document.querySelectorAll(".sample-btn")];
 const featuredBalls = document.querySelector("#featured-balls");
 const resultsNote = document.querySelector("#results-note");
 const evolutionSection = document.querySelector("#evolution-section");
@@ -484,16 +483,6 @@ function selectPokemon(pokemon) {
     badge.textContent = TYPE_LABEL[type] || type;
     typesEl.append(badge);
   }
-  const speciesDefault = (catalog.bySpecies.get(pokemon.speciesSlug) || []).find((entry) => entry.isDefault);
-  for (const button of sampleButtons) {
-    const selected =
-      button.dataset.slug === pokemon.slug ||
-      (speciesDefault && button.dataset.slug === speciesDefault.slug);
-    button.className = selected
-      ? "btn btn-outline-danger sample-btn"
-      : "btn btn-light border sample-btn";
-    button.setAttribute("aria-pressed", selected ? "true" : "false");
-  }
   renderFeaturedBalls(pokemon);
   renderEvolution(pokemon);
   renderVariants(pokemon);
@@ -637,14 +626,6 @@ searchForm.addEventListener("submit", (event) => {
 document.addEventListener("click", (event) => {
   if (!event.target.closest(".search-panel")) closeList();
 });
-
-for (const button of sampleButtons) {
-  button.addEventListener("click", () => {
-    const pokemon = catalog.bySlug.get(button.dataset.slug);
-    if (!pokemon) return;
-    choose(pokemon);
-  });
-}
 
 function shinyRequested() {
   const params = new URLSearchParams(location.search);

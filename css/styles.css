@@ -199,19 +199,6 @@ h3,
   color: rgba(255, 255, 255, 0.86);
 }
 
-.sample-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.5rem;
-  max-width: 56rem;
-  margin-inline: auto;
-}
-
-.sample-btn {
-  font-weight: 800;
-}
-
 .soft-card {
   background: var(--card);
   border: 0;
@@ -306,13 +293,6 @@ h3,
   font-family: "Fredoka", "Nunito", sans-serif;
   font-size: 0.85rem;
   flex: none;
-}
-
-.sample-pill {
-  background: #fff4cc;
-  color: #5c4814;
-  border: 1px solid rgba(92, 72, 20, 0.16);
-  font-weight: 800;
 }
 
 .type-badge {
