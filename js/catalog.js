@@ -8,10 +8,11 @@
 const REGIONAL_SUFFIXES = ["-alola", "-galar", "-hisui", "-paldea"];
 
 async function loadCatalog() {
-  const [pokemon, families, palettes] = await Promise.all([
+  const [pokemon, families, palettes, bases] = await Promise.all([
     fetchJson("data/pokemon.json"),
     fetchJson("data/families.json"),
     fetchJson("data/palettes.json"),
+    fetchJson("data/form-bases.json"),
   ]);
   const paletteBySlug = new Map(Object.entries(palettes));
   const bySlug = new Map(pokemon.map((entry) => [entry.slug, entry]));
@@ -65,6 +66,14 @@ async function loadCatalog() {
     return forms.find((form) => form.isDefault) || forms[0];
   }
 
+  function resolve(slug) {
+    if (!slug) return null;
+    const direct = bySlug.get(slug);
+    if (direct) return direct;
+    const base = bases[slug];
+    return base ? bySlug.get(base) || null : null;
+  }
+
   function familyTree(slug) {
     const entry = bySlug.get(slug);
     if (!entry) return null;
@@ -78,7 +87,7 @@ async function loadCatalog() {
     return node(rootOf(entry.speciesSlug));
   }
 
-  return { pokemon, bySlug, bySpecies, familyTree, palettes: paletteBySlug };
+  return { pokemon, bySlug, bySpecies, familyTree, palettes: paletteBySlug, resolve };
 }
 
 async function fetchJson(url) {

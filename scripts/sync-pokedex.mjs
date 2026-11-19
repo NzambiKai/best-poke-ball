@@ -3,6 +3,7 @@
  *
  *   node scripts/sync-pokedex.mjs
  *   node scripts/sync-pokedex.mjs --palettes-only
+ *   node scripts/sync-pokedex.mjs --apply-omissions
  *
  * Uses Node's built-in fetch only. HOME sprites are converted with cwebp
  * from the webp package (Debian/Ubuntu: sudo apt-get install webp) at
@@ -17,6 +18,11 @@
  * files and never changes them. A ball omitted from js/balls.js is not
  * downloaded. That includes the Legends: Arceus balls. Raw responses are
  * cached in .cache/.
+ *
+ * isCatalogueExcluded drops battle-only forms, Minior's colour cores, and
+ * Arceus's ??? type before a sprite is downloaded. data/form-bases.json maps
+ * each omitted slug to the form the page opens instead. A re-run prunes HOME
+ * sprites no remaining entry uses, so those forms do not come back.
  */
 import { spawn } from "node:child_process";
 import fs from "node:fs";
@@ -32,6 +38,134 @@ const WEBP_QUALITY = "90";
 // Forms that exist only in Pokémon GO. Empty against the current National Dex.
 // A listed slug is skipped even when PokeAPI has a HOME sprite for it.
 const GO_DENYLIST = new Set();
+
+// Battle-only and placeholder forms. Matched on the slug, not on the display
+// name, so "mega" inside Meganium or Yanmega stays. Regional, female, and
+// cosmetic forms are not in this set. Minior meteor entries stay, including
+// the colour meteors that share one sprite. Greninja's Battle Bond form stays;
+// only Ash-Greninja is omitted.
+const CATALOGUE_EXACT = new Set([
+  "aegislash-blade",
+  "arceus-unknown",
+  "castform-rainy",
+  "castform-snowy",
+  "castform-sunny",
+  "cherrim-sunshine",
+  "cramorant-gorging",
+  "cramorant-gulping",
+  "darmanitan-galar-zen",
+  "darmanitan-zen",
+  "eternatus-eternamax",
+  "greninja-ash",
+  "meloetta-pirouette",
+  "mimikyu-busted",
+  "necrozma-ultra",
+  "wishiwashi-school",
+  "zygarde-complete",
+]);
+
+const MINIOR_CORE = /^minior-(red|orange|yellow|green|blue|indigo|violet)$/;
+
+function isCatalogueExcluded(slug) {
+  if (typeof slug !== "string" || !slug) return false;
+  if (CATALOGUE_EXACT.has(slug) || MINIOR_CORE.test(slug)) return true;
+  if (/-mega(?:-[xyz])?$/.test(slug)) return true;
+  if (slug.endsWith("-gmax") || slug.endsWith("-primal")) return true;
+  return slug.includes("-totem");
+}
+
+// Next slug to try when an omitted form is saved or linked. The first kept
+// candidate wins. Marowak's totem is the Alolan form. A Minior core falls
+// back to that colour's meteor. Zen Darmanitan falls back to its standard form.
+function baseCandidates(slug) {
+  const next = [];
+  if (slug === "marowak-totem") next.push("marowak-alola");
+  if (MINIOR_CORE.test(slug)) next.push(`${slug}-meteor`);
+  if (slug.endsWith("-zen")) next.push(slug.replace(/-zen$/, "-standard"));
+  if (/-mega(?:-[xyz])?$/.test(slug)) next.push(slug.replace(/-mega(?:-[xyz])?$/, ""));
+  if (slug.endsWith("-gmax")) next.push(slug.replace(/-gmax$/, ""));
+  if (slug.endsWith("-primal")) next.push(slug.replace(/-primal$/, ""));
+  if (slug === "eternatus-eternamax") next.push("eternatus");
+  if (slug.includes("-totem")) {
+    const stripped = slug.replace("-totem-", "-").replace(/-totem$/, "");
+    if (stripped !== slug) next.push(stripped);
+  }
+  if (slug.endsWith("-complete")) next.push(slug.replace(/-complete$/, ""));
+  if (slug.endsWith("-ultra")) next.push(slug.replace(/-ultra$/, ""));
+  if (slug.endsWith("-pirouette")) next.push(slug.replace(/-pirouette$/, ""));
+  if (slug.endsWith("-school")) next.push(slug.replace(/-school$/, "-solo"));
+  if (slug.endsWith("-blade")) next.push(slug.replace(/-blade$/, "-shield"));
+  if (slug.endsWith("-busted")) next.push(slug.replace(/-busted$/, "-disguised"));
+  if (slug.endsWith("-gulping") || slug.endsWith("-gorging")) next.push(slug.replace(/-(?:gulping|gorging)$/, ""));
+  if (slug.endsWith("-sunshine")) next.push(slug.replace(/-sunshine$/, ""));
+  if (slug === "castform-rainy" || slug === "castform-snowy" || slug === "castform-sunny") next.push("castform");
+  if (slug === "greninja-ash") next.push("greninja");
+  if (slug === "arceus-unknown") next.push("arceus");
+  return next;
+}
+
+function resolveBaseSlug(slug, kept) {
+  const queue = [slug];
+  const seen = new Set();
+  while (queue.length) {
+    const current = queue.shift();
+    if (seen.has(current)) continue;
+    seen.add(current);
+    for (const candidate of baseCandidates(current)) {
+      if (kept.has(candidate) && !isCatalogueExcluded(candidate)) return candidate;
+      queue.push(candidate);
+    }
+  }
+  return null;
+}
+
+function formBasesFor(omitted, keptEntries) {
+  const kept = new Set(keptEntries.map((entry) => entry.slug));
+  const speciesDefault = new Map();
+  for (const entry of keptEntries) {
+    if (entry.isDefault) speciesDefault.set(entry.speciesSlug, entry.slug);
+  }
+  const bases = {};
+  const unresolved = [];
+  for (const slug of [...omitted.keys()].sort()) {
+    const base = resolveBaseSlug(slug, kept) || speciesDefault.get(omitted.get(slug)) || null;
+    if (!base || !kept.has(base) || isCatalogueExcluded(base)) unresolved.push(slug);
+    else bases[slug] = base;
+  }
+  if (unresolved.length) throw new Error(`No base form for ${unresolved.join(", ")}`);
+  return bases;
+}
+
+function referencedHomeAssets(entries) {
+  const refs = new Set();
+  for (const entry of entries) {
+    if (entry.sprites?.home) refs.add(entry.sprites.home);
+    if (entry.sprites?.shiny) refs.add(entry.sprites.shiny);
+  }
+  return refs;
+}
+
+function pruneHomeSprites(referenced) {
+  const root = path.join(ROOT, "assets", "home");
+  if (!fs.existsSync(root)) return [];
+  const removed = [];
+  const walk = (dir) => {
+    for (const name of fs.readdirSync(dir)) {
+      const abs = path.join(dir, name);
+      if (fs.statSync(abs).isDirectory()) {
+        walk(abs);
+        continue;
+      }
+      if (!name.endsWith(".webp")) continue;
+      const rel = path.relative(ROOT, abs).split(path.sep).join("/");
+      if (referenced.has(rel)) continue;
+      fs.unlinkSync(abs);
+      removed.push(rel);
+    }
+  };
+  walk(root);
+  return removed.sort();
+}
 
 const HAND_EDITED = ["js/balls.js", "js/overrides.js", "js/form-rules.js"];
 
@@ -463,6 +597,7 @@ async function main() {
   const downloads = new Map();
   const omittedNoHome = new Set();
   const omittedGo = new Set();
+  const omittedCatalogue = new Map();
 
   process.stderr.write("Fetching National Dex lists\n");
   const [speciesList, chainList] = await Promise.all([listAll("pokemon-species"), listAll("evolution-chain")]);
@@ -522,6 +657,10 @@ async function main() {
       omittedGo.add(slug);
       continue;
     }
+    if (isCatalogueExcluded(slug)) {
+      omittedCatalogue.set(slug, job.species.slug);
+      continue;
+    }
     const home = pokemon.sprites?.other?.home;
     if (!home?.front_default) {
       omittedNoHome.add(slug);
@@ -568,6 +707,10 @@ async function main() {
       omittedGo.add(femaleSlug);
       continue;
     }
+    if (isCatalogueExcluded(femaleSlug)) {
+      omittedCatalogue.set(femaleSlug, female.speciesSlug);
+      continue;
+    }
     const name = female.slug.endsWith("-male") ? `Female ${female.species.english}` : `Female ${female.name}`;
     addEntry({
       slug: femaleSlug,
@@ -600,13 +743,17 @@ async function main() {
     }
     const parentSlug = form.pokemon.name;
     const parent = varietyBySlug.get(parentSlug);
+    const species = speciesBySlug.get(parent?.speciesSlug) || [...speciesBySlug.values()].find((item) => item.varieties.some((variety) => variety.pokemon.name === parentSlug));
+    if (isCatalogueExcluded(slug)) {
+      if (species) omittedCatalogue.set(slug, species.slug);
+      continue;
+    }
     const home = form.sprites?.other?.home;
     if (!home?.front_default) {
       omittedNoHome.add(slug);
       continue;
     }
     if (parent && home.front_default === downloads.get(parent.sprites.home)) continue;
-    const species = speciesBySlug.get(parent?.speciesSlug) || [...speciesBySlug.values()].find((item) => item.varieties.some((variety) => variety.pokemon.name === parentSlug));
     if (!species) {
       omittedNoHome.add(slug);
       continue;
@@ -683,6 +830,7 @@ async function main() {
     familyCount: Object.keys(families).length,
     goDenylist: [...GO_DENYLIST].sort(),
     omittedGo: [...omittedGo].sort(),
+    omittedCatalogue: [...omittedCatalogue.keys()].sort(),
     omittedNoHome: [...omittedNoHome].sort(),
     paletteVersion: 2,
     paletteCount: entries.length - paletteFailed.length,
@@ -692,14 +840,58 @@ async function main() {
     shinyPaletteMissing: paletteResult.shinyMissing,
   };
 
+  const formBases = formBasesFor(omittedCatalogue, entries);
+  const pruned = pruneHomeSprites(referencedHomeAssets(entries));
+
   fs.mkdirSync(outputPath("data"), { recursive: true });
   fs.writeFileSync(outputPath("data/pokemon.json"), `${JSON.stringify(entries, null, 2)}\n`);
   fs.writeFileSync(outputPath("data/families.json"), `${JSON.stringify(families, null, 2)}\n`);
+  fs.writeFileSync(outputPath("data/form-bases.json"), `${JSON.stringify(formBases, null, 2)}\n`);
   fs.writeFileSync(outputPath("data/source.json"), `${JSON.stringify(source, null, 2)}\n`);
 
   if (omittedGo.size) process.stderr.write(`Skipped GO-only forms: ${[...omittedGo].sort().join(", ")}\n`);
   process.stderr.write(`Wrote ${entries.length} entries, ${Object.keys(families).length} families, ${downloads.size} sprites\n`);
+  process.stderr.write(`Omitted from the catalogue: ${source.omittedCatalogue.length}. Pruned ${pruned.length} unused HOME sprites\n`);
   process.stderr.write(`Omitted with no HOME art: ${source.omittedNoHome.join(", ")}\n`);
+}
+
+function applyOmissions() {
+  const pokemonPath = path.join(ROOT, "data/pokemon.json");
+  const palettePath = path.join(ROOT, "data/palettes.json");
+  const sourcePath = path.join(ROOT, "data/source.json");
+  const entries = JSON.parse(fs.readFileSync(pokemonPath, "utf8"));
+  const palettes = JSON.parse(fs.readFileSync(palettePath, "utf8"));
+  const source = JSON.parse(fs.readFileSync(sourcePath, "utf8"));
+  const keptEntries = entries.filter((entry) => !isCatalogueExcluded(entry.slug));
+  const omittedEntries = entries.filter((entry) => isCatalogueExcluded(entry.slug));
+  const omitted = new Map(omittedEntries.map((entry) => [entry.slug, entry.speciesSlug]));
+  const kept = new Set(keptEntries.map((entry) => entry.slug));
+  for (const speciesSlug of new Set(entries.map((entry) => entry.speciesSlug))) {
+    const forms = keptEntries.filter((entry) => entry.speciesSlug === speciesSlug);
+    if (!forms.some((entry) => entry.isDefault)) throw new Error(`Species ${speciesSlug} lost its default form`);
+  }
+  const formBases = formBasesFor(omitted, keptEntries);
+  const nextPalettes = {};
+  for (const [slug, value] of Object.entries(palettes)) {
+    if (kept.has(slug)) nextPalettes[slug] = value;
+  }
+  const shinyMissing = keptEntries.filter((entry) => !nextPalettes[entry.slug]?.shiny).map((entry) => entry.slug);
+  source.varietyCount = keptEntries.filter((entry) => entry.kind === "variety").length;
+  source.formCount = keptEntries.filter((entry) => entry.kind === "form").length;
+  source.femaleCount = keptEntries.filter((entry) => entry.kind === "female").length;
+  source.entryCount = keptEntries.length;
+  source.omittedCatalogue = [...omitted.keys()].sort();
+  source.paletteCount = keptEntries.filter((entry) => nextPalettes[entry.slug]?.regular).length;
+  source.paletteFailed = (source.paletteFailed || []).filter((slug) => kept.has(slug));
+  source.shinyPaletteCount = keptEntries.filter((entry) => nextPalettes[entry.slug]?.shiny).length;
+  source.shinyPaletteFailed = (source.shinyPaletteFailed || []).filter((slug) => kept.has(slug));
+  source.shinyPaletteMissing = shinyMissing.sort();
+  const pruned = pruneHomeSprites(referencedHomeAssets(keptEntries));
+  fs.writeFileSync(pokemonPath, `${JSON.stringify(keptEntries, null, 2)}\n`);
+  fs.writeFileSync(palettePath, `${JSON.stringify(nextPalettes, null, 2)}\n`);
+  fs.writeFileSync(path.join(ROOT, "data/form-bases.json"), `${JSON.stringify(formBases, null, 2)}\n`);
+  fs.writeFileSync(sourcePath, `${JSON.stringify(source, null, 2)}\n`);
+  process.stderr.write(`Kept ${keptEntries.length}, omitted ${omitted.size}, pruned ${pruned.length} sprites\n`);
 }
 
 async function regeneratePalettes() {
@@ -723,11 +915,15 @@ async function regeneratePalettes() {
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const run = process.argv.includes("--palettes-only") ? regeneratePalettes : main;
+  const run = process.argv.includes("--palettes-only")
+    ? regeneratePalettes
+    : process.argv.includes("--apply-omissions")
+      ? async () => applyOmissions()
+      : main;
   run().catch((error) => {
     console.error(error);
     process.exit(1);
   });
 }
 
-export { extractPalette, oklabFromRgb };
+export { extractPalette, oklabFromRgb, isCatalogueExcluded, resolveBaseSlug };

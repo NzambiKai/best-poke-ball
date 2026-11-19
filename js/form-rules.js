@@ -68,12 +68,23 @@
  *   gift of the Original Color is not a shiny distribution.
  * - zarude and zarude-dada: Bulbapedia marks Zarude unavailable as a shiny
  *   in Generations VIII and IX. Serebii's Dada distributions are not shiny.
+ * - Cap Pikachu (original, hoenn, sinnoh, unova, kalos, alola, world):
+ *   Bulbapedia's unobtainable-shiny list marks these event caps shiny-locked.
+ *   Serebii's event list does not include a shiny distribution of them.
+ *   Partner Cap is not locked: Let's Go Partner Pikachu can be shiny.
  */
 const FORM_RULES = {
   magearna: { shinyLocked: true },
   "magearna-original": { cherishOnly: true, shinyLocked: true },
   zarude: { cherishOnly: true, shinyLocked: true },
   "zarude-dada": { cherishOnly: true, shinyLocked: true },
+  "pikachu-original-cap": { shinyLocked: true },
+  "pikachu-hoenn-cap": { shinyLocked: true },
+  "pikachu-sinnoh-cap": { shinyLocked: true },
+  "pikachu-unova-cap": { shinyLocked: true },
+  "pikachu-kalos-cap": { shinyLocked: true },
+  "pikachu-alola-cap": { shinyLocked: true },
+  "pikachu-world-cap": { shinyLocked: true },
 };
 
 function rulesFor(slug) {
