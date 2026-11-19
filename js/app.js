@@ -42,7 +42,6 @@ const art = document.querySelector("#pokemon-art");
 const nameEl = document.querySelector("#pokemon-name");
 const dexEl = document.querySelector("#pokemon-dex");
 const typesEl = document.querySelector("#pokemon-types");
-const sampleButtons = [...document.querySelectorAll(".sample-btn")];
 const featuredBalls = document.querySelector("#featured-balls");
 const resultsNote = document.querySelector("#results-note");
 const evolutionSection = document.querySelector("#evolution-section");
@@ -208,7 +207,7 @@ function featuredCard(card, index, count) {
   body.className = "card-body d-flex gap-3 align-items-center";
   const copy = document.createElement("div");
   const headingRow = document.createElement("div");
-  headingRow.className = "d-flex align-items-center gap-2 mb-1";
+  headingRow.className = "d-flex align-items-center gap-2";
   const rank = document.createElement("span");
   rank.className = "rank-badge";
   rank.setAttribute("aria-hidden", "true");
@@ -227,10 +226,7 @@ function featuredCard(card, index, count) {
   } else {
     headingRow.append(rank, heading);
   }
-  const reason = document.createElement("p");
-  reason.className = "mb-0 ball-reason";
-  reason.textContent = card.reason;
-  copy.append(headingRow, reason);
+  copy.append(headingRow);
   body.append(ballPlate(card.ball), copy);
   article.append(body);
   column.append(article);
@@ -343,10 +339,7 @@ function stageCard(pokemon, markLine) {
       title.append(pill);
     }
     title.append(document.createTextNode(card.name));
-    const reason = document.createElement("p");
-    reason.className = "mb-0 evo-reason";
-    reason.textContent = card.reason;
-    text.append(title, reason);
+    text.append(title);
     item.append(ball, text);
     list.append(item);
   });
@@ -489,16 +482,6 @@ function selectPokemon(pokemon) {
     badge.className = `badge rounded-pill type-badge type-${type}`;
     badge.textContent = TYPE_LABEL[type] || type;
     typesEl.append(badge);
-  }
-  const speciesDefault = (catalog.bySpecies.get(pokemon.speciesSlug) || []).find((entry) => entry.isDefault);
-  for (const button of sampleButtons) {
-    const selected =
-      button.dataset.slug === pokemon.slug ||
-      (speciesDefault && button.dataset.slug === speciesDefault.slug);
-    button.className = selected
-      ? "btn btn-outline-danger sample-btn"
-      : "btn btn-light border sample-btn";
-    button.setAttribute("aria-pressed", selected ? "true" : "false");
   }
   renderFeaturedBalls(pokemon);
   renderEvolution(pokemon);
@@ -643,14 +626,6 @@ searchForm.addEventListener("submit", (event) => {
 document.addEventListener("click", (event) => {
   if (!event.target.closest(".search-panel")) closeList();
 });
-
-for (const button of sampleButtons) {
-  button.addEventListener("click", () => {
-    const pokemon = catalog.bySlug.get(button.dataset.slug);
-    if (!pokemon) return;
-    choose(pokemon);
-  });
-}
 
 function shinyRequested() {
   const params = new URLSearchParams(location.search);

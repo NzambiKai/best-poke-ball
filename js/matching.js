@@ -94,8 +94,6 @@ const TYPE_THEMES = {
   fairy: ["fairy", "cute"],
 };
 
-const CHERISH_REASON = "Only ever available in a Cherish Ball via events";
-
 const labCache = new Map();
 
 function srgbToLinear(channel) {
@@ -214,10 +212,6 @@ function hueName(hex) {
   if (turn < 242) return "teal";
   if (turn < 278) return "blue";
   return lightness > 0.8 && chroma > 0.08 ? "pink" : "purple";
-}
-
-function capitalize(word) {
-  return word.charAt(0).toUpperCase() + word.slice(1);
 }
 
 function regionsFor(palette) {
@@ -462,20 +456,6 @@ function keepsAnotherLargeRegion(row, chosen, regions, targetIndex) {
   return false;
 }
 
-function reasonFor(pokemon, row) {
-  const pair = row.pair;
-  if (!pair) return `A match for ${pokemon.name}'s colours`;
-  const ballHue = hueName(pair.swatch.hex);
-  const monHue = hueName(pair.color.hex);
-  const neutral = pair.color.neutral || pair.color.cast || chromaOf(labOf(pair.color.hex)) < 0.03;
-  if (neutral) {
-    const coat = ballHue === "black" || ballHue === "gray" ? "dark" : ballHue;
-    const body = monHue === "black" || monHue === "gray" ? "dark" : monHue;
-    return `${capitalize(coat)} shell for ${pokemon.name}'s ${body} coat`;
-  }
-  return `${capitalize(ballHue)} shell beside ${pokemon.name}'s ${monHue} coloring`;
-}
-
 function accentBall(regions, picked) {
   const used = new Set(picked.map((row) => row.ball.id));
   let best = null;
@@ -716,25 +696,17 @@ function cherishCard() {
     {
       ball: "cherish-ball",
       name: ball ? ball.name : "Cherish Ball",
-      reason: CHERISH_REASON,
       cherish: true,
     },
   ];
 }
 
-function cardsFromOverride(entry, pokemon, palette) {
-  const ranked = rankBalls(pokemon, palette);
+function cardsFromOverride(entry) {
   const cards = [];
-  entry.balls.slice(0, MAX_BALLS).forEach((id, index) => {
+  entry.balls.slice(0, MAX_BALLS).forEach((id) => {
     const ball = ballById(id);
     if (!ball || ball.matchable === false) return;
-    const row = ranked.find((item) => item.ball.id === id) || scoreBall(ball, regionsFor(palette));
-    const handwritten = entry.reasons && entry.reasons[index];
-    cards.push({
-      ball: ball.id,
-      name: ball.name,
-      reason: handwritten || reasonFor(pokemon, row),
-    });
+    cards.push({ ball: ball.id, name: ball.name });
   });
   return cards.length ? cards : null;
 }
@@ -743,12 +715,11 @@ function matchBalls(pokemon, palette) {
   if (rulesFor(pokemon.slug).cherishOnly) return cherishCard();
   const override = overrideFor(pokemon.slug);
   if (override) {
-    const replaced = cardsFromOverride(override, pokemon, palette);
+    const replaced = cardsFromOverride(override);
     if (replaced) return replaced;
   }
   return rankBalls(pokemon, palette).map((row) => ({
     ball: row.ball.id,
     name: row.ball.name,
-    reason: reasonFor(pokemon, row),
   }));
 }

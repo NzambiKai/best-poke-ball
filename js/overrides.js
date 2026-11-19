@@ -8,8 +8,7 @@
  * rulesFor(slug).cherishOnly still wins, and it is applied before this list.
  *
  * Shape, when a replacement is actually needed:
- *   { slug, balls: ["dive-ball", "net-ball"], reasons: ["optional", "optional"] }
- * reasons line up with balls. A missing sentence falls back to the template.
+ *   { slug, balls: ["dive-ball", "net-ball"] }
  */
 const OVERRIDES = [];
 
