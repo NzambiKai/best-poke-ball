@@ -4,6 +4,9 @@
  *   node scripts/review-sheet.mjs [out-dir]
  *   node scripts/review-sheet.mjs --shiny [out-dir]
  *
+ * With no out-dir, files are written to review-sheets/ under the repository
+ * root. Pass an out-dir to write somewhere else.
+ *
  * Writes sheet-1.png, sheet-2.png, ... and picks.txt. Each row is the HOME
  * sprite, the extracted palette, and the balls js/matching.js chose.
  * --shiny uses the shiny sprite and the shiny palette. Forms with no shiny
@@ -18,7 +21,7 @@ import { fileURLToPath } from "node:url";
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const args = process.argv.slice(2);
 const shinyMode = args.includes("--shiny");
-const outDir = path.resolve(args.find((arg) => !arg.startsWith("--")) || "/tmp/review-sheets");
+const outDir = path.resolve(args.find((arg) => !arg.startsWith("--")) || path.join(ROOT, "review-sheets"));
 fs.mkdirSync(outDir, { recursive: true });
 
 const REQUIRED = [
