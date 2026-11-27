@@ -5,13 +5,23 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
+def load_font(name, size):
+    try:
+        return ImageFont.truetype(name, size)
+    except OSError:
+        try:
+            return ImageFont.load_default(size)
+        except TypeError:
+            return ImageFont.load_default()
+
+
 payload = json.loads(sys.stdin.read())
 root = Path(payload["root"])
 out_dir = Path(payload["outDir"])
 rows = payload["rows"]
-font = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 15)
-small = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf", 12)
-bold = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf", 16)
+font = load_font("DejaVuSans.ttf", 15)
+small = load_font("DejaVuSans.ttf", 12)
+bold = load_font("DejaVuSans-Bold.ttf", 16)
 
 WIDTH = 1680
 ROW = 112
