@@ -6,13 +6,7 @@ Best Poké Ball is not affiliated with Nintendo, Game Freak, or The Pokémon Com
 
 ## View it locally
 
-From the repository root:
-
-```bash
-python3 -m http.server 8080
-```
-
-Then open http://localhost:8080
+Serve the repository root with any static file server and open the page it prints in a browser.
 
 The page is static and suited to GitHub Pages. Pokémon data and artwork are in this repository. Bootstrap and the fonts still load from their CDNs, so viewing the layout needs a network connection for those.
 
